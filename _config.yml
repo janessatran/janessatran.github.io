@@ -28,7 +28,7 @@ twitter_username: janessatran_
 github_username:  janessatran
 nav-links:
   - name: Home
-    url: /
+    url: .
   - name: Writing
     url: /writing
 
