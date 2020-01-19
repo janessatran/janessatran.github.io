@@ -34,7 +34,7 @@ Another way to make a website more accessible is by adding titles to anchor tags
 In this theme, I added titles to anchor tags to indicate where the link would redirect the user to.
 
 <figure>
-  <img src="./_includes/photos/title_attribute_anchors.png" alt="Example of title attribute on anchor tag">
+  <img src="/assets/photos/title_attribute_anchors.png" alt="Example of title attribute on anchor tag">
   <figcaption>Example of tooltip provided by defined "title" attributes in anchor elements. </figcaption>
 </figure>
 
@@ -44,7 +44,7 @@ Additionally, web design focused on accessibility considers that a user may navi
 In this theme, I added a hidden skip link that becomes visible when the link is focused. This provides a shorcute for users who want to just skip to the main content, making the website easier and quicker for users (especially those with disabilities).
 
 <figure>
-  <img src="./_includes/photos/skip_link.gif" alt="Example of skip link">
+  <img src="/assets/photos/skip_link.gif" alt="Example of skip link">
   <figcaption>Example of "Skip to main content link".</figcaption>
 </figure>
 
