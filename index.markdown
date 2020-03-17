@@ -16,7 +16,7 @@ My professional and academic experiences have included projects relating to the 
 On a personal note, I love reading non-fiction, meditation, compassionate people, and my cat. His name is Lloyd and I named [this jekyll theme](https://github.com/janessatran/laloyd) after him if you're interested in checking it out and using it!
 
 # 🦉 Contact me
-I'm on [Twitter](https://twitter.com/janessatran_), [LinkedIn](https://linkedin.com/in/janessatran), [GitHub](https://github.com/janessatran)
+I'm on [Twitter](https://twitter.com/janessatran_), [LinkedIn](https://linkedin.com/in/janessatran), [GitHub](https://github.com/janessatran), [Dev.to](https://dev.to/janessatran)
 
 
 
