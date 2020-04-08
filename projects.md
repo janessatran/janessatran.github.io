@@ -11,7 +11,7 @@ A Ruby on Rails application that enables users to search cheatsheets by tags, cr
 **Technologies used:** Ruby on Rails, Ruby, Rspec, JavaScript, HTML/CSS.
 
 [Github Repository](https://github.com/janessatran/railsapp){: .btn} |
-[Live Website](https://tilnotes.herokuapp.com/){: .btn}  
+[Live Demo](https://tilnotes.herokuapp.com/){: .btn}  
 
 # 🙏 Gratitude List
 ![Gratitude List Application](https://i.imgur.com/KAX5dly.png "Gratitude List Application")
@@ -20,7 +20,7 @@ A gratitude list built with ReactJS and tested with Jest and Enzyme. Enables use
 **Technologies used:**  React.JS, Jest, Enzyme
 
 [Github Repository](https://github.com/janessatran/gratitude-list){: .btn} |
-[Live Website](https://janessatran.github.io/gratitude-list/){: .btn}  
+[Live Demo](https://janessatran.github.io/gratitude-list/){: .btn}  
 
 # 🥄 Restaurant Page
 ![Restaurant Page Application](https://i.imgur.com/axF2MQw.png "Restaurant Page Application")
@@ -29,7 +29,7 @@ A restaurant page rendered dynamically with JavaScript modules to update the DOM
 **Technologies used:**  JavaScript, HTML, CSS
 
 [Github Repository](https://github.com/janessatran/restaurant-page){: .btn} |
-[Live Website](https://janessatran.github.io/restaurant-page/){: .btn}  
+[Live Demo](https://janessatran.github.io/restaurant-page/){: .btn}  
 
 
 # 📚 Summer Reading List
@@ -39,7 +39,7 @@ A summer reading list application to help you keep track of books you want to re
 **Technologies used:**  JavaScript, HTML, CSS
 
 [Github Repository](https://github.com/janessatran/summer-reading-list){: .btn} |
-[Live Website](https://janessatran.github.io/summer-reading-list/){: .btn}  
+[Live Demo](https://janessatran.github.io/summer-reading-list/){: .btn}  
 
 # 🧩 Hangman Game
 ![Command Line Hangman Game](http://g.recordit.co/YyrDNzrB8p.gif "Command Line Hangman Game")
@@ -57,7 +57,7 @@ A pomodoro timer application. Allows user to set work and break session times. W
 **Technologies used:** HTML/CSS, JavaScript
 
 [Github Repository](https://github.com/janessatran/pomdoro-timer){: .btn} |
-[View Website](https://janessatran.github.io/pomdoro-timer){: .btn}
+[Live Demo](https://janessatran.github.io/pomdoro-timer){: .btn}
 
 
 # 🧮 Calculator
@@ -67,7 +67,7 @@ A basic calculator made with JavaScript. Accepts input from button presses with 
 **Technologies used:** HTML/CSS, JavaScript
 
 [Github Repository](https://github.com/janessatran/calculator){: .btn} |
-[View Website](https://janessatran.github.io/calculator){: .btn}
+[Live Demo](https://janessatran.github.io/calculator){: .btn}
 
 
 # 🎨 Etch-A-Sketch
@@ -77,7 +77,7 @@ An etch-a-sketch canvas that enables you to draw simple pixelated art. Uses Java
 **Technologies used:** HTML/CSS, JavaScript
 
 [Github Repository](https://github.com/janessatran/etch-a-sketch){: .btn} |
-[View Website](https://janessatran.github.io/etch-a-sketch){: .btn}
+[Live Demo](https://janessatran.github.io/etch-a-sketch){: .btn}
 
 # ❌ Tic-Tac-Toe
 ![Tic-Tac-Toe Application](https://i.imgur.com/idxPeAg.png?1 "Tic-Tac-Toe Application")
@@ -86,4 +86,4 @@ A two player Tic Tac Toe Game.
 **Technologies used:** HTML/CSS, JavaScript
 
 [Github Repository](https://github.com/janessatran/tic-tac-toe){: .btn} |
-[View Website](https://janessatran.github.io/tic-tac-toe){: .btn}
+[Live Demo](https://janessatran.github.io/tic-tac-toe){: .btn}
