@@ -1,11 +1,11 @@
 body {
   font-family: 'Lora', serif;
   background: #EAE7DC;
-
+  padding: 30px;
 }
 
 a {
-  color: #E85E4F;
+  color: rgb(233, 69, 51);
   /* background: linear-gradient(to bottom, transparent 0%, transparent 60%, #ffb44479 60%, #ffb44479 100%); */
   text-decoration: none;
  }
@@ -17,7 +17,7 @@ a:hover, a:focus {
   /* background: linear-gradient(to bottom, transparent 0%, transparent 0%, #0c5eac 0%, #0c5eac 100%); */
 }
 h1 {
-  color: #E85E4F;
+  color: rgb(233, 69, 51);
   padding-top: 10px; }
 
 h2, h3, h4, h5, h6 {
@@ -128,3 +128,13 @@ pre {
   word-wrap: break-word;
   /* Internet Explorer 5.5+ */
   padding: 2%; }
+
+  /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 600px) {
+  * {
+    font-size: 15px;
+  }
+  .site-title {
+    font-size: 36px;
+  }
+}
