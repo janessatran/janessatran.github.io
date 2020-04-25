@@ -1,17 +1,23 @@
 body {
-  font-family: system-ui, Helvetica, Arial, sans-serif; }
+  font-family: 'Lora', serif;
+  background: #EAE7DC;
+  padding: 30px;
+}
 
 a {
-  color: #3e3e3e;
-  background: linear-gradient(to bottom, transparent 0%, transparent 60%, #ffb44479 60%, #ffb44479 100%);
-  text-decoration: none; }
+  color: rgb(233, 69, 51);
+  /* background: linear-gradient(to bottom, transparent 0%, transparent 60%, #ffb44479 60%, #ffb44479 100%); */
+  text-decoration: none;
+ }
 
 a:hover, a:focus {
-  color: #cf000f;
-  background: linear-gradient(to bottom, transparent 0%, transparent 0%, #ffb44479 0%, #ffb44479 100%); }
-
+  color: #080808;
+  position: relative;
+  text-decoration: none;
+  /* background: linear-gradient(to bottom, transparent 0%, transparent 0%, #0c5eac 0%, #0c5eac 100%); */
+}
 h1 {
-  color: #cf000f;
+  color: rgb(233, 69, 51);
   padding-top: 10px; }
 
 h2, h3, h4, h5, h6 {
@@ -19,13 +25,13 @@ h2, h3, h4, h5, h6 {
   padding-top: 10px; }
 
 h1 {
-  size: 1.7rem; }
-
-h2 {
   size: 1.3rem; }
 
-h3 {
+h2 {
   size: 1.2rem; }
+
+h3 {
+  size: 1.1rem; }
 
 img {
   max-width: 100%; }
@@ -45,7 +51,7 @@ p, li {
   margin: 1.25rem 0; }
 
 .site-title, .post-title {
-  font-size: 2.5rem;
+  font-weight: 800;
   color: #3e3e3e;
   margin: 0; }
 
@@ -54,8 +60,8 @@ p, li {
   flex-direction: column;
   justify-content: center;
   margin: auto;
-  width: 80%;
-  max-width: 600px; }
+  width: 100%;
+  max-width: 800px; }
 
 #nav-container > h1 {
   font-size: 2.5rem; }
@@ -73,6 +79,27 @@ nav > ul li {
 nav > ul li a, .btn {
   font-weight: bold; }
 
+nav > ul li a {
+  position: relative;
+}
+
+nav > ul li a:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: rgb(53, 53, 53);
+  visibility: hidden;
+  transform: scaleX(0);
+  transition: all 0.3s ease-in-out 0s;
+}
+nav > ul li a:hover:before {
+  visibility: visible;
+  transform: scaleX(1);
+}
+
 .skip-link {
   background: #fff;
   position: absolute;
@@ -87,7 +114,7 @@ th, td {
   border-bottom: 1px solid #ddd; }
 
 code {
-  font-size: 1.1rem; }
+  font-size: 1rem; }
 
 pre {
   white-space: pre-wrap;
@@ -101,3 +128,13 @@ pre {
   word-wrap: break-word;
   /* Internet Explorer 5.5+ */
   padding: 2%; }
+
+  /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 600px) {
+  * {
+    font-size: 15px;
+  }
+  .site-title {
+    font-size: 36px;
+  }
+}

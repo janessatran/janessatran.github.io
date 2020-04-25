@@ -33,9 +33,11 @@ nav-links:
     url: /writing
   - name: Projects
     url: /projects
+  - name: Social
+    url: /social
 
 # Build settings
-theme: laloyd
+theme: #laloyd
 plugins:
   - jekyll-feed
 
