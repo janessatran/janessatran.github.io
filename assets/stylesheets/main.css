@@ -11,7 +11,7 @@ a {
  }
 
 a:hover, a:focus {
-  color: #43899b;
+  color: #080808;
   position: relative;
   text-decoration: none;
   /* background: linear-gradient(to bottom, transparent 0%, transparent 0%, #0c5eac 0%, #0c5eac 100%); */
@@ -25,13 +25,13 @@ h2, h3, h4, h5, h6 {
   padding-top: 10px; }
 
 h1 {
-  size: 1.5rem; }
-
-h2 {
   size: 1.3rem; }
 
-h3 {
+h2 {
   size: 1.2rem; }
+
+h3 {
+  size: 1.1rem; }
 
 img {
   max-width: 100%; }

@@ -33,6 +33,8 @@ nav-links:
     url: /writing
   - name: Projects
     url: /projects
+  - name: About
+    url: /about
 
 # Build settings
 theme: laloyd
