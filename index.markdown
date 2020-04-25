@@ -10,7 +10,7 @@ I am a first-generation college graduate of San Diego State University (where I 
 
 My professional and academic experiences have included projects relating to the environment, wifi on airplanes, <a href="https://sites.google.com/site/tranjanessa/home/lorenzanimations">visualizing multi-dimensional data</a>, analyzing trends in e-commerce, <a href="https://github.com/janessatran/beatlesmusicanalysis/blob/master/JanessaTranMLRPaper.pdf">understanding what drives popularity in certain songs by The Beatles</a>, among other topics.
 
-Currently, I am a Full-stack Junior Software Engineer at Ten Forward Consulting.
+Currently, I am a full-stack Junior Software Engineer at Ten Forward Consulting.
 
 On a personal note, I love reading non-fiction, meditation, yoga, and my cat. His name is Lloyd and I named [this jekyll theme](https://github.com/janessatran/laloyd) after him if you're interested in checking it out and using it!
 
