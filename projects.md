@@ -10,8 +10,8 @@ A Ruby on Rails application that enables users to search cheatsheets by tags, cr
 
 **Technologies used:** Ruby on Rails, Ruby, Rspec, JavaScript, HTML/CSS.
 
-[Github Repository](https://github.com/janessatran/railsapp){: .btn} |
-[Live home](https://tilnotes.herokuapp.com/){: .btn}  
+[Repo](https://github.com/janessatran/railsapp){: .btn} |
+[Demo](https://tilnotes.herokuapp.com/){: .btn}  
 
 # 🙏 Gratitude List
 ![Gratitude List Application](https://i.imgur.com/KAX5dly.png "Gratitude List Application")
@@ -19,8 +19,8 @@ A gratitude list built with ReactJS and tested with Jest and Enzyme. Enables use
 
 **Technologies used:**  React.JS, Jest, Enzyme
 
-[Github Repository](https://github.com/janessatran/gratitude-list){: .btn} |
-[Live demo](https://janessatran.github.io/gratitude-list/){: .btn}  
+[Repo](https://github.com/janessatran/gratitude-list){: .btn} |
+[Demo](https://janessatran.github.io/gratitude-list/){: .btn}  
 
 # 🥄 Restaurant Page
 ![Restaurant Page Application](https://i.imgur.com/axF2MQw.png "Restaurant Page Application")
