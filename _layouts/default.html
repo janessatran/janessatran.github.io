@@ -1,8 +1,13 @@
 <!DOCTYPE html>
   {% include head.html %}
   <body>
+    <svg id="fader"></svg>
+     <script>
+        fadeInPage();
+     </script>
     <a href="#main-content" class="skip-link" title="Skip to main content link">Skip to main content</a>
     <div class="page">
+      <a href="{{ / | prepend:site.url }}" title="Go to Home" class="site-title">{{ site.title }}</a>
       {% include nav.html %}
       <div id="main-content">
         {{ content }}

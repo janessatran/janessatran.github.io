@@ -29,12 +29,13 @@ github_username:  janessatran
 nav-links:
   - name: Home
     url: /
+  - name: About
+    url: /about
   - name: Writing
     url: /writing
   - name: Projects
     url: /projects
-  - name: Social
-    url: /social
+
 
 # Build settings
 plugins:
