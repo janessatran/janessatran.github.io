@@ -36,7 +36,7 @@ Scaffolding in Ruby on Rails refers to the auto-generation of a Model, Views, an
 Other things I've learned from work...
 
 #### What is HAML?
-[HAML](http://haml.info/about.html), which stands for HTML Abstraction Markup Language, is a markup language that’s used to cleanly and simply describe the HTML of any web document without the use of inline code. 
+[HAML](https://haml.info/about.html), which stands for HTML Abstraction Markup Language, is a markup language that’s used to cleanly and simply describe the HTML of any web document without the use of inline code. 
 #### What is coffeescript? 
 [Coffeescript](https://coffeescript.org/#introduction) is a programming language that compiles to JavaScript. It adds syntactic sugar inspired by Ruby, Python and Haskell in an effort to enhance JavaScript's brevity and readability. (source: [Wikipedia](https://en.wikipedia.org/wiki/CoffeeScript))
 

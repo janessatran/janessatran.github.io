@@ -54,7 +54,7 @@ Color contrast is another important aspect of web accessibility, but it is also 
 - A 4.5:1 contrast between the link text color and background.
 - A 3:1 contrast between the link text color and the surrounding non-link text color.
 
-In creating this theme, I used [this tool, ColorSafe](http://colorsafe.co/) to ensure the colors were up to these guidelines. I also selected a syntax highlighter from [this list of accessible syntax highlights](https://github.com/mpchadwick/pygments-high-contrast-stylesheets).
+In creating this theme, I used [this tool, ColorSafe](https://colorsafe.co/) to ensure the colors were up to these guidelines. I also selected a syntax highlighter from [this list of accessible syntax highlights](https://github.com/mpchadwick/pygments-high-contrast-stylesheets).
 
 ## Focus States
 **Focus states** apply to interactive components of a website and communicates when a user has highlighted an element using a keyboard or voice. They are important because they can indicate to the user where they are on the page. Most browsers show focus states, but some are easier to see than others.

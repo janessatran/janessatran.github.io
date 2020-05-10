@@ -42,7 +42,7 @@ A summer reading list application to help you keep track of books you want to re
 [Demo](https://janessatran.github.io/summer-reading-list/){: .btn}  
 
 # 🧩 Hangman Game
-![Command Line Hangman Game](http://g.recordit.co/YyrDNzrB8p.gif "Command Line Hangman Game")
+![Command Line Hangman Game](https://g.recordit.co/YyrDNzrB8p.gif "Command Line Hangman Game")
 A command line hangman game. Enables user to save game state and return to it later.
 
 **Technologies used:** Ruby, Rspec
