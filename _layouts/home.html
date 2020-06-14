@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Janessa Tran</title>
+    <meta name="description" content="Personal website of Janessa Tran" />
+    <meta name="keywords" content="janessa tran, web developer, software engineer" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/assets/stylesheets/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/stylesheets/home.css" />
+   </head>
+  <body class="home-1 loading">
+    <main>
+      <div class="svg-wrap">
+        <svg
+          width="1200"
+          height="1200"
+          viewBox="0 0 600 600"
+          xmlns="https://www.w3.org/2000/svg"
+          class="svg blob"
+        >
+          <g transform="translate(300,300)">
+            <path d="M160.8,-124.4C207.9,-113.6,245.5,-56.8,247.2,1.8C249,60.3,215,120.7,167.8,161C120.7,201.3,60.3,221.7,7.4,214.2C-45.5,206.8,-91,171.6,-136.3,131.3C-181.6,91,-226.8,45.5,-232.8,-6C-238.8,-57.5,-205.7,-115,-160.4,-125.9C-115,-136.7,-57.5,-100.8,-0.4,-100.5C56.8,-100.1,113.6,-135.3,160.8,-124.4Z" fill="" />
+          </g>
+        </svg>
+      </div>
+      <div class="content-wrap">
+        <div class="content content--layout content--layout-1">
+          <img class="content__img" src="/assets/photos/flower.svg#svgView(viewBox(500 600 3000 5000))" alt="Flower drawing" />
+          <h3 class="content__title">Janessa Tran</h3>
+          <p class="content__desc">software engineer.</p>
+          {% if site.nav-links %}
+          <nav>
+            <ul>
+              {% for link in site.nav-links %}
+                {% if link.name != "Home" %}
+                  <li><a href="{{ link.url | prepend:site.url }}" title="Go to {{link.name}}"class="content__link">{{ link.name }}</a></li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </nav>
+          {% endif %}
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

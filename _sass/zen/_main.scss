@@ -51,7 +51,7 @@
    that is currently Firefox-only */
    .highlight {
     scrollbar-width: thin;
-    scrollbar-color: rgba(197, 197, 197, 0) #db94b6;
+    scrollbar-color: rgba(197, 197, 197, 0) #6272a4;
   }
   
   /* Works on Chrome/Edge/Safari */
@@ -62,9 +62,9 @@
     background: rgba(197, 197, 197, 0);
   }
   .highlight::-webkit-scrollbar-thumb {
-    background-color: #db94b6;
+    background-color:#6272a4;
     border-radius: 20px;
-    border: 3px solid #db94b6;
+    border: 3px solid #6272a4;
   }
 
 @media all and (max-width:800px) //800px for tablets and phones.

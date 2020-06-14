@@ -1,0 +1,209 @@
+@font-face {
+  font-family: 'nexa_boldregular';
+  font-weight: bold;
+  font-style: normal;
+  src: url('/assets/fonts/nexa_boldfree_macroman/Nexa_Free_Bold-webfont.eot');
+  src: url('/assets/fonts/nexa_boldfree_macroman/Nexa_Free_Bold-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/nexa_boldfree_macroman/Nexa_Free_Bold-webfont.woff2') format('woff2'), url('../fonts/nexa_boldfree_macroman/Nexa_Free_Bold-webfont.woff') format('woff'), url('../fonts/nexa_boldfree_macroman/Nexa_Free_Bold-webfont.ttf') format('truetype'), url('../fonts/nexa_boldfree_macroman/Nexa_Free_Bold-webfont.svg#nexa_boldregular') format('svg');
+}
+
+body {
+  font-family: 'Lora', sans-serif;
+  background: #F8E4DD;
+  padding: 30px;
+}
+
+a {
+  font-family: 'nexa_boldregular', serif;
+  color: #F57149;
+  /* background: linear-gradient(to bottom, transparent 0%, transparent 60%, #ffb44479 60%, #ffb44479 100%); */
+  text-decoration: none;
+  transition: color 0.5s ease;
+ }
+
+a:hover, a:focus {
+  color: #080808;
+  position: relative;
+  text-decoration: none;
+  color: #4e0b95;
+  /* background: linear-gradient(to bottom, transparent 0%, transparent 0%, #0c5eac 0%, #0c5eac 100%); */
+}
+h1 {
+  color: #000;
+  padding-top: 10px; }
+
+h2, h3, h4, h5, h6 {
+  color: #4e0b95;
+  padding-top: 10px;
+  font-weight: bold;
+}
+
+h1 {
+  size: 1.3rem; }
+
+h2 {
+  size: 1.2rem; }
+
+h3 {
+  size: 1.1rem; }
+
+img {
+  max-width: 100%; }
+
+figcaption {
+  margin-top: -3px;
+  background: #dddddd;
+  padding: 1rem;
+  font-size: 1rem;
+  line-height: 1.3rem;
+  text-align: center; }
+
+p, li {
+  font-size: 1rem;
+  line-height: 150%;
+  color: #444;
+  margin: 1.25rem 0; }
+
+.site-title {
+  font-weight: 800;
+  color: #3e3e3e;
+  margin: 0;
+  font-size: 3em;
+  font-family: 'nexa_boldregular', sans-serif;
+  letter-spacing: .1em;
+  line-height: 160px;
+  text-transform: lowercase;
+  z-index: 10;
+  transition: color 0.5s ease;
+}
+
+.site-title:hover {
+  color: #4e0b95;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  width: 100%;
+  max-width: 800px; }
+
+#nav-container > h1 {
+  font-size: 2.5rem; }
+
+nav > ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding-inline-start: 0; }
+
+nav > ul li {
+  font-size: 1.2rem;
+  padding-right: 2vw;
+  font-weight: 300;
+  margin:0; }
+
+nav > ul li a, .btn {
+  font-weight: bold; }
+
+nav > ul li a {
+  position: relative;
+}
+
+nav > ul li a:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: rgb(53, 53, 53);
+  visibility: hidden;
+  transform: scaleX(0);
+  transition: all 0.3s ease-in-out 0s;
+}
+nav > ul li a:hover:before {
+  visibility: visible;
+  transform: scaleX(1);
+}
+
+.skip-link {
+  background: #fff;
+  position: absolute;
+  top: -3em; }
+
+.skip-link:focus {
+  top: 0; }
+
+th, td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd; }
+
+code {
+  font-size: 1rem; }
+
+pre {
+  white-space: pre-wrap;
+  /* css-3 */
+  white-space: -moz-pre-wrap;
+  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;
+  /* Opera 4-6 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 */
+  word-wrap: break-word;
+  /* Internet Explorer 5.5+ */
+  padding: 2%; }
+
+  /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 600px) {
+  * {
+    font-size: 15px;
+  }
+  .site-title {
+    font-size: 36px;
+    line-height: 20px;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+  }
+  nav > ul li {
+    font-size: 1.2rem;
+    padding: 2vw 5vw 2vw 0;
+    font-weight: 300;
+    margin:0;
+  }
+}
+
+#fader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+        pointer-events: none;
+    background: white;
+  animation-duration: 300ms;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes fade-out {
+    from { opacity: 1 }
+      to { opacity: 0 }
+}
+
+@keyframes fade-in {
+    from { opacity: 0 }
+      to { opacity: 1 }
+}
+
+#fader.fade-out {
+    opacity: 0;
+    animation-name: fade-out;
+}
+
+#fader.fade-in {
+    opacity: 1;
+    animation-name: fade-in;
+}
