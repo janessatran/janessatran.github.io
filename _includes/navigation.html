@@ -1,0 +1,21 @@
+
+<nav class="nav">
+  <div class="toggle-container">
+    {% include toggle.html %}
+  </div>
+  <div class="nav-container">
+
+    <a href="{{ site.baseurl }}/">
+      <h2 class="nav-title">{{ site.title }}</h2>
+    </a>
+    <ul>
+      {% if site.nav-links %}
+          {% for link in site.nav-links %}
+            {% if link.name != "Home" %}
+              <li><a href="{{ link.url | prepend:site.url }}" title="Go to {{link.name}}">{{ link.name }}</a></li>
+            {% endif %}
+          {% endfor %}
+      {% endif %}
+    </ul>
+  </div>
+</nav>
