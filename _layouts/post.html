@@ -1,39 +1,48 @@
----
-layout: default
----
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+  {% include head.html %}
 
-<div class="post">
-  <div class="post-info">
-    <span>Written by</span>
-    {% if page.author %}
-        {{ page.author }}
-    {% else %}
-        {{ site.author.name }}
-    {% endif %}
+  <body>
+    <div class="container">
+      <a href="/"><- Back to Home</a>
+      <div class="post">
+        <div class="bio__header">
+          <a href="{{ site.url }}{{ "/" | relative_url }}">
+            {{ site.header }}
+          </a>
+        </div>
 
-    {% if page.date %}
-      <br>
-      <span>on&nbsp;</span><time datetime="{{ page.date }}">{{ page.date | date: "%B %d, %Y" }}</time>
-    {% endif %}
-  </div>
+        <div class="post__meta">
+          <div class="post__title">{{ page.title }}</div>
+          <div class="post__date">
+            {% if site.date_format %}
+              {{ page.date | date: site.date_format }}
+            {% else %}
+              {{ page.date | date: "%b %-d, %Y" }}
+            {% endif %}
+          </div>
+          <div class="post__cat">{{ page.category }}</div>
+        </div>
 
-  <h1 class="post-title">{{ page.title }}</h1>
-  <div class="post-line"></div>
+        <div class="post__body">
+          {{ content }}
+        </div>
 
-  {{ content }}
-</div>
+        {% if site.prev-next %}
+          <div class="post__paginate">
+            {% if page.previous.url %}
+              <a class="post__paginate-left" href="{{ site.url }}{{ page.previous.url | relative_url }}">{{ page.previous.title }}</a>
+            {% endif %}
 
-{% if page.comments %}
-  {% include disqus_comments.html %}
-{% endif %}
+            {% if page.next.url %}
+              <a class="post__paginate-right" href="{{ site.url }}{{ page.next.url | relative_url }}">{{ page.next.title }}</a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
 
-<div class="pagination">
-  {% if page.next.url %}
-    <a href="{{ page.next.url | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
-  {% endif %}
-  {% if page.previous.url %}
-    <a href="{{ page.previous.url | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
-  {% endif %}
+      {% include posts_list.html uid=page.id %}
+    </div>
+  </body>
 
-  <a href="#" class="top">Top</a>
-</div>
+</html>

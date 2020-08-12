@@ -4,7 +4,7 @@ title: It's been a minute... hi! 💖
 author: Janessa
 date: 2019-05-14
 tags: [Post]
-categories: Code
+category: Tech
 intro: "hope you've been well, friend!"
 ---
 Hello, reader! It's been a bit of time since I last posted but I have nonetheless been coding away during the <b>#100DaysOfCode</b> challenge. 

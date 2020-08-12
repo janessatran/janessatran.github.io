@@ -4,8 +4,9 @@ title: Sufjan Stevens Lyrics Generator using a LSTM model
 author: Janessa
 date: 2018-07-16
 tags: [Post]
-categories: Data
+category: Data
 intro: "Data Science + Sufjan Stevens = ?"
+img: https://res.cloudinary.com/culturemap-com/image/upload/ar_7:4,c_fill,g_faces:center,w_1200/v1525982417/photos/15664_original.jpg
 ---
 
 If I had to name my favorite musician in the entire world, I would probably say it is Sufjan Stevens. He is an Oscar-nominated, indie/folk/electronic/alternative, multiinstrumentalist and musician. He also has a singing voice that is so soft and angelic, you can't help but feel you've transcended this sphere you inhabit (or maybe that's just me). At the core of it all, however, what attracts me to Sufjan's music the most is he is fundamentally a storyteller through song. He has written two albums after states in the US (Illinois and Michigan), an album in the perspective of the planets in the universe, an album about the loss of his mother (and an ode to Oregon), among many other albums. For this reason, I thought it would be interesting to attempt to create a model that could generate lyrics of the artistic, story-telling caliber of Sufjan Stevens.

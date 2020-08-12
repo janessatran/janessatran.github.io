@@ -4,7 +4,7 @@ title: Still (March)ing Along...
 author: Janessa
 date: 2019-03-09
 tags: [Post]
-categories: Code
+category: Tech
 intro: "Checking in on #100DaysOfCode"
 ---
 Hi, friends! I thought it'd be a good time to check in because I'm at half-way mark of the #100DaysOfCode challenge (I can't believe it!).

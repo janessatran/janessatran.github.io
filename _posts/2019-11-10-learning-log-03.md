@@ -4,7 +4,7 @@ title: Learning Log (03) - Rails AntiPatterns, Model layer code
 author: Janessa
 date: 2019-11-10
 tags: [Post]
-categories: learning_log
+category: Tech
 ---
 Today I started reading a book called "Rails AntiPatterns, Best Practice Ruby on Rails Refactoring". My goal with reading this book is to  get a better sense of how to write more organized, clean code that makes sense to other people and is easier to maintain. In this post, I will share what I learned today from the book!
 

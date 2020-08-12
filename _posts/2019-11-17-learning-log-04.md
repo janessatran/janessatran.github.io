@@ -4,7 +4,7 @@ title: Learning Log (04) - Rails AntiPatterns, Using modules and classes
 author: Janessa
 date: 2019-11-17
 tags: [Post]
-categories: learning_log
+category: Tech
 ---
 Good morning my fellow readers! I'm continuing to go through Rails AntiPatterns and have more things I'd like to share as I'm learning. This post will be about how to simplify Models using modules and classes.
 
