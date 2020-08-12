@@ -4,7 +4,8 @@ title: Post-surgery life reflections
 author: Janessa
 date: 2019-07-28
 tags: [Post]
-categories: Life
+category: Reflections
+img: https://66.media.tumblr.com/74d24f8b1c5804d12a623e9e479a6498/9874b97f13e99c5f-1c/s500x750/b0e2b38874684d929d98c6299bc16895b0d6f120.jpg
 ---
 
 I got all four of my wisdom teeth extracted the day after my birthday this year. A lame way to celebrate my birthday? Sure. But I was actually pretty excited because I have been waiting to do this operation for a while now (waiting to have health insurance, waiting to have the appropriate amount of time off, waiting to have enough money). It got me thinking about life, about my life in particular. In part, I am reflecting because I am currently limited in what I'm able to do post-operation (lots of time to sit and reflect). But also because I am reminded again of the circumstances of my life and how it's necessitation of self-sufficiency has impacted the timeline in which I can expect things to happen to me / my life. I am a year older now and not only is that truth sinking in, I am accepting it and I am perfectly okay with it.

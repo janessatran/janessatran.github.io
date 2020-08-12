@@ -4,7 +4,7 @@ title: Learning Log (01)
 author: Janessa
 date: 2019-10-27
 tags: [Post]
-categories: learning_log
+category: Tech
 ---
 ## I get paid to write code?!
 Last week was my first week working as a professional jr. software engineer and it was GREAT. I really like the people I work with, really enjoy working in Rails (I'm full-stack btw, Ruby just holds a special place in my heart ❤️), and I just love that I get to spend most of my days now thinking about code. I feel incredibly fortunate. 

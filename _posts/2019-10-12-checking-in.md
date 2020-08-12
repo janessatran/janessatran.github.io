@@ -4,7 +4,7 @@ title: Life Updates
 author: Janessa
 date: 2019-10-12
 tags: [Post]
-categories: Life
+category: Reflections
 ---
 ## Checking in again 
 Hi there! 👋 It's been about three months since I've posted on this blog, which is quite a bit of time... but not very unusual for me. I haven't prioritized recording the things I've been doing much in blog post form (although, I'm pretty good with [tweeting](https://twitter.com/janessatran_) about what I'm learning). A lot has happened during the last time I posted! Exciting things! To name a few:

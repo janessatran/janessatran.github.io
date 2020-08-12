@@ -4,7 +4,8 @@ title: New Year, New (The)me
 author: Janessa
 date: 2020-01-19
 tags: [Post]
-categories: learning_log
+category: Tech
+img: https://i.imgur.com/sVkCT33.jpg
 ---
 
 I have a habit of changing up my theme quite a bit, if you haven't already noticed. If you know me in real life, this would come as no surprise. I often rearrange my spaces (apartment, desk setup) and change my phone screens seasonally (I actually really look forward to this). I think this theme will be around for a bit, though. It's clean, it's functional, and most importantly... IT HAS SOME *ACCESSIBILITY FEATURES INTEGRATED*!! I'm really excited about it.

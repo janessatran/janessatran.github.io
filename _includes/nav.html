@@ -3,9 +3,7 @@
   <nav>
     <ul>
       {% for link in site.nav-links %}
-        {% if link.name != "Home" %}
-          <li><a href="{{ link.url | prepend:site.url }}" title="Go to {{link.name}}">{{ link.name }}</a></li>
-        {% endif %}
+        <li><a href="{{ link.url | prepend:site.url }}" title="Go to {{link.name}}">{{ link.name }}</a></li>
       {% endfor %}
     </ul>
   </nav>

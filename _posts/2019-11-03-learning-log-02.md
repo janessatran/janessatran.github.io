@@ -4,7 +4,7 @@ title: Learning Log (02) - `chmod` and binary
 author: Janessa
 date: 2019-11-03
 tags: [Post]
-categories: learning_log
+category: Tech
 ---
 Hello again, friend! I'm learning a lot of new things in my new role and it's great!! One of the things that stands out from last week that I learned was about permission settings on files and the unix command `chmod`, as well as how binary works in general. This post will be a summary of those key things. 
 
