@@ -7,7 +7,7 @@ tags: [Ruby on Rails]
 category: Tech
 ---
 
-Recently at work, I had to implement a sign-up form to enable users to subscribe to system. At first glance, it seemed really straightforward: create a form where a user enters their information and upon successful submission, decrease the number of subscription licenses associated with that user's account. Unsurprisingly, however, there were a lot of other requirements I had to meet and implementing this functionality turned out to be more complicated than I was expecting. For the sake of future me, and for the sake of whoever else might need to do something similar, I wanted to write out my approach to implementing the feature in this post. First things first, let's make sure we understand all the requirements... I'll list them all below!
+Recently at work, I had to implement a sign-up form for user subscriptions. At first glance, it seemed really straightforward: create a form where a user enters their information and upon successful submission, decrease the number of subscription licenses associated with that user's account. Unsurprisingly, however, there were a lot of other requirements I had to meet and implementing this functionality turned out to be more complicated than I was expecting. For the sake of future me, and for the sake of whoever else might need to do something similar, I wanted to write out my approach to implementing the feature in this post. First things first, let's make sure we understand all the requirements... I'll list them all below!
 
 ## The Requirements to be met
 
