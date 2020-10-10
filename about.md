@@ -1,18 +1,12 @@
 ---
-title: Colophon
+title: About Me
 permalink: /about/
 layout: page
-excerpt: Hello peeps, I'm student of computer science from Banyuwangi, living in Jogjakarta. This blog for documentation about my programming journey, running on jekyll, hosting on netlify and using my own simple theme.
+excerpt: Data Analyst turned Software Engineer, loves to create and reflect on life.
 comments: false
 ---
 
-He's a student from Banyuwangi, living in Jogjakarta. the blog for documentation about his programming 🎒 journey, running on jekyll, hosting on [now.sh](http://now.sh) and using his own theme, he name it <a href="https://github.com/piharpi/jekyll-klise" target="_blank" rel="noopener">klisé</a>, he also loves to learning web technology; but he often forgot, that a reason why him doing the writing.
+I'm a data analyst turned full-stack software engineer with a penchant for creative activities. Having studied quantitative economics, I graduated from college working in data analytics but found myself increasingly drawn towards the aspects of my role that involved code. As someone who likes to create, I loved the idea of being able to write code and see something tangible being built. As a person who values learning very deeply, I also loved the idea of having the opportunity to always learn something new. Fast-forward two years later, I excitedly announced to my close friends and family that I was going to teach myself web development by doing the #100DaysOfCode challenge. Eight months after that, I got my first real programming role as a Junior Software Engineer at Ten Forward Consulting (where I still currently work!)
 
-If you have a question about him or else, just send a letter to him.
+My writing is a compilation of technical articles and how-tos, life reflections, and general updates about what I'm up to in life. I am an avid recorder through words because I love being able to look back and see how much I have learned, grown, and changed. I don't, however, write solely for myself. I also write for other early career developers starting their journey who want to see the process others are going through to learn new things. I also write for first-generation college students who want more insight into navigating the world post-graduation. I also write for my triplet sisters who often want to know what I'm up to (we're really close and I'm very grateful). And I write for you! Thank you for taking the time to check out my site and reading!
 
-You can [report](http://github.com/piharpi/jekyll-klise/issues/new) if there is an broken link(s) or somethings else.
-
-**may u needs ✨**
-
-- {{ site.author.email }}
-- github.com/{{ site.author.github }}
