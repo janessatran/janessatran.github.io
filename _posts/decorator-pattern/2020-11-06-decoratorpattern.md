@@ -2,7 +2,7 @@
 layout: post
 title: Decorator Pattern in Ruby on Rails
 author: Janessa
-date: 2020-09-06
+date: 2020-11-06
 tags: [Ruby on Rails, Design Patterns]
 category: Tech
 ---
