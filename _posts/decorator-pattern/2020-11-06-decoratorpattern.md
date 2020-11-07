@@ -7,8 +7,6 @@ tags: [Ruby on Rails, Design Patterns]
 category: Tech
 ---
 
-# Decorator Pattern
-
 ## What is the Decorator Pattern?
 
 It allows us to add functionality to an object of a class without affecting other instances of that class. The term "decorator" originates from the pattern of adding additional behavior onto a single object, among all the instances of the class you have a "decorated" instance.
@@ -68,7 +66,7 @@ end
 ```
 
 
-## Implementing the Decorator into our Views**
+## Implementing the Decorator into our Views
 
 Now we can use our decorators to simplify our views. First in the user's profile page:
 
