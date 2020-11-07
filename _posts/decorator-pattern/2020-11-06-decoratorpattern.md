@@ -25,6 +25,8 @@ In order to keep presentation logic out of the views and models*, which should a
 
 Let's say we have a `User` class and an `Article` class. In two separate views, the `User` show page and `Article` index, we display the full name of the user by combining the `user.first_name` and `user.last_name`
 
+On the user's profile page:
+
 ```ruby
 # apps/views/users/show.html.haml
 
@@ -32,7 +34,7 @@ Let's say we have a `User` class and an `Article` class. In two separate views, 
   = @user.first_name + " " + @user.last_name
 
 ```
-
+In the index page of articles:
 
 ```ruby
 # apps/views/articles/index.html.haml
@@ -68,7 +70,7 @@ end
 
 ## Implementing the Decorator into our Views**
 
-Now we can use our decorators to simplify our views:
+Now we can use our decorators to simplify our views. First in the user's profile page:
 
 ```ruby
 # apps/views/users/show.html.haml
@@ -78,6 +80,7 @@ Now we can use our decorators to simplify our views:
 
 ```
 
+Then in the article index page:
 
 ```ruby
 # apps/views/articles/index.html.haml
