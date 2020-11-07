@@ -110,7 +110,7 @@ Then, you would call `decorate` in your controller like so:
 # app/controllers/users_controller.rb
 
 def show
-	@user = User.find(params[:id]).decorate
+  @user = User.find(params[:id]).decorate
 end
 ```
 
