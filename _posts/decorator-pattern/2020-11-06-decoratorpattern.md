@@ -9,17 +9,17 @@ category: Tech
 
 # Decorator Pattern
 
-**What is the Decorator Pattern?**
+## What is the Decorator Pattern?
 
 It allows us to add functionality to an object of a class without affecting other instances of that class. The term "decorator" originates from the pattern of adding additional behavior onto a single object, among all the instances of the class you have a "decorated" instance.
 
-**How do we use that in Ruby on Rails?**
+## How do we use that in Ruby on Rails?
 
 A common requirement in projects is to alter data in a model for the view layer. For example, say you have a `User` model with attributes `first_name` and `last_name` and you want to display the full name of the user in the view.
 
 In order to keep presentation logic out of the views and models*, which should always be the goal,* you can add it into a decorator class instead. This simplifies our views which should exclude logic as much as possible, and models which should not know about presentation. Then, we can decorate our instances as we need.
 
-**How do you implement the Decorator Pattern?**
+## How do you implement the Decorator Pattern?
 
 <ins>View Logic:</ins>
 
@@ -66,7 +66,7 @@ end
 ```
 
 
-**Implementing the Decorator into our Views**
+## Implementing the Decorator into our Views**
 
 Now we can use our decorators to simplify our views:
 
@@ -86,7 +86,7 @@ Now we can use our decorators to simplify our views:
 .author Written By #{UserDecorator.new(@article.user).name_display}
 ```
 
-**Alternative: Using the Draper Gem**
+## Alternative: Using the Draper Gem
 
 If you don't want to create your own decorator class from scratch, you can also use the [Draper Gem](https://github.com/drapergem/draper).
 
