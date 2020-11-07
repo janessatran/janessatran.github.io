@@ -21,7 +21,7 @@ In order to keep presentation logic out of the views and models*, which should a
 
 **How do you implement the Decorator Pattern?**
 
-View Logic:
+<ins>View Logic:</ins>
 
 Let's say we have a `User` class and an `Article` class. In two separate views, the `User` show page and `Article` index, we display the full name of the user by combining the `user.first_name` and `user.last_name`
 
@@ -33,6 +33,7 @@ Let's say we have a `User` class and an `Article` class. In two separate views, 
 
 ```
 
+
 ```ruby
 # apps/views/articles/index.html.haml
 
@@ -40,11 +41,11 @@ Let's say we have a `User` class and an `Article` class. In two separate views, 
 .author Written By #{@article.user.first_name + " " + @article.user.last_name}
 ```
 
-Code Smell:
+<ins>Code Smell:</ins>
 
 Right away, we should detect a code smell! Firstly, we're repeating code in multiple places. Secondly, we're manipulating data directly in the view which we should **avoid.** Remember, the view should just be there and display things.
 
-The Solution
+<ins>The Solution:</ins>
 
 We can add a decorator pattern to improve this!
 
@@ -52,6 +53,7 @@ We can add a decorator pattern to improve this!
 - Define a file, `app/decorators/user_decorator.rb`
 
 In this file we can define a `name_display` method which will contain the string manipulation logic to show the full name of the user.  The class will inherit from `SimpleDelegator`, a native Ruby class that provides the means to delegate all supported methods calls to the object passed into the constructor.
+
 
 ```ruby
 # app/decorators/user_decorator.rb
@@ -63,7 +65,8 @@ class UserDecorator < SimpleDelegator
 end
 ```
 
-Implementing the Decorator into our Views
+
+**Implementing the Decorator into our Views**
 
 Now we can use our decorators to simplify our views:
 
@@ -74,6 +77,7 @@ Now we can use our decorators to simplify our views:
   = UserDecorator.new(@user).name_display
 
 ```
+
 
 ```ruby
 # apps/views/articles/index.html.haml
