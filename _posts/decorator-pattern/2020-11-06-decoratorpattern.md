@@ -52,7 +52,10 @@ We can add a decorator pattern to improve this!
 - Define a subdirectory, `app/decorators`
 - Define a file, `app/decorators/user_decorator.rb`
 
-In this file we can define a `name_display` method which will contain the string manipulation logic to show the full name of the user.  The class will inherit from `SimpleDelegator`, a native Ruby class that provides the means to delegate all supported methods calls to the object passed into the constructor.
+In this file we can define a `name_display` method which will contain the string manipulation logic to show the full name of the user.  The class will inherit from `SimpleDelegator`, a native Ruby class that allows you to delegate methods calls to the object passed in during construction.
+
+As stated in the Ruby docs:
+> "this class provides the means to delegate all supported method calls to the object passed into the constructor" - [ruby-doc](https://ruby-doc.org/stdlib-2.5.1/libdoc/delegate/rdoc/SimpleDelegator.html)
 
 
 ```ruby
@@ -123,3 +126,7 @@ And in your views:
 %h1.name-display
   = @user.name_display
 ```
+## Additional Resources
+
+- Decorator Pattern in Java: [TutorialsPoint](https://www.tutorialspoint.com/design_pattern/decorator_pattern.htm)
+- Decorator in Ruby [RefactoringGuru](https://refactoring.guru/design-patterns/decorator/ruby/example)
