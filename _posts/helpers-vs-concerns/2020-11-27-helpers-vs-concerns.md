@@ -34,7 +34,6 @@ In our view:
 ```ruby
 # app/views/users/index.haml
 
-
 %h1 Users Index
 
 %ul
