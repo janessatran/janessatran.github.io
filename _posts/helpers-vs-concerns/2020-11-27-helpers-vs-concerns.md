@@ -23,7 +23,7 @@ For example, say we have a `User` model with attributes `first_name` and `last_n
 
 module UserHelper
   def name_display(user)
-    #{user.first_name user.last_name}
+    "#{user.first_name user.last_name}"
    end
 end
 
