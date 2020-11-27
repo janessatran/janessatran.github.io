@@ -38,8 +38,8 @@ In our view:
 %h1 Users Index
 
 %ul
-- User.all.each do |user|
-  %li= name_display(user)
+  - User.all.each do |user|
+    %li= name_display(user)
 
 ```
 
