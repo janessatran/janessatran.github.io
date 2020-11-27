@@ -18,7 +18,7 @@ Helpers are modules that fall under `app/helpers` in our Rails project. Within t
 
 For example, say we have a `User` model with attributes `first_name` and `last_name` and we'd like to display a `user`'s full name in a view. We could write a helper to re-use:
 
-```
+```ruby
 # app/helpers/user_helper.rb
 
 module UserHelper
@@ -31,7 +31,7 @@ end
 
 In our view:
 
-```
+```ruby
 # app/views/users/index.haml
 
 
@@ -46,7 +46,7 @@ In our view:
 ### Can we use them in controllers?
 If we're using Rails 5+, we can use helpers in our controller with the `helpers` object. Note that it is possible, but it's not super common.
 
-```
+```ruby
 # app/controllers/users_controller.rb
 
 class UsersController < ApplicationController
@@ -76,7 +76,7 @@ Below, I will demonstrate how to write the concerns for the scenarios discussed 
 
 The concern:
 
-```
+```ruby
 # app/models/archivable.rb
 
 module Archivable
@@ -101,7 +101,7 @@ end
 
 Including it in `User`:
 
-```
+```ruby
 # app/models.user.rb
 
 class User < ApplicationRecord
@@ -114,7 +114,7 @@ end
 
 And again in `Post`:
 
-```
+```ruby
 # app/models.post.rb
 
 class Post < ApplicationRecord
@@ -131,7 +131,7 @@ Now, we can call  the methods defined in the module for instances of `User` and 
 **Concern:** multiple controllers should skip authorization (via pundit). Instead of calling the same callbacks twice, we define a concern and include it in the controller.
 
 The concern:
-```
+```ruby
 # app/controllers/concerns/skip_authorization.rb
 
 module SkipAuthorization
@@ -147,7 +147,7 @@ end
 
 Including it in our `posts_controller`:
 
-```
+```ruby
 # app/controllers/posts_controller.rb
 
 class PostsController < ApplicationController
@@ -159,7 +159,7 @@ end
 ```
 And again in `comments_controller`:
 
-```
+```ruby
 # app/controllers/comments_controller.rb
 
 class CommentsController < ApplicationController
