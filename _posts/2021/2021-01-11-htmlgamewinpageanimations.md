@@ -18,7 +18,7 @@ If you play the game, you go around avoiding spiders, collecting keys to open do
 
 **The object is to go from this:**
 
-<img src="[https://i.imgur.com/Ra31dBW.png](https://i.imgur.com/Ra31dBW.png)" alt="A screen that says 'You Won' and 'Press w to restart'">
+<img src="https://i.imgur.com/Ra31dBW.png" alt="A screen that says 'You Won' and 'Press w to restart'">
 
 **To this:**
 
