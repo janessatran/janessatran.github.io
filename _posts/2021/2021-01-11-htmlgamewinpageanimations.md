@@ -4,13 +4,13 @@ title: Sprucing up the Win Screen
 author: Janessa
 date: 2021-01-11
 tags: [Game Dev]
-category: Techß
+category: Tech
 ---
 
 
 If you've been following me along my journey of learning html game development, you know that I have been working on implementing additional features to my game [Adventures of Leat](https://janessatran.github.io/html5game). In this post, I will explain how I spruced up the Win State page using sprite sheet animations!
 
-*If you haven't been following along or just have no idea what I am talking about, you can read the first part of this GameDev blog series in my [original post about learning game development]([https://www.janessatran.com/htmlgamedevelopment/](https://www.janessatran.com/htmlgamedevelopment/))*
+*If you haven't been following along or just have no idea what I am talking about, you can read the first part of this GameDev blog series in my [original post about learning game development](https://www.janessatran.com/htmlgamedevelopment/)*
 
 ## What do you mean by "sprucing up"?
 
