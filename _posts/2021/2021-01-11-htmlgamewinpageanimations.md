@@ -103,7 +103,7 @@ animatedCoinIcon.animations.play('rotate')
 
 All together this looks like:
 
-```jsx
+```js
 WinState.create = function () {
     this.game.add.image(0, 0, 'background');
 
