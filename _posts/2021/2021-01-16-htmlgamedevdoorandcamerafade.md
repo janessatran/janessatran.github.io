@@ -2,7 +2,7 @@
 layout: post
 title: Adding a door animation and camera fade
 author: Janessa
-date: 2021-01-15
+date: 2021-01-16
 tags: [Game Dev]
 category: Tech
 ---
