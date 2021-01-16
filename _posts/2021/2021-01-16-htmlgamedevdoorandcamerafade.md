@@ -51,7 +51,7 @@ That's it! Now, when Leat enters the door with a key, the open door animation wi
 
 Before ending the game and displaying the win screen, I wanted to add a way to enable the player to intentionally savor the moment of completing the game. In order to create this, I added a camera effect which fades the screen black before it eventually fades back to normal on the Win Screen. 
 
-To add this, we make use of `[game.camera](http://game.camera)` which is automatically created when we initiatialize our `game` object. The camera is the view into our world. I'll include a description from the Phaser documentation itself, as I think the description is pretty good.
+To add this, we make use of `game.camera` which is automatically created when we initiatialize our `game` object. The camera is the view into our world. I'll include a description from the Phaser documentation itself, as I think the description is pretty good.
 
 <center><img src="https://i.imgur.com/8qOG4aK.png" alt="screenshot of Phaser camera documentation"></center>
 
