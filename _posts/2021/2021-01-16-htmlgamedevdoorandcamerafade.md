@@ -73,7 +73,7 @@ PlayState.fade = function () {
 }
 ```
 
-We also want to set up a handler for what happens after the fade completes, which in this instance is to transition to the Win State. Within `[Phaser.Camera](http://phaser.Camera)` is an event handler method called `onFadeComplete` which we will use. In `Phaser.create`, we set this up with this line of code:
+We also want to set up a handler for what happens after the fade completes, which in this instance is to transition to the Win State. Within `Phaser.Camera` is an event handler method called `onFadeComplete` which we will use. In `Phaser.create`, we set this up with this line of code:
 
 ```js
 Phaser.create = function () {
@@ -108,6 +108,9 @@ PlayState._nextLevel = function(){
     }
 };
 ```
+
+
+And it looks like...
 
 <center><img src="https://i.imgur.com/G1QUHLw.gif" alt="camera fade effect turning screen black before showing win screen"></center>
 
