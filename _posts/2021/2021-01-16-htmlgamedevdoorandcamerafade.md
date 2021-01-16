@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title: Adding a door animation and camera fade
