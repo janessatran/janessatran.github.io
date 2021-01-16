@@ -30,7 +30,7 @@ The arguments provided in this line of code do the following:
 - `8`: the rate in frames per second we will play the animation frames
 
 
-<center><img src="[https://i.imgur.com/MGkFN8t.png](https://i.imgur.com/MGkFN8t.png%5B/img%5D)" alt="sprite sheet of door"></center>
+<center><img src="https://i.imgur.com/MGkFN8t.png" alt="sprite sheet of door"></center>
 
 Next, we will modify the event handler `PlayState._onHeroVsDoor` to play the animation and add a time event which allows the entire animation to play before loading the next level by adding a delay.
 
@@ -43,7 +43,7 @@ PlayState._onHeroVsDoor = function (hero, door) {
 
 That's it! Now, when Leat enters the door with a key, the open door animation will play and make it look like they are actually going through the door 😃
 
-<center><img src="[https://i.imgur.com/1Af2fQ2.gif](https://i.imgur.com/1Af2fQ2.gif%5B/img%5D)" alt="door entering animation effect"></center>
+<center><img src="https://i.imgur.com/1Af2fQ2.gif" alt="door entering animation effect"></center>
 
 ## Savoring Victory
 
@@ -53,7 +53,7 @@ Before ending the game and displaying the win screen, I wanted to add a way to e
 
 To add this, we make use of `[game.camera](http://game.camera)` which is automatically created when we initiatialize our `game` object. The camera is the view into our world. I'll include a description from the Phaser documentation itself, as I think the description is pretty good.
 
-<center><img src="[https://i.imgur.com/8qOG4aK.png](https://i.imgur.com/8qOG4aK.png%5B/img%5D)" alt="screenshot of Phaser camera documentation"></center>
+<center><img src="https://i.imgur.com/8qOG4aK.png" alt="screenshot of Phaser camera documentation"></center>
 
 [https://phaser.io/docs/2.6.2/Phaser.Camera.html](https://phaser.io/docs/2.6.2/Phaser.Camera.html)
 
@@ -109,7 +109,7 @@ PlayState._nextLevel = function(){
 };
 ```
 
-<center><img src="[https://i.imgur.com/G1QUHLw.gif](https://i.imgur.com/G1QUHLw.gif%5B/img%5D)" alt="camera fade effect turning screen black before showing win screen"></center>
+<center><img src="https://i.imgur.com/G1QUHLw.gif" alt="camera fade effect turning screen black before showing win screen"></center>
 
 ## That's a wrap!
 
