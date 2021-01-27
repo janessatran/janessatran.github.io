@@ -158,21 +158,6 @@ A dynamically rendered restaurant homepage using JavaScript. It is for my future
 <br>
 <br>
 
-## Restaurant Page
-<p style="padding:0;margin:0">
-	<a class="tag" href="https://github.com/janessatran/restaurant-page">Repo</a> |
-	<a class="tag" href="https://janessatran.github.io/restaurant-page/">Live</a>
-</p>
-
-A dynamically rendered restaurant homepage using JavaScript. It is for my future oatmeal restaurant (yes, I love oatmeal! ❤️)
-
-<center>
-	<img src="https://i.imgur.com/nVFImRf.png" style="margin: 0 auto;">
-</center>
-
-<br>
-<br>
-
 ## Summer Reading List
 <p style="padding:0;margin:0">
 	<a class="tag" href="https://github.com/janessatran/summer-reading-list">Repo</a> |
