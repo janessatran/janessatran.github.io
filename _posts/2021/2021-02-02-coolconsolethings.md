@@ -20,10 +20,10 @@ I work a lot with the rails console and learned a few cool things you can do ins
 **View method's source:** `show-source object`
 
 **Shortcut for value of last successful expression: `_`**
+This is useful when you run a command and then you decide you want to reference it. Instead of typing the entire command again or going back to assign it to some variable, you can just use `_`.
 
 **To view all commands available from the pry gem, in the console type** `help`
 
-This is useful when you run a command and then you decide you want to reference it. Instead of typing the entire command again or going back to assign it to some variable, you can just use `_`.
 
 **To access high level methods in the application** such as path helpers or HTTP methods, you can call those methods on `app`: 
 
