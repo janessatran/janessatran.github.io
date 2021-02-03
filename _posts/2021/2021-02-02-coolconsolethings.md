@@ -7,9 +7,7 @@ tags: [Ruby on Rails]
 category: Tech
 ---
 
-I work a lot with the rails console and learned a few cool things you can do inside the console that I wanted to share with you all.  
-
-*(Also, if you're unfamiliar with the **rails console**, it's a command that lets you interact with your Rails application from the command line.)*
+I work a lot with the rails console and learned a few cool things you can do inside the console that I wanted to record.  If you're unfamiliar with the **rails console**, it's a command that lets you interact with your Rails application from the command line.
 
 ## Useful Things You Can Do In Rails Console
 
