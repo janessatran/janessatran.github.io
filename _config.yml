@@ -1,5 +1,7 @@
-title: Tailwind Jekyll Starter Kit
-description: A starter kit for using Tailwind with Jekyll
+title: Janessa Tran
+description: >- # site description
+  Full-stack software engineer
+lang: en-US # default lang
 
 exclude:
   - Gemfile

@@ -1,6 +1,6 @@
 --- 
 title: Who Am I?
-permalink: /about
+permalink: /about/
 layout: post
 ---
 
