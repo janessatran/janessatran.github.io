@@ -1,0 +1,39 @@
+---
+---
+
+{% include header.html %}
+
+<main class="mt-10 mx-auto p-4 md:p-12 my-8 sm:mt-12 md:mt-16 lg:mt-10 md:w-3/5 w-11/12 xl:mt-18 text-left shadow-md rounded-lg overflow-hidden bg-yellow-50">
+    <div class="md:flex justify-between items-center">
+        <span class="font-light text-gray-600">              
+          {{ page.date | date: "%b %d, %Y" }}
+        </span>
+        {% if page.tags and page.tags != empty %}
+        <div class="tags my-4 md:my-0 text-xs">
+          {% assign tags = page.tags %}
+          <span itemprop="keywords">
+            {% for tag in tags %}
+            <a class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500"
+              href="/tags/#{{tag | downcase | slugify}}">{{tag | upcase }}</a>{% unless forloop.last %} {% endunless %}
+            {% endfor %}
+          </span>
+        </div>
+        {% endif %}
+    </div>
+    <div class="mt-2">
+        <h1 class="text-2xl text-gray-700 font-bold hover:text-gray-600 pt-4 text-red-500">
+          {{ page.title }}
+        </h1>
+    </div>
+    <div class="post-content">
+      {{ content }}
+    </div>
+ 
+  {% if page.next or page.previous %}
+    {% include navigation.html %}
+  {% endif %}
+
+</main>
+
+
+{% include footer.html %}

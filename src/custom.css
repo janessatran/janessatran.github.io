@@ -1,0 +1,86 @@
+
+.post-content > h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: rgba(239, 68, 68, 1);
+  padding-top: 30px;
+}
+
+.post-content > h2 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: rgba(245, 158, 11, 0.9);
+  padding-top: 30px;
+}
+
+.post-content > h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: rgba(245, 158, 11, 0.7);
+  padding-top: 30px;
+}
+
+
+blockquote {
+  color: #161616;
+  font-style: italic;
+  text-align: center;
+  opacity: 0.9;
+  border-top: 1px solid #ececec;
+  border-bottom: 1px solid #ececec;
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 1em;
+}
+
+blockquote > p > a {
+  color: red;
+}
+
+a, p > a {
+  color: red;
+}
+
+div.hero-image {
+  max-width: 400px;
+}
+
+.post-content > p {
+  padding: 20px 0 0 0;
+  margin: 0;
+}
+
+.post-content > p > img{
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.post-content img{
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.post-content > ul {
+  margin-left: 50px;
+  padding-top: 10px;
+  list-style: disc;
+}
+
+.projects > h2 {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .post-content > p > img{
+    margin: 0 auto;
+    padding: 0;
+  }
+  
+  .post-content img{
+    margin: 0 auto;
+    padding: 0;
+  }
+  
+}

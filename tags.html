@@ -1,0 +1,29 @@
+---
+title: Tags
+permalink: /tags/
+layout: post
+---
+
+ <div class="mt-4 md:flex md:flex-wrap justify-start">
+  {%- for tag in site.tags -%} 
+  <div class="tags my-2 mr-2 text-xs">
+    {% capture name %}{{ tag | first }}{% endcapture %}
+    <span itemprop="keywords">
+      <a class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500"
+       href="#{{name}}">{{ name }}</a> 
+    </span>
+  </div>
+  {%- endfor -%}
+</div>
+
+{%- for tag in site.tags -%}
+  {%- capture name -%}{{ tag | first }}{%- endcapture -%}
+  <h2 id="{{ name }}">{{ name | upcase }}</h2>
+  {%- for post in site.tags[name] -%}
+    <article class="post-item" id="results-container">
+      <h3 class="post-item-title">
+        <a href="{{ post.url }}">{{ post.title | escape }}</a>
+      </h3> 
+    </article>
+  {%- endfor -%}
+{%- endfor -%}
