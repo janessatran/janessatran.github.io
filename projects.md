@@ -6,14 +6,13 @@ excerpt: Things I've tinkered with.
 comments: false
 ---
 
-
 ## Adventures of Leat
+
 <p style="padding:0;margin:0">
 	<a class="tag" href="https://github.com/janessatran/html5game">Repo</a> |
 	<a class="tag" href="https://janessatran.github.io/html5game">Live</a>
 </p>
 Platformer game built using <a href="https://phaser.io/">Phaser</a>, a JavaScript framework for Canvas and WebGL browser based games. The objective is to unlock levels by getting keys to doors, avoid spiders, and collect coins along the way!
-
 
 <center>
 	<img src="https://i.imgur.com/C8fWxYY.gif" alt="animation of sprite character dying after touching spider" style="margin: 0 auto;">
@@ -23,6 +22,7 @@ Platformer game built using <a href="https://phaser.io/">Phaser</a>, a JavaScrip
 <br>
 
 ## Elliot Smith Tribute
+
 <p style="padding:0;margin:0">
 	<a class="tag" href="https://github.com/janessatran/tributepage">Repo</a> |
 	<a class="tag" href="https://janessatran.github.io/tributepage/">Live</a>
@@ -37,6 +37,7 @@ A tribute page for Elliot Smith that uses CSS Grid to make a responsive layout.
 <br>
 
 ## Morning Bird
+
 <p style="padding:0;margin:0">
 	<a class="tag" href="https://github.com/janessatran/MorningBird">Repo</a>
 </p>
@@ -54,6 +55,7 @@ An iOS application built using SwiftUI. Users are able to enter cities and acces
 <br>
 
 ## Small Wins
+
 <p style="padding:0;margin:0">
 	<a class="tag" href="https://github.com/janessatran/small-wins">Repo</a> |
 	<a class="tag" href="https://janessa-small-wins.herokuapp.com/">Live</a>
@@ -69,12 +71,12 @@ An application made with Rails and Google Sheets API showing a list of daily sma
 <br>
 
 ## LaLoyd - Theme for Jekyll
+
 <p style="padding:0;margin:0">
 	<a class="tag" href="https://github.com/janessatran/laloyd">Repo</a>
 </p>
 
 🐈 LaLoyd: A Jekyll theme focused on accessibility. 🐈‍⬛
-
 
 <center>
 	<img src="https://camo.githubusercontent.com/65efd2a46297bd449261e5e2aa1a5f9f2e24ec3582ce97e44d921973fd297143/687474703a2f2f672e7265636f726469742e636f2f414f303173665a6e50302e676966" style="margin: 0 auto;">
@@ -84,6 +86,7 @@ An application made with Rails and Google Sheets API showing a list of daily sma
 <br>
 
 ## Gratitude List
+
 <p style="padding:0;margin:0">
 	<a class="tag" href="https://github.com/janessatran/gratitude-list">Repo</a> |
 	<a class="tag" href="https://janessatran.github.io/gratitude-list/">Live</a>
@@ -99,6 +102,7 @@ A gratitude list created with ReactJS.
 <br>
 
 ## Pomodoro Timer
+
 <p style="padding:0;margin:0">
 	<a class="tag" href="https://github.com/janessatran/pomdoro-timer">Repo</a> |
 	<a class="tag" href="https://janessatran.github.io/pomdoro-timer/">Live</a>
@@ -114,9 +118,10 @@ A pomodoro timer created with HTML, CSS, and JavaScript. The Pomodoro Technique 
 <br>
 
 ## Etch-a-Sketch
+
 <p style="padding:0;margin:0">
 	<a class="tag" href="https://github.com/janessatran/etch-a-sketch">Repo</a> |
-	<a class="tag" href="https://janessatran.github.io/pomdoro-timer/">Live</a>
+	<a class="tag" href="https://janessatran.github.io/etch-a-sketch/">Live</a>
 </p>
 
 An etch-a-sketch application! Throwing it back 😎
@@ -129,12 +134,13 @@ An etch-a-sketch application! Throwing it back 😎
 <br>
 
 ## Calculator
+
 <p style="padding:0;margin:0">
 	<a class="tag" href="https://github.com/janessatran/calculator">Repo</a> |
 	<a class="tag" href="https://janessatran.github.io/calculator/">Live</a>
 </p>
 
-A calculator application that does basic mathematical operations. 
+A calculator application that does basic mathematical operations.
 
 <center>
 	<img src="https://i.imgur.com/CXHaJ2M.png" style="margin: 0 auto;">
@@ -144,6 +150,7 @@ A calculator application that does basic mathematical operations.
 <br>
 
 ## Restaurant Page
+
 <p style="padding:0;margin:0">
 	<a class="tag" href="https://github.com/janessatran/restaurant-page">Repo</a> |
 	<a class="tag" href="https://janessatran.github.io/restaurant-page/">Live</a>
@@ -159,6 +166,7 @@ A dynamically rendered restaurant homepage using JavaScript. It is for my future
 <br>
 
 ## Summer Reading List
+
 <p style="padding:0;margin:0">
 	<a class="tag" href="https://github.com/janessatran/summer-reading-list">Repo</a> |
 	<a class="tag" href="https://janessatran.github.io/summer-reading-list">Live</a>
@@ -174,6 +182,7 @@ A JavaScript application that allows you to build/update a table of books for yo
 <br>
 
 ## Weather Data
+
 <p style="padding:0;margin:0">
 	<a class="tag" href="https://github.com/janessatran/weather-data">Repo</a> |
 	<a class="tag" href="https://janessatran.github.io/weather-data/">Live</a>
@@ -189,21 +198,21 @@ Dabbling with d3.js to create a stacked bar chart of snowfall in Madison (in inc
 <br>
 
 ## Hangman Command Line Game
+
 <p style="padding:0;margin:0">
 	<a class="tag" href="https://github.com/janessatran/hangman">Repo</a>
 </p>
 
-Commandline Hangman game implemented in Ruby! 
+Commandline Hangman game implemented in Ruby!
 
 <br>
 <br>
 
 ## Sufjan LSTM
+
 <p style="padding:0;margin:0">
 	<a class="tag" href="https://github.com/janessatran/sufjan_lstm">Repo</a> |
 	<a class="tag" href="https://www.janessatran.com/sufjan-lstm/">Blog</a>
 </p>
 
 Sufjan Stevens' Lyric Generator using LSTM Model
-
-
