@@ -141,7 +141,7 @@ We can keep the `authKey` private within our `api()` while still checking for au
 
 ## Circling back
 
-Does it make sense now? I hope so! All in all, closures enable us to associate data with a function that operates on it. One of the ways this is useful is that we can emulate private methods/variables which is useful to restrict access to code and also manage our global namespace!
+All in all, closures are inner functions with access to the variables/params of the outer function, even after the outer function is closed. It is able to access this data after the outer function is closed because of it's lexical environment, which has references to it's outer lexical environment.
 
 I started with a meme, so it feels only right to end with one.
 
