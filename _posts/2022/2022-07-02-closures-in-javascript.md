@@ -56,16 +56,13 @@ The variable `privateCounter` and function `changeBy()` are private, but `increm
 
 ## How do Closures work?
 
-It's important to understand a few things when understanding how closures work.
-**Lexical Environment** is the environment of the function where it's written, regardless of where it's called from.
+It's important to understand a few _other_ concepts when understanding how closures work.
 
-**Lexical scope** is the locations from where a variable is visible/accessible. In a nested group of functions, the innermost functions have access to the variables and other resources of their parent scope.
+A **Lexical Environment** is a map between identifiers (local variable names) and values. It's part of every execution context (the state of the stack frame).
 
-**Execution context**: the status of the execution stack at any point during runtime.
+Every function in JavaScript maintains reference to its outer lexical environment. This enables code inside a function to "see" variables declared outside the function, regardless of when it's called.
 
-The first two are particularly important to understand because they explain why closures are able to access variables of their outer functions, even after they've returned.
-
-Let's look at an example of lexical scope.
+When a function is called by another function, it creates a chain of environments called a scope chain. Let's look at an example to see how it works.
 
 ```javascript
 let globalVar = "global";
