@@ -15,3 +15,15 @@ tags: [100DaysOfCode]
 Learning InkScape was not too difficult and pretty fun. I made a bat and I was prett happy with how it turned out. It's relatively easy to look things up for InkScape! The codepen I created was complaining about the SVG not being real HTML, and I learned it's because I had exported the image as an InkScape SVG instead of plain SVG, meaning it includes a few properties that are specific to InkScape and technically not HTML. I ended up keeping it as an InkScape SVG because without that type of export, the image didn't include the namespaces I was querying off of to select the pupils. I know I could add some selector classes off the plain SVG, but the effort was pretty manual so maybe I'll just do that next time 😆
 
 **Link to work**: My notes are private, but the codepen is [here](https://codepen.io/janessatran/pen/dymNgBQ).
+
+## Day 2: July 18, 2022
+
+**Today's Progress**: Lots of reading today. I read Chapter 8 of [Just JavaScript](https://justjavascript.com/), about Properties. Also read [Fallacies of Distributed Systems](https://architecturenotes.co/fallacies-of-distributed-systems/) and [Things You Should Know About Databases](https://architecturenotes.co/things-you-should-know-about-databases/)
+
+**Thoughts**: Not a ton of time to get into coding work but reading is still something!
+
+The chapter on properties in the Just JavaScript book was really insightful in helping me realize the mental model I have around objects and properties. Again, I highly recommend this book! It's super interactive and helps you understand how you understand things, and helps you realize when your understanding of things might be a little wrong.
+
+I enjoy how the Architecture Notes blog has a lot of visuals to supplement the articles. Sometimes I find the writing style a bit round-a-bout and distracting, but I learned a lot from it so far so that's what matters!
+
+**Link to work**: No links
