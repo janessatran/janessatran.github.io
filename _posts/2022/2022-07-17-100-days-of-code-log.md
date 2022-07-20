@@ -27,3 +27,13 @@ The chapter on properties in the Just JavaScript book was really insightful in h
 I enjoy how the Architecture Notes blog has a lot of visuals to supplement the articles. Sometimes I find the writing style a bit round-a-bout and distracting, but I learned a lot from it so far so that's what matters!
 
 **Link to work**: No links
+
+## Day 3: July 19, 2022
+
+**Today's Progress**: Read about Mutations in Chapter 9 of [Just JavaScript](https://justjavascript.com/). I also started going through a tutorial to learn about WebRTC, which stands for Web Real-Time Communication and is a technology that allows you to stream audio/video media between browsers without an intermediary!
+
+**Thoughts**: The mutations chapter felt super reptitive, because it was really similar to the last chapter about properties. Nonetheless, the practice of drawing out how each line of code is visually represented was actually _super_ helpful. While I was very tempted to skip all the drawings, I am glad I stuck it through and completed the chapter because it seems to be helping me cement a more solid understanding of how properties and changing values of properties/objects works in the JS universe!
+
+As for the WebRTC tutorial, I haven't gotten very far yet but I have learned a bit about WebRTC and how it works! I also learned a few new postgres commands and a bit more about databases!
+
+**Link to work**: No links, maybe soon once I go through the WebRTC application tutorial 😃
