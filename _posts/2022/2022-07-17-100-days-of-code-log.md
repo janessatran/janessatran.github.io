@@ -37,3 +37,11 @@ I enjoy how the Architecture Notes blog has a lot of visuals to supplement the a
 As for the WebRTC tutorial, I haven't gotten very far yet but I have learned a bit about WebRTC and how it works! I also learned a few new postgres commands and a bit more about databases!
 
 **Link to work**: No links, maybe soon once I go through the WebRTC application tutorial 😃
+
+## Day 4: July 20, 2022
+
+**Today's Progress**: Read about Prototypes in the FINAL CHAPTER of [Just JavaScript](https://justjavascript.com/).
+
+**Thoughts**: I wish there was more to read/learn from Just JavaScript! I learned about prototypes, the prototype chain, and plan on revisiting my notes just to better cement the learnings in my brain. I really enjoyed this read and I'm considering picking up a course to continue this style of structured, self-paced learning. I've often gone the route of learn-by-doing which I think has worked really great, but I also think there's something to learning from experts before you start tinkering yourself.
+
+**Link to work**: No links
