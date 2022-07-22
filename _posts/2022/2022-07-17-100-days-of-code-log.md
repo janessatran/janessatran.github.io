@@ -45,3 +45,11 @@ As for the WebRTC tutorial, I haven't gotten very far yet but I have learned a b
 **Thoughts**: I wish there was more to read/learn from Just JavaScript! I learned about prototypes, the prototype chain, and plan on revisiting my notes just to better cement the learnings in my brain. I really enjoyed this read and I'm considering picking up a course to continue this style of structured, self-paced learning. I've often gone the route of learn-by-doing which I think has worked really great, but I also think there's something to learning from experts before you start tinkering yourself.
 
 **Link to work**: No links
+
+## Day 5: July 21, 2022
+
+**Today's Progress**: Went through Part 0 of [Fullstack Open 2022](https://fullstackopen.com/en/)
+
+**Thoughts**: Part 0 was just about the fundamentals of web apps. Even though a lot of the information was familiar/known, I did learn a few things (like various buttons/features in the developer console)! So far I like how it's a mixture of reading and then applying the new information through some sort of activity. In this case, it was creating sequence diagrams for various actions on different types of web apps. I am curious to see if I get feedback on whether or not I did the exercises correctly (you submit your answers in a repo). I guess we will see!
+
+**Link to work**: I'm adding the solutions to exercises in [this repo](https://github.com/janessatran/fullstack-course)
