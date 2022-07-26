@@ -71,3 +71,11 @@ As for the WebRTC tutorial, I haven't gotten very far yet but I have learned a b
 Also I plan on taking a break this weekend to celebrate another year around the sun! :)
 
 **Link to work**: I've stored solutions to exercises in the various parts by commit [here](https://github.com/janessatran/fullstack-course)
+
+## Day 7: July 25, 2022
+
+**Today's Progress**: Went through Part 1c of [Fullstack Open 2022](https://fullstackopen.com/en/)
+
+**Thoughts**: A lot of this is review material because it covered component states and event handlers. It was a little boring because it's all review.
+
+**Link to work**: No links
