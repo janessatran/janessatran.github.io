@@ -87,3 +87,11 @@ Also I plan on taking a break this weekend to celebrate another year around the 
 **Thoughts**: I read through [this article about GraphQL fundamentals](https://dev.to/michlbrmly/graphql-fundamentals-hands-on-30lk) and started up a storefront app using [Vendure](https://www.vendure.io/) and [this Remix storefront starter](https://github.com/vendure-ecommerce/storefront-remix-starter). I'm starting to gain familiarity with how to write queries, but still have a lot to learn because I don't really understand how to use the queries to load the data where I need it. I'm planning to read through [this article about Remix with Apollo GraphQL](https://layercode.com/community/remix-apollo-graphql) tomorrow. Hopefully it clears up some of my confusion! I'm trying to do something seemingly simple at the moment: query for a collection via name and use the assets within that collection to load on the homepage. Wish me luck!!
 
 **Link to work**: Nothing pushed up yet, so no links!
+
+## Day 9: July 27, 2022
+
+**Today's Progress**: Completed the tutorial [Odyssey's Lift-Off Part 1 on GraphQL](https://www.apollographql.com/tutorials/) and read about Remix + Apollo GraphQL.
+
+**Thoughts**: I read [the article about Remix + Apollo GraphQL](https://layercode.com/community/remix-apollo-graphql) that I had mentioned yesterday, but was still unsuccessful in undersatnding the GraphQL wrapper class in the Remix storefront starter. There's a lot of things in this tech stack that I'm unfamiliar with so I decided I should probably learn to walk before I try to run. 😂 As a result, I stumbled upon a tutorial to learn GraphQL and went through the first part to learn the basics. It was actually super super useful!! And it feels like a win from yesterday because I was going down a rabbit hole of trying to make an entire app with a new stack and I didn't even really understand the underlying bits. Well. You live and you learn. I'm learning!!!
+
+**Link to work**: I forked the repo that I'm working through in the learning path. It can be found [here](https://github.com/janessatran/odyssey-lift-off-part1) if you are so inclined to look into it!
