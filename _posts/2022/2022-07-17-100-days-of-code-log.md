@@ -95,3 +95,11 @@ Also I plan on taking a break this weekend to celebrate another year around the 
 **Thoughts**: I read [the article about Remix + Apollo GraphQL](https://layercode.com/community/remix-apollo-graphql) that I had mentioned yesterday, but was still unsuccessful in undersatnding the GraphQL wrapper class in the Remix storefront starter. There's a lot of things in this tech stack that I'm unfamiliar with so I decided I should probably learn to walk before I try to run. 😂 As a result, I stumbled upon a tutorial to learn GraphQL and went through the first part to learn the basics. It was actually super super useful!! And it feels like a win from yesterday because I was going down a rabbit hole of trying to make an entire app with a new stack and I didn't even really understand the underlying bits. Well. You live and you learn. I'm learning!!!
 
 **Link to work**: I forked the repo that I'm working through in the learning path. It can be found [here](https://github.com/janessatran/odyssey-lift-off-part1) if you are so inclined to look into it!
+
+## Day 10: July 28, 2022
+
+**Today's Progress**: Started going through part 2 of the tutorial about GraphQL.
+
+**Thoughts**: Didn't have as much time today to study but started learning about the journey of a GraphQL query from the client, to server, and back to the client. Learned some details about how the server converts the query string into an abstract syntax tree, and about resolver functions which populate data for each field in the schema.
+
+**Link to work**: No links
