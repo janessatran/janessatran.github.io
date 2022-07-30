@@ -103,3 +103,14 @@ Also I plan on taking a break this weekend to celebrate another year around the 
 **Thoughts**: Didn't have as much time today to study but started learning about the journey of a GraphQL query from the client, to server, and back to the client. Learned some details about how the server converts the query string into an abstract syntax tree, and about resolver functions which populate data for each field in the schema.
 
 **Link to work**: No links
+
+## Day 11: July 29, 2022
+
+**Today's Progress**: Finished part 2 of the GraphQL tutorial, learning about Resolvers. Also completed part 3, learning about arguments in queries.
+
+**Thoughts**: Now that I know more about resolvers and arguments, I'd like to try to go through the storefront code with the graphql wrapper (from previous days) to see if I can better understand the code. It's pretty late here now though so I'm going to go to bed and will hopefully get to that this weekend!
+
+**Link to work**:
+
+- [Repo for part 2, about resolvers](https://github.com/janessatran/odyssey-lift-off-part2).
+- [Repo for part 3, about arguments](https://github.com/janessatran/odyssey-lift-off-part3)
