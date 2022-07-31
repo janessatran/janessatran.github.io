@@ -114,3 +114,11 @@ Also I plan on taking a break this weekend to celebrate another year around the 
 
 - [Repo for part 2, about resolvers](https://github.com/janessatran/odyssey-lift-off-part2).
 - [Repo for part 3, about arguments](https://github.com/janessatran/odyssey-lift-off-part3)
+
+## Day 12: July 30, 2022
+
+**Today's Progress**: Took a break from the GraphQL tutorial to go back to the storefront app to see if I could get it to work. I did! I set up a new private repo with the server, client, and a somewhat detailed README to get things set up.
+
+**Thoughts**: I was able to figure out how to set up the stripe integration for the app and to get the assets I wanted loaded on the homepage. It helped a lot that I learned a bit about GraphQL before attempting to work in this stack. I also got some help from my sister (which if you are reading this, thank you sister!!).
+
+**Link to work**: No links, it's private for now until it gets to a place that is ready to be shared!
