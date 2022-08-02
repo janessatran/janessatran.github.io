@@ -1,9 +1,8 @@
 ---
 layout: post
-title: 100 Days Of Code (round 2) - Log
+title: Learning Log
 author: Janessa
 date: 2022-07-17
-tags: [100DaysOfCode]
 ---
 
 ## Day 1: July 17, 2022
@@ -122,3 +121,9 @@ Also I plan on taking a break this weekend to celebrate another year around the 
 **Thoughts**: I was able to figure out how to set up the stripe integration for the app and to get the assets I wanted loaded on the homepage. It helped a lot that I learned a bit about GraphQL before attempting to work in this stack. I also got some help from my sister (which if you are reading this, thank you sister!!).
 
 **Link to work**: No links, it's private for now until it gets to a place that is ready to be shared!
+
+## Day 13: August 01, 2022
+
+**Today's Progress**: Happy August!! Today I went through a RemixJS tutorial, specifically this [Developer Blog](https://remix.run/docs/en/v1/tutorials/blog) one.
+
+**Thoughts**: RemixJS is pretty interesting. I see some parallels with Ruby on Rails with the route pages representing the views. I went through the tutorial but haven't done any of the "homework" tasks. I may go through those at some point.
