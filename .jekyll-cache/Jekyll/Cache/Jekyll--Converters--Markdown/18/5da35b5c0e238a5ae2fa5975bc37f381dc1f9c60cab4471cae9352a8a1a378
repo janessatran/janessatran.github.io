@@ -1,0 +1,94 @@
+I"~<p>If you were to ask me last week about closures in JavaScript…</p>
+
+<p><img src="https://miro.medium.com/max/1200/1*UDzgsQXxvWyJ0NQ8xp27ZA.jpeg" /></p>
+
+<p>Let’s change that!</p>
+
+<h2 id="what-is-a-closure">What is a Closure?</h2>
+
+<p>A closure is a function that remembers its outer variables and can access them.</p>
+
+<p>How?</p>
+
+<p>Functions remember where they were created using a hidden <code class="language-plaintext highlighter-rouge">[[Environment]]</code> property (aka the lexical environment), and then their code can access outer variables.</p>
+
+<p>When a variable is updated, it’s updated in the Lexical Environment where it lives. This is how we’re able to update variables within a function from outside of it!</p>
+
+<p>Let’s take a look at how this works with an example.</p>
+
+<h2 id="example-please">Example please!</h2>
+
+<p>Open up the inspector and run this in the console.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">makeCounter</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">return</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">count</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>If we call the outer function, it will just call the inner function.</p>
+
+<p>Enter this into the console and you will see, <code class="language-plaintext highlighter-rouge">makeCounter()</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>makeCounter()
+ƒ () {
+  return count++;
+}
+</code></pre></div></div>
+
+<p>Calling <code class="language-plaintext highlighter-rouge">makeCounter()</code> increments the <code class="language-plaintext highlighter-rouge">count</code> variable, but <code class="language-plaintext highlighter-rouge">count</code> isn’t within the scope of the inner function. What happens then? When the code wants to access a variable, the inner lexical environment is searched first, then the outer one, then the more outer one, until it reaches the global one.</p>
+
+<p>The lexical environment of the outer function includes <code class="language-plaintext highlighter-rouge">count</code>, so the innter function will access <code class="language-plaintext highlighter-rouge">count</code> through there.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">counter</span> <span class="o">=</span> <span class="nx">makeCounter</span><span class="p">();</span>
+<span class="nx">counter</span><span class="p">();</span> <span class="c1">// 0</span>
+<span class="nx">counter</span><span class="p">();</span> <span class="c1">// 1</span>
+<span class="nx">counter</span><span class="p">();</span> <span class="c1">// 2</span>
+<span class="nx">counter</span><span class="p">();</span> <span class="c1">// 3</span>
+</code></pre></div></div>
+
+<h3 id="how-is-this-useful">How is this useful?</h3>
+
+<p>This is useful to encapsulate private information. For example, let’s say we have an API that requires authorization.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">authChecker</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">authKey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">authKey</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// lets say this is encrypted</span>
+  <span class="kd">let</span> <span class="nx">authorize</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Authorizing access</span><span class="dl">"</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="kd">let</span> <span class="nx">checkAuthKey</span> <span class="o">=</span> <span class="p">(</span><span class="nx">key</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">key</span> <span class="o">===</span> <span class="nx">authKey</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">authorize</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Invalid authorization key</span><span class="dl">"</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+
+  <span class="kd">let</span> <span class="nx">validateRequest</span> <span class="o">=</span> <span class="p">(</span><span class="nx">key</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">checkAuthKey</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="k">return</span> <span class="p">{</span> <span class="nx">validateRequest</span> <span class="p">};</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">authChecker</span><span class="p">();</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">validateRequest</span><span class="p">(</span><span class="dl">"</span><span class="s2">test</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// Invalid authorization</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">validateRequest</span><span class="p">(</span><span class="dl">"</span><span class="s2">authKey</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// Authorizing access</span>
+</code></pre></div></div>
+
+<p>We want to be able to access the <code class="language-plaintext highlighter-rouge">authKey</code> when we call <code class="language-plaintext highlighter-rouge">validateRequest()</code>, but not have that variable public. This can be resolved by using closure functions!</p>
+
+<h3 id="circling-back">Circling back</h3>
+
+<p>All in all, closures are inner functions with access to the variables/params of the outer function, even after the outer function is closed.</p>
+
+<p>Closure functions are able to access this data after the outer function is closed because of it’s lexical environment, which has references to it’s outer lexical environment.</p>
+
+<p>This is useful for several reasons including keeping sensitive information private.</p>
+
+<center>
+	<img src="https://i.imgur.com/KGgYGks.jpg" style="margin: 0 auto;" />
+</center>
+:ET

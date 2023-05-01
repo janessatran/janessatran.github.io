@@ -1,0 +1,59 @@
+I"N<p>One of my goals this year is to intentionally learn CSS. More specifically, I’d like to learn how to use CSS to make responsive web design, animations, and accessible websites. Recently I completed FreeCodeCamp’s Responsive Web Design course and completed the first project which involves making a tribute page. I made a tribute page for Elliot Smith, which you can <a href="https://janessatran.github.io/tributepage/">view here</a>. In this project, I utilized CSS Grid and <code class="language-plaintext highlighter-rouge">grid-template-areas</code> to make a responsive layout. In this post, I will describe how to set up a responsive layout using my project as an example.</p>
+
+<h2 id="what-is-css-grid">What is CSS Grid?</h2>
+<p>CSS is grid is a layout system available in CSS that handles columns and rows, thus making it a 2D grid system. It works by applying grid properties to the parent element AKA the <strong>Grid Container</strong>, and child elements AKA the <strong>Grid Items</strong>.</p>
+
+<h2 id="how-to-set-up-css-grid-in-your-display">How to set up CSS Grid in your display</h2>
+<p>To set up CSS Grid in your layout, you define <code class="language-plaintext highlighter-rouge">display</code> on the Grid Container to set up a new grid formatting context for the contents of the container. The possible values include:</p>
+
+<p>Values:</p>
+
+<ul>
+  <li><strong>grid</strong> – generates a block-level grid</li>
+  <li><strong>inline-grid</strong> – generates an inline-level grid</li>
+</ul>
+
+<p>In my project, I wanted to make the album container responsive. On a desktop view, the albums display in 2 rows with 3 columns. On a mobile view, the albums display in a single column with 6 rows instead.</p>
+
+<p>To begin the set up, I defined <code class="language-plaintext highlighter-rouge">display: grid</code> on the parent container for the albums.</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.albums-grid</span> <span class="p">{</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="nb">auto</span><span class="p">;</span>
+    <span class="nl">display</span><span class="p">:</span> <span class="n">grid</span><span class="p">;</span>
+        <span class="err">...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="defining-grid-template-areas">Defining <code class="language-plaintext highlighter-rouge">grid-template-areas</code></h2>
+
+<p>The next step is to define the layout, which I mentioned earlier. There are several ways to do this. You can define <code class="language-plaintext highlighter-rouge">grid-template-columns</code>, <code class="language-plaintext highlighter-rouge">grid-template-rows</code>,  or <code class="language-plaintext highlighter-rouge">grid-template-areas</code>.</p>
+
+<p>For my project, I went with the last option. The cool thing about <code class="language-plaintext highlighter-rouge">grid-template-areas</code> is the syntax provides a visual of what the grid looks like. Here is an example:</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@media</span> <span class="p">(</span><span class="n">max-width</span><span class="p">:</span> <span class="m">1000px</span><span class="p">)</span> <span class="p">{</span>
+<span class="nc">.albums-grid</span> <span class="p">{</span>
+        <span class="py">grid-template-areas</span><span class="p">:</span>
+          <span class="s2">'album1'</span>
+          <span class="s2">'album2'</span>
+          <span class="s2">'album3'</span>
+          <span class="s2">'album4'</span>
+          <span class="s2">'album5'</span>
+          <span class="s2">'album6'</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="resulting-layout">Resulting Layout</h2>
+<p>On a wide screen (such as desktop), the layout looks like this:
+<img src="https://i.imgur.com/TM9torU.png" alt="A grid of 2 rows and 3 columns, displaying albums by musician Elliot Smith." /></p>
+
+<p>On a more narrow screen (such as mobile), the layout looks like this:
+<img src="https://i.imgur.com/SKpMSiF.png" alt="A grid of 6 rows and 1 column, displaying albums by musician Elliot Smith." /></p>
+
+<h2 id="references">References</h2>
+<p>If you would like to learn more, here are some good references to check out.</p>
+<ul>
+  <li><a href="[https://css-tricks.com/snippets/css/complete-guide-grid/](https://css-tricks.com/snippets/css/complete-guide-grid/)">Complete Guide to CSS Grid by CSS Tricks</a></li>
+  <li><a href="[https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Realizing_common_layouts_using_CSS_Grid_Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Realizing_common_layouts_using_CSS_Grid_Layout)">Realizing Common Layouts Using CSS Grid by MDN</a></li>
+</ul>
+:ET

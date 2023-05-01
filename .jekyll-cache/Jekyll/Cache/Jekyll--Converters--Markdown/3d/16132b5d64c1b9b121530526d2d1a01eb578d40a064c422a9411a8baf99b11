@@ -1,0 +1,74 @@
+I"�!<p><em>Psst! This is the fourth post in my series on learning html game development. You can find the other posts <a href="https://www.janessatran.com/tags/#game-dev">here</a>!</em></p>
+
+<p>This next section is going to cover how I added the ability to “high jump” (or fly, because you can technically continue to stay in the air 😂) into the game. This was probably one of the trickier features for me to figure out how to implement, partially due to my lack of experience with playing games and not knowing what a “high jump” even is. Nevertheless… let’s get into how to add this feature!</p>
+
+<h2 id="enabling-flappy-bird-mode">Enabling Flappy Bird Mode</h2>
+
+<p>In this game, a “high jump” is essentially having the ability to jump while you are already jumping. Theoretically, this means you can continuously jump while already “jumping”, emulating a flappy-bird-like flying motion. Jumping is initiated when the user presses the up-arrow key. In order to add a “high jump”, then, we need to check if the player is already jumping to boost it.</p>
+
+<p>We can do this by making use of a method called <code class="language-plaintext highlighter-rouge">downDuration</code> from  <code class="language-plaintext highlighter-rouge">Phaser.Key</code>.</p>
+
+<p>This method takes a parameter to define the duration within which a key is considered to have just been pressed. For example, if we pass in <code class="language-plaintext highlighter-rouge">downDuration(200)</code>, it will check if the last key pressed was less than 200 ms ago, if so, return true.</p>
+
+<p><img src="https://i.imgur.com/YiTcmet.png" alt="Image of Phaser Docs" />
+Source: <a href="https://phaser.io/docs/2.6.2/Phaser.Key.html#duration">https://phaser.io/docs/2.6.2/Phaser.Key.html#duration</a></p>
+
+<p>We can use this to check whether or not the additional jump (resulting from pressing the “up” key again after already having pressed it), was done within a short enough time frame that we can make the sprite “high jump”.</p>
+
+<p>We’ve already defined the signal event in <code class="language-plaintext highlighter-rouge">PlayState.init()</code> so we can modify it to add in this feature:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">PlayState</span><span class="p">.</span><span class="nx">init</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+   <span class="p">...</span>
+    <span class="c1">// Subscribe key to signal (event)</span>
+    <span class="kd">const</span> <span class="nx">JUMP_HOLD</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="p">.</span><span class="nx">up</span><span class="p">.</span><span class="nx">onDown</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keys</span><span class="p">.</span><span class="nx">up</span><span class="p">.</span><span class="nx">downDuration</span><span class="p">(</span><span class="nx">JUMP_HOLD</span><span class="p">))</span> <span class="p">{</span>
+            <span class="kd">let</span> <span class="nx">didJump</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">hero</span><span class="p">.</span><span class="nx">jump</span><span class="p">();</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">didJump</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">sfx</span><span class="p">.</span><span class="nx">jump</span><span class="p">.</span><span class="nx">play</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">hero</span><span class="p">.</span><span class="nx">stopHighJump</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">},</span> <span class="k">this</span><span class="p">)</span>
+    <span class="p">...</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>We also modify the <code class="language-plaintext highlighter-rouge">Hero</code> class <code class="language-plaintext highlighter-rouge">jump</code> method, which previously set the y-velocity only if <code class="language-plaintext highlighter-rouge">canJump</code> was true (when the body of the sprite is touching the platform sprites).</p>
+
+<p>The modification involves making it so that if <code class="language-plaintext highlighter-rouge">this.highJumping</code> is true, it will <em>also</em> set the y velocity.</p>
+
+<p><em>Note:</em> <em>a negative velocity means the sprite will move in the opposite direction.</em></p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Hero</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">jump</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">JUMP_SPEED</span> <span class="o">=</span> <span class="mi">400</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">canJump</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">touching</span><span class="p">.</span><span class="nx">down</span><span class="p">;</span> <span class="c1">// check if a body is touching another body</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">canJump</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">highJumping</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">velocity</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="o">-</span><span class="nx">JUMP_SPEED</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">highJumping</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">canJump</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Lastly, we want to ensure that the high jump only works if the body is already jumping. If it’s not already jumping (which we know from our signal event on the up-arrow key), we want to stop the high jump.</p>
+
+<p>We create a method <code class="language-plaintext highlighter-rouge">stopHighJump</code> that we call in the initialization of our <code class="language-plaintext highlighter-rouge">PlayState</code> to set <code class="language-plaintext highlighter-rouge">highJumping</code> to false, preventing the body from continuously increasing in velocity:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Hero</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">stopHighJump</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">highJumping</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="jump-tastic">Jump-tastic!</h2>
+
+<p>There you have it, the ability to high jump! Let me know if you are able to win the game without collecting any coins or killing any spiders 😉</p>
+
+<ul>
+  <li><strong>Source code</strong>: <a href="https://github.com/janessatran/html5game/commit/17ffabc93a08845db41fa84be25380a906f71f7b">Add high jump ability commit</a></li>
+  <li><strong>Link to game</strong>: <a href="https://janessatran.github.io/html5game/">Adventures of Leat</a></li>
+</ul>
+
+:ET

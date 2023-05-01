@@ -1,0 +1,14 @@
+I"�<p>Setting up a new development environment can be a time consuming thing, but it doesn’t have to be! That’s where dotfiles come in.</p>
+
+<p><strong>Dotfiles</strong> are essentially files that are used to customize your system, and they are named as such because the configuration files often start with a dot (you know, like <code class="language-plaintext highlighter-rouge">.bash_profile</code>, <code class="language-plaintext highlighter-rouge">.zshrc</code>, etc).</p>
+
+<p>I’m storing my <a href="https://github.com/janessatran/dotfiles">dotfiles here</a>. At the moment, I just copy or symlink them to existing config files, but you can get real fancy and create an installation script if you want.</p>
+
+<p>A <strong>symlink</strong> is a symbolic link that creates a shortcut to another file. So let’s say I installed this <code class="language-plaintext highlighter-rouge">dotfiles</code> repo on a new computer and wanted to link the config files to my current config files (usually in the home directory, <code class="language-plaintext highlighter-rouge">~</code>). I would do something like:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ln</span> <span class="nt">-sv</span> <span class="s2">"~/.dotfiles/git/.gitconfig"</span> ~
+<span class="nb">ln</span> <span class="nt">-sv</span> <span class="s2">"~/.dotfiles/zsh/.zshrc"</span> ~
+</code></pre></div></div>
+
+<p>Boom! dotfiles setup 🌟</p>
+:ET

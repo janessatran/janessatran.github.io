@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-US"><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en-US" /><updated>2023-05-01T13:05:46-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Janessa Tran</title><subtitle>Full-stack software engineer</subtitle><author><name>Janessa Tran</name></author><entry><title type="html">Learning Log</title><link href="http://localhost:4000/learning-log/" rel="alternate" type="text/html" title="Learning Log" /><published>2022-07-17T00:00:00-07:00</published><updated>2022-07-17T00:00:00-07:00</updated><id>http://localhost:4000/learning-log</id><content type="html" xml:base="http://localhost:4000/learning-log/">&lt;h2 id=&quot;day-1-july-17-2022&quot;&gt;Day 1: July 17, 2022&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Today’s Progress&lt;/strong&gt;: I read Chapter 7 of &lt;a href=&quot;https://justjavascript.com/&quot;&gt;Just JavaScript&lt;/a&gt;, learning about Equality of Values. I also started learning how to use Inkscape as well as how to animate SVGs with JavaScript and CSS.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Thoughts&lt;/strong&gt;: I really enjoy how interactive the reading is with Just JavaScript. Also, I can’t help but notice how JS has so many quirks. For example, today I learned about the strict equality operator’s special cases where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NaN === NaN&lt;/code&gt; returns false and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0 === -0&lt;/code&gt; returns true. What?!&lt;/p&gt;
+
+&lt;p&gt;Learning InkScape was not too difficult and pretty fun. I made a bat and I was prett happy with how it turned out. It’s relatively easy to look things up for InkScape! The codepen I created was complaining about the SVG not being real HTML, and I learned it’s because I had exported the image as an InkScape SVG instead of plain SVG, meaning it includes a few properties that are specific to InkScape and technically not HTML. I ended up keeping it as an InkScape SVG because without that type of export, the image didn’t include the namespaces I was querying off of to select the pupils. I know I could add some selector classes off the plain SVG, but the effort was pretty manual so maybe I’ll just do that next time 😆&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Link to work&lt;/strong&gt;: My notes are private, but the codepen is &lt;a href=&quot;https://codepen.io/janessatran/pen/dymNgBQ&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-2-july-18-2022&quot;&gt;Day 2: July 18, 2022&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Today’s Progress&lt;/strong&gt;: Lots of reading today. I read Chapter 8 of &lt;a href=&quot;https://justjavascript.com/&quot;&gt;Just JavaScript&lt;/a&gt;, about Properties. Also read &lt;a href=&quot;https://architecturenotes.co/fallacies-of-distributed-systems/&quot;&gt;Fallacies of Distributed Systems&lt;/a&gt; and &lt;a href=&quot;https://architecturenotes.co/things-you-should-know-about-databases/&quot;&gt;Things You Should Know About Databases&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Thoughts&lt;/strong&gt;: Not a ton of time to get into coding work but reading is still something!&lt;/p&gt;
+
+&lt;p&gt;The chapter on properties in the Just JavaScript book was really insightful in helping me realize the mental model I have around objects and properties. Again, I highly recommend this book! It’s super interactive and helps you understand how you understand things, and helps you realize when your understanding of things might be a little wrong.&lt;/p&gt;
+
+&lt;p&gt;I enjoy how the Architecture Notes blog has a lot of visuals to supplement the articles. Sometimes I find the writing style a bit round-a-bout and distracting, but I learned a lot from it so far so that’s what matters!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Link to work&lt;/strong&gt;: No links&lt;/p&gt;
+
+&lt;h2 id=&quot;day-3-july-19-2022&quot;&gt;Day 3: July 19, 2022&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Today’s Progress&lt;/strong&gt;: Read about Mutations in Chapter 9 of &lt;a href=&quot;https://justjavascript.com/&quot;&gt;Just JavaScript&lt;/a&gt;. I also started going through a tutorial to learn about WebRTC, which stands for Web Real-Time Communication and is a technology that allows you to stream audio/video media between browsers without an intermediary!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Thoughts&lt;/strong&gt;: The mutations chapter felt super reptitive, because it was really similar to the last chapter about properties. Nonetheless, the practice of drawing out how each line of code is visually represented was actually &lt;em&gt;super&lt;/em&gt; helpful. While I was very tempted to skip all the drawings, I am glad I stuck it through and completed the chapter because it seems to be helping me cement a more solid understanding of how properties and changing values of properties/objects works in the JS universe!&lt;/p&gt;
+
+&lt;p&gt;As for the WebRTC tutorial, I haven’t gotten very far yet but I have learned a bit about WebRTC and how it works! I also learned a few new postgres commands and a bit more about databases!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Link to work&lt;/strong&gt;: No links, maybe soon once I go through the WebRTC application tutorial 😃&lt;/p&gt;
+
+&lt;h2 id=&quot;day-4-july-20-2022&quot;&gt;Day 4: July 20, 2022&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Today’s Progress&lt;/strong&gt;: Read about Prototypes in the FINAL CHAPTER of &lt;a href=&quot;https://justjavascript.com/&quot;&gt;Just JavaScript&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Thoughts&lt;/strong&gt;: I wish there was more to read/learn from Just JavaScript! I learned about prototypes, the prototype chain, and plan on revisiting my notes just to better cement the learnings in my brain. I really enjoyed this read and I’m considering picking up a course to continue this style of structured, self-paced learning. I’ve often gone the route of learn-by-doing which I think has worked really great, but I also think there’s something to learning from experts before you start tinkering yourself.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Link to work&lt;/strong&gt;: No links&lt;/p&gt;
+
+&lt;h2 id=&quot;day-5-july-21-2022&quot;&gt;Day 5: July 21, 2022&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Today’s Progress&lt;/strong&gt;: Went through Part 0 of &lt;a href=&quot;https://fullstackopen.com/en/&quot;&gt;Fullstack Open 2022&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Thoughts&lt;/strong&gt;: Part 0 was just about the fundamentals of web apps. Even though a lot of the information was familiar/known, I did learn a few things (like various buttons/features in the developer console)! So far I like how it’s a mixture of reading and then applying the new information through some sort of activity. In this case, it was creating sequence diagrams for various actions on different types of web apps. I am curious to see if I get feedback on whether or not I did the exercises correctly (you submit your answers in a repo). I guess we will see!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Link to work&lt;/strong&gt;: I’m adding the solutions to exercises in &lt;a href=&quot;https://github.com/janessatran/fullstack-course&quot;&gt;this repo&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;day-4-july-20-2022-1&quot;&gt;Day 4: July 20, 2022&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Today’s Progress&lt;/strong&gt;: Read about Prototypes in the FINAL CHAPTER of &lt;a href=&quot;https://justjavascript.com/&quot;&gt;Just JavaScript&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Thoughts&lt;/strong&gt;: I wish there was more to read/learn from Just JavaScript! I learned about prototypes, the prototype chain, and plan on revisiting my notes just to better cement the learnings in my brain. I really enjoyed this read and I’m considering picking up a course to continue this style of structured, self-paced learning. I’ve often gone the route of learn-by-doing which I think has worked really great, but I also think there’s something to learning from experts before you start tinkering yourself.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Link to work&lt;/strong&gt;: No links&lt;/p&gt;
+
+&lt;h2 id=&quot;day-6-july-22-2022&quot;&gt;Day 6: July 22, 2022&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Today’s Progress&lt;/strong&gt;: Went through Part 1a and 1b of &lt;a href=&quot;https://fullstackopen.com/en/&quot;&gt;Fullstack Open 2022&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Thoughts&lt;/strong&gt;: Part 1a and Part 1b consisted of an introduction to React and an introduction to JavaScript. It was mostly overview for me at this point, but still useful to concretize the information in my brain I suppose!&lt;/p&gt;
+
+&lt;p&gt;Also I plan on taking a break this weekend to celebrate another year around the sun! :)&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Link to work&lt;/strong&gt;: I’ve stored solutions to exercises in the various parts by commit &lt;a href=&quot;https://github.com/janessatran/fullstack-course&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;day-7-july-25-2022&quot;&gt;Day 7: July 25, 2022&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Today’s Progress&lt;/strong&gt;: Went through Part 1c of &lt;a href=&quot;https://fullstackopen.com/en/&quot;&gt;Fullstack Open 2022&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Thoughts&lt;/strong&gt;: A lot of this is review material because it covered component states and event handlers. It was a little boring because it’s all review.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Link to work&lt;/strong&gt;: No links&lt;/p&gt;
+
+&lt;h2 id=&quot;day-8-july-26-2022&quot;&gt;Day 8: July 26, 2022&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Today’s Progress&lt;/strong&gt;: Started learning more about GraphQL by creating a new app with remix and vendure.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Thoughts&lt;/strong&gt;: I read through &lt;a href=&quot;https://dev.to/michlbrmly/graphql-fundamentals-hands-on-30lk&quot;&gt;this article about GraphQL fundamentals&lt;/a&gt; and started up a storefront app using &lt;a href=&quot;https://www.vendure.io/&quot;&gt;Vendure&lt;/a&gt; and &lt;a href=&quot;https://github.com/vendure-ecommerce/storefront-remix-starter&quot;&gt;this Remix storefront starter&lt;/a&gt;. I’m starting to gain familiarity with how to write queries, but still have a lot to learn because I don’t really understand how to use the queries to load the data where I need it. I’m planning to read through &lt;a href=&quot;https://layercode.com/community/remix-apollo-graphql&quot;&gt;this article about Remix with Apollo GraphQL&lt;/a&gt; tomorrow. Hopefully it clears up some of my confusion! I’m trying to do something seemingly simple at the moment: query for a collection via name and use the assets within that collection to load on the homepage. Wish me luck!!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Link to work&lt;/strong&gt;: Nothing pushed up yet, so no links!&lt;/p&gt;
+
+&lt;h2 id=&quot;day-9-july-27-2022&quot;&gt;Day 9: July 27, 2022&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Today’s Progress&lt;/strong&gt;: Completed the tutorial &lt;a href=&quot;https://www.apollographql.com/tutorials/&quot;&gt;Odyssey’s Lift-Off Part 1 on GraphQL&lt;/a&gt; and read about Remix + Apollo GraphQL.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Thoughts&lt;/strong&gt;: I read &lt;a href=&quot;https://layercode.com/community/remix-apollo-graphql&quot;&gt;the article about Remix + Apollo GraphQL&lt;/a&gt; that I had mentioned yesterday, but was still unsuccessful in undersatnding the GraphQL wrapper class in the Remix storefront starter. There’s a lot of things in this tech stack that I’m unfamiliar with so I decided I should probably learn to walk before I try to run. 😂 As a result, I stumbled upon a tutorial to learn GraphQL and went through the first part to learn the basics. It was actually super super useful!! And it feels like a win from yesterday because I was going down a rabbit hole of trying to make an entire app with a new stack and I didn’t even really understand the underlying bits. Well. You live and you learn. I’m learning!!!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Link to work&lt;/strong&gt;: I forked the repo that I’m working through in the learning path. It can be found &lt;a href=&quot;https://github.com/janessatran/odyssey-lift-off-part1&quot;&gt;here&lt;/a&gt; if you are so inclined to look into it!&lt;/p&gt;
+
+&lt;h2 id=&quot;day-10-july-28-2022&quot;&gt;Day 10: July 28, 2022&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Today’s Progress&lt;/strong&gt;: Started going through part 2 of the tutorial about GraphQL.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Thoughts&lt;/strong&gt;: Didn’t have as much time today to study but started learning about the journey of a GraphQL query from the client, to server, and back to the client. Learned some details about how the server converts the query string into an abstract syntax tree, and about resolver functions which populate data for each field in the schema.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Link to work&lt;/strong&gt;: No links&lt;/p&gt;
+
+&lt;h2 id=&quot;day-11-july-29-2022&quot;&gt;Day 11: July 29, 2022&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Today’s Progress&lt;/strong&gt;: Finished part 2 of the GraphQL tutorial, learning about Resolvers. Also completed part 3, learning about arguments in queries.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Thoughts&lt;/strong&gt;: Now that I know more about resolvers and arguments, I’d like to try to go through the storefront code with the graphql wrapper (from previous days) to see if I can better understand the code. It’s pretty late here now though so I’m going to go to bed and will hopefully get to that this weekend!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Link to work&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/janessatran/odyssey-lift-off-part2&quot;&gt;Repo for part 2, about resolvers&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/janessatran/odyssey-lift-off-part3&quot;&gt;Repo for part 3, about arguments&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;day-12-july-30-2022&quot;&gt;Day 12: July 30, 2022&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Today’s Progress&lt;/strong&gt;: Took a break from the GraphQL tutorial to go back to the storefront app to see if I could get it to work. I did! I set up a new private repo with the server, client, and a somewhat detailed README to get things set up.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Thoughts&lt;/strong&gt;: I was able to figure out how to set up the stripe integration for the app and to get the assets I wanted loaded on the homepage. It helped a lot that I learned a bit about GraphQL before attempting to work in this stack. I also got some help from my sister (which if you are reading this, thank you sister!!).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Link to work&lt;/strong&gt;: No links, it’s private for now until it gets to a place that is ready to be shared!&lt;/p&gt;
+
+&lt;h2 id=&quot;day-13-august-01-2022&quot;&gt;Day 13: August 01, 2022&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Today’s Progress&lt;/strong&gt;: Happy August!! Today I went through a RemixJS tutorial, specifically this &lt;a href=&quot;https://remix.run/docs/en/v1/tutorials/blog&quot;&gt;Developer Blog&lt;/a&gt; one.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Thoughts&lt;/strong&gt;: RemixJS is pretty interesting. I see some parallels with Ruby on Rails with the route pages representing the views. I went through the tutorial but haven’t done any of the “homework” tasks. I may go through those at some point.&lt;/p&gt;</content><author><name>Janessa</name></author><summary type="html">Day 1: July 17, 2022</summary></entry><entry><title type="html">Understanding Closures</title><link href="http://localhost:4000/closures-in-javascript/" rel="alternate" type="text/html" title="Understanding Closures" /><published>2022-07-02T00:00:00-07:00</published><updated>2022-07-02T00:00:00-07:00</updated><id>http://localhost:4000/closures-in-javascript</id><content type="html" xml:base="http://localhost:4000/closures-in-javascript/">&lt;p&gt;If you were to ask me last week about closures in JavaScript…&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/1200/1*UDzgsQXxvWyJ0NQ8xp27ZA.jpeg&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Let’s change that!&lt;/p&gt;
+
+&lt;h2 id=&quot;what-is-a-closure&quot;&gt;What is a Closure?&lt;/h2&gt;
+
+&lt;p&gt;A closure is a function that remembers its outer variables and can access them.&lt;/p&gt;
+
+&lt;p&gt;How?&lt;/p&gt;
+
+&lt;p&gt;Functions remember where they were created using a hidden &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[[Environment]]&lt;/code&gt; property (aka the lexical environment), and then their code can access outer variables.&lt;/p&gt;
+
+&lt;p&gt;When a variable is updated, it’s updated in the Lexical Environment where it lives. This is how we’re able to update variables within a function from outside of it!&lt;/p&gt;
+
+&lt;p&gt;Let’s take a look at how this works with an example.&lt;/p&gt;
+
+&lt;h2 id=&quot;example-please&quot;&gt;Example please!&lt;/h2&gt;
+
+&lt;p&gt;Open up the inspector and run this in the console.&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;makeCounter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If we call the outer function, it will just call the inner function.&lt;/p&gt;
+
+&lt;p&gt;Enter this into the console and you will see, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;makeCounter()&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;makeCounter()
+ƒ () {
+  return count++;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Calling &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;makeCounter()&lt;/code&gt; increments the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;count&lt;/code&gt; variable, but &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;count&lt;/code&gt; isn’t within the scope of the inner function. What happens then? When the code wants to access a variable, the inner lexical environment is searched first, then the outer one, then the more outer one, until it reaches the global one.&lt;/p&gt;
+
+&lt;p&gt;The lexical environment of the outer function includes &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;count&lt;/code&gt;, so the innter function will access &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;count&lt;/code&gt; through there.&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;counter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;makeCounter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;counter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 0&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;counter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 1&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;counter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 2&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;counter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 3&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;how-is-this-useful&quot;&gt;How is this useful?&lt;/h3&gt;
+
+&lt;p&gt;This is useful to encapsulate private information. For example, let’s say we have an API that requires authorization.&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;authChecker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;authKey&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;authKey&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// lets say this is encrypted&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;authorize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Authorizing access&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;checkAuthKey&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;authKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;authorize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Invalid authorization key&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;validateRequest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;checkAuthKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;validateRequest&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;authChecker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;validateRequest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Invalid authorization&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;validateRequest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;authKey&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Authorizing access&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We want to be able to access the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;authKey&lt;/code&gt; when we call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;validateRequest()&lt;/code&gt;, but not have that variable public. This can be resolved by using closure functions!&lt;/p&gt;
+
+&lt;h3 id=&quot;circling-back&quot;&gt;Circling back&lt;/h3&gt;
+
+&lt;p&gt;All in all, closures are inner functions with access to the variables/params of the outer function, even after the outer function is closed.&lt;/p&gt;
+
+&lt;p&gt;Closure functions are able to access this data after the outer function is closed because of it’s lexical environment, which has references to it’s outer lexical environment.&lt;/p&gt;
+
+&lt;p&gt;This is useful for several reasons including keeping sensitive information private.&lt;/p&gt;
+
+&lt;center&gt;
+	&lt;img src=&quot;https://i.imgur.com/KGgYGks.jpg&quot; style=&quot;margin: 0 auto;&quot; /&gt;
+&lt;/center&gt;</content><author><name>Janessa</name></author><category term="javascript" /><summary type="html">If you were to ask me last week about closures in JavaScript…</summary></entry><entry><title type="html">Things I like at the moment</title><link href="http://localhost:4000/thingsilikecurrently/" rel="alternate" type="text/html" title="Things I like at the moment" /><published>2022-06-18T00:00:00-07:00</published><updated>2022-06-18T00:00:00-07:00</updated><id>http://localhost:4000/thingsilikecurrently</id><content type="html" xml:base="http://localhost:4000/thingsilikecurrently/">&lt;p&gt;Recently I listened to &lt;a href=&quot;https://open.spotify.com/episode/63uj0GgUn2pKikxiskvT4N?si=zr3lHHxGRPW0wuDWwXJlXg&quot;&gt;this podcast about identifying what you enjoy&lt;/a&gt; and it inspired me to write down a few things I like at this present moment of being:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/catppuccin/catppuccin&quot;&gt;Catppuccin theme&lt;/a&gt; for VSCode and Iterm&lt;/li&gt;
+  &lt;li&gt;Taking walks after dinner with my partner&lt;/li&gt;
+  &lt;li&gt;The song &lt;a href=&quot;https://www.youtube.com/watch?v=XxfyRqF3e9s&amp;amp;ab_channel=FleetFoxes&quot;&gt;I’m Not My Season&lt;/a&gt; by Fleet Foxes&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/tonsky/FiraCode&quot;&gt;Fira Code&lt;/a&gt; font because the ligatures are v nice&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.altrarunning.com/shop/women/womens-provision-6-al0a5488?variationId=130&quot;&gt;Altra Provision 6&lt;/a&gt; running shoes because they’ve got a wide toe box!&lt;/li&gt;
+  &lt;li&gt;Writing out my day-to-day in Notion (I go back between a digital planner and paper planner, currently it’s a digital planner season for me)&lt;/li&gt;
+  &lt;li&gt;The sun rising at 5am. I’m a morning person and I like seeing the sky go between the pink, purple, to blue (ish, kinda mostly grey in Seattle)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://newsroom.spotify.com/2022-03-30/discover-and-listen-to-music-with-even-more-friends-and-family-plus-some-of-your-favorite-artists-with-spotifys-newest-blend-update/&quot;&gt;Spotify’s Blend Playlist&lt;/a&gt; feature.&lt;/li&gt;
+  &lt;li&gt;Brandon Weaver’s series on &lt;a href=&quot;https://dev.to/baweaver/series/11177&quot;&gt;Understanding Ruby&lt;/a&gt;. I haven’t seriously programmed in Ruby in a hot minute and I’m falling in love with the language again 🥰&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Janessa</name></author><category term="personal" /><category term="personal" /><summary type="html">Recently I listened to this podcast about identifying what you enjoy and it inspired me to write down a few things I like at this present moment of being:</summary></entry><entry><title type="html">Getting started with dotfiles</title><link href="http://localhost:4000/dotfiles/" rel="alternate" type="text/html" title="Getting started with dotfiles" /><published>2021-12-29T00:00:00-08:00</published><updated>2021-12-29T00:00:00-08:00</updated><id>http://localhost:4000/dotfiles</id><content type="html" xml:base="http://localhost:4000/dotfiles/">&lt;p&gt;Setting up a new development environment can be a time consuming thing, but it doesn’t have to be! That’s where dotfiles come in.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Dotfiles&lt;/strong&gt; are essentially files that are used to customize your system, and they are named as such because the configuration files often start with a dot (you know, like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bash_profile&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.zshrc&lt;/code&gt;, etc).&lt;/p&gt;
+
+&lt;p&gt;I’m storing my &lt;a href=&quot;https://github.com/janessatran/dotfiles&quot;&gt;dotfiles here&lt;/a&gt;. At the moment, I just copy or symlink them to existing config files, but you can get real fancy and create an installation script if you want.&lt;/p&gt;
+
+&lt;p&gt;A &lt;strong&gt;symlink&lt;/strong&gt; is a symbolic link that creates a shortcut to another file. So let’s say I installed this &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dotfiles&lt;/code&gt; repo on a new computer and wanted to link the config files to my current config files (usually in the home directory, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~&lt;/code&gt;). I would do something like:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;ln&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-sv&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;~/.dotfiles/git/.gitconfig&quot;&lt;/span&gt; ~
+&lt;span class=&quot;nb&quot;&gt;ln&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-sv&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;~/.dotfiles/zsh/.zshrc&quot;&lt;/span&gt; ~
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Boom! dotfiles setup 🌟&lt;/p&gt;</content><author><name>Janessa Tran</name></author><summary type="html">Setting up a new development environment can be a time consuming thing, but it doesn’t have to be! That’s where dotfiles come in.</summary></entry><entry><title type="html">HTTP Verbs</title><link href="http://localhost:4000/http-verbs/" rel="alternate" type="text/html" title="HTTP Verbs" /><published>2021-12-28T00:00:00-08:00</published><updated>2021-12-28T00:00:00-08:00</updated><id>http://localhost:4000/http-verbs</id><content type="html" xml:base="http://localhost:4000/http-verbs/">&lt;p&gt;These are the most commonly used HTTP verbs and their correspondence to CRUD operations.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;POST: create&lt;/li&gt;
+  &lt;li&gt;GET: read&lt;/li&gt;
+  &lt;li&gt;PUT: full update&lt;/li&gt;
+  &lt;li&gt;DELETE: delete&lt;/li&gt;
+  &lt;li&gt;PATCH: partial update&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Janessa Tran</name></author><summary type="html">These are the most commonly used HTTP verbs and their correspondence to CRUD operations.</summary></entry><entry><title type="html">Using websites with the lock symbol</title><link href="http://localhost:4000/ssl/" rel="alternate" type="text/html" title="Using websites with the lock symbol" /><published>2021-12-27T00:00:00-08:00</published><updated>2021-12-27T00:00:00-08:00</updated><id>http://localhost:4000/ssl</id><content type="html" xml:base="http://localhost:4000/ssl/">&lt;p&gt;Over winter break, a discussion arose regarding data and security on the internet. My almost-but-not-technically brother-in-law advised his Mom to only shop on websites that show a lock symbol next to the URL. She mentioned she had heard that meant the website was secure, but wasn’t sure exactly what it was or how it was secured. So, what is the lock symbol and what does it signify?&lt;/p&gt;
+
+&lt;h2 id=&quot;ssltls&quot;&gt;SSL/TLS&lt;/h2&gt;
+
+&lt;p&gt;A website that shows a lock symbol next to the URL in the search bar is one which implements SSL/TLS. SSL, or Secure Sockets Layer, is an encryption-based security protocol for the purpose of ensuring privacy, authentication, and data integrity on the internet. Almost every website on the internet transfers sensitive user information, such as payment details, login credentials, credit card information, etc. SSL/TLS protects the information by encrypting the data transfer between a user’s browser and the website.&lt;/p&gt;
+
+&lt;h2 id=&quot;whats-the-difference-between-ssl-and-tls&quot;&gt;What’s the difference between SSL and TLS?&lt;/h2&gt;
+
+&lt;p&gt;SSL is the predecessor to the modern TLS, Transport Layer Security, that is often used today. The names are often used together or interchangeably, but they are actually two different things. SSL came before TLS, which was developed by the Internet Engineering Task Force (while SSL was developed by Netscape). The final version of SSL and the first version of TLS are not super different, but the name change signifies the change in ownership.&lt;/p&gt;
+
+&lt;h2 id=&quot;how-does-ssltls-work&quot;&gt;How does SSL/TLS work?&lt;/h2&gt;
+
+&lt;p&gt;SSL encrypts data that is transmitted across the web. This means that anyone who tries to intercept the data will not be able to understand the information unless they are able to decrypt it, as it comes across as a mix of random characters. Through a &lt;a href=&quot;https://www.ssl.com/article/ssl-tls-handshake-overview/&quot;&gt;&lt;strong&gt;handshake&lt;/strong&gt;&lt;/a&gt; process, SSL initiates authentication between two communicating devices to verify that both are who they claim to be. Through a digital signature, SSL provides data integrity by ensuring that data is not tampered with in transit.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-is-an-ssltls-certificate&quot;&gt;What is an SSL/TLS Certificate?&lt;/h2&gt;
+
+&lt;p&gt;SSL certificates (often technically TLS certificates) are what enable websites to move from HTTP to HTTPs. It is a data file which is hosted on the website’s origin server and contains the website’s public key and identity.&lt;/p&gt;
+
+&lt;p&gt;Devices attempting to communicate with the origin server will reference the SSL certificate to get the public key and verify the server’s identity. Meanwhile, the private key is kept secret and is used to decrypt data that was encrypted with the public key.&lt;/p&gt;
+
+&lt;h2 id=&quot;in-summary&quot;&gt;In Summary&lt;/h2&gt;
+
+&lt;p&gt;SSL (Secure Sockets Layer) is an encryption technology used by websites to secure the connection between the website and their visitors.&lt;/p&gt;</content><author><name>Janessa Tran</name></author><summary type="html">Over winter break, a discussion arose regarding data and security on the internet. My almost-but-not-technically brother-in-law advised his Mom to only shop on websites that show a lock symbol next to the URL. She mentioned she had heard that meant the website was secure, but wasn’t sure exactly what it was or how it was secured. So, what is the lock symbol and what does it signify?</summary></entry><entry><title type="html">JWT Tokens</title><link href="http://localhost:4000/jwt-tokens/" rel="alternate" type="text/html" title="JWT Tokens" /><published>2021-12-23T00:00:00-08:00</published><updated>2021-12-23T00:00:00-08:00</updated><id>http://localhost:4000/jwt-tokens</id><content type="html" xml:base="http://localhost:4000/jwt-tokens/">&lt;p&gt;Recently at work we bootstrapped a new API and discussed what authentication methods we should use. JWT came up, and I didn’t know about it, so here’s what I learned.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-is-a-jwt-access-token&quot;&gt;What is a JWT Access Token?&lt;/h2&gt;
+
+&lt;p&gt;JSON Web Token (JWT) is an open standard defining a compact, self-contained way for securely transmitting JSON information. These tokens are digitally signed using either a secret or public/private key pair.&lt;/p&gt;
+
+&lt;h2 id=&quot;when-should-you-use-jwts&quot;&gt;When should you use JWTs?&lt;/h2&gt;
+
+&lt;p&gt;JSON Web Tokens are useful for &lt;strong&gt;authorization&lt;/strong&gt; and &lt;strong&gt;information exchange&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;For authorization, once the user is logged in, each following request will include the JWT which will allow the user to access things that are permitted with that token.&lt;/p&gt;
+
+&lt;p&gt;For information exchange, JWTs are used to verify the senders are who they claim to be since JWTs can be signed for. Also, since the signature is calculated using the header and the payload, you can verify that the content hasn’t been changed or messed with.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-is-the-structure&quot;&gt;What is the structure?&lt;/h2&gt;
+
+&lt;p&gt;In its compact form, JSON Web Tokens consist of the Header, Payload, and Signature. The output consists of three Base64Url strings separated by dots that can be easily passed in HTML and HTTP environments. Something like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;XXXX.YYYY.ZZZZ&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Header&lt;/strong&gt;: The header usually consists of two parts, the type of the token (JWT) and the signing algorithm being used (HMAC, SHA256, RSA). For example:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{
+  &quot;alg&quot;: &quot;HS256&quot;,
+  &quot;type&quot;: &quot;JWT&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This JSON is then Base64URL encoded to form the first part of the JWT. You can do this in JavaScript in the following way:&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;headerJson&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;alg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;HS256&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;typ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;JWT&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;encoded&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bota&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;stringify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;headerJson&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Payload&lt;/strong&gt;: The payload makes up the second part of the token and contains the claims, which are statements about an entity (often the user) and addtional data. There are three types of claims: registered, public, and private.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Registered Claims&lt;/strong&gt;: These are a set of predefined claims that provide a set of useful, interoperable claims. Some include iss (issuer), exp (expiration time), sub (subject), etc. While predefined, they are not mandatory (just recommended).&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Public Claims&lt;/strong&gt;: These are names that are required to be collision resistant (in other words, highly unlikely to collide with other names). Their names should be UUIDs or prefixed by a URL to create a safe namespace for them and avoid collisions.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Private Claims&lt;/strong&gt;: These are names that are not required to be collision resistant.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;An example payload could be:&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;sub&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;123456789&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Janessa&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;admin&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Similar to encoding the header, the payload is then Base64Url encoded to form the second part of the JSON Web Token.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Signature&lt;/strong&gt;:
+The signature is used to verify the message wasn’t changed along the way. In the case of tokens signed with a private key, it can also verify that the sender of the JWT is who they say they are. To create the signature, you taken the encoded header, the encoded payload, a secret, the algorithm (specified in header), and sign it.&lt;/p&gt;
+
+&lt;p&gt;For example:&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;HMACSHA&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;256&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;(base&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;UrlEncode(header)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;.&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;base&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;UrlEncode(payload),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;secret)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;When you put the header, payload, and signature all together you get something like:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkiLCJuYW1lIjoiSmFuZXNzYSIsImFkbWluIjp0cnVlfQ.dCKmOwHDkyXGtHQfExjUoepCKQpKy9czARV-EJIJx_E
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Janessa Tran</name></author><summary type="html">Recently at work we bootstrapped a new API and discussed what authentication methods we should use. JWT came up, and I didn’t know about it, so here’s what I learned.</summary></entry><entry><title type="html">Proxy Servers</title><link href="http://localhost:4000/proxy-servers/" rel="alternate" type="text/html" title="Proxy Servers" /><published>2021-12-23T00:00:00-08:00</published><updated>2021-12-23T00:00:00-08:00</updated><id>http://localhost:4000/proxy-servers</id><content type="html" xml:base="http://localhost:4000/proxy-servers/">&lt;p&gt;During a project at work, my teammate and I were having issues trying to connect to an API that was behind a VPN. The question of whether or not our the request was going through a proxy server came up. I hadn’t heard of a proxy server before so I thought I would write about what it is.&lt;/p&gt;
+
+&lt;h2 id=&quot;whats-a-proxy-server-and-how-does-it-work&quot;&gt;What’s a proxy server and how does it work?&lt;/h2&gt;
+
+&lt;p&gt;A &lt;strong&gt;proxy server&lt;/strong&gt; acts as a gateway between you and the internet.&lt;/p&gt;
+
+&lt;p&gt;The way it works is, when you send a web request your request goes to the proxy server first. Then, the proxy server makes your web request on your behalf and collects the response from the web server. When the request is intercepted by the proxy, it may forward the request and it may modify it. Finally, the proxy server returns you the web page data.&lt;/p&gt;
+
+&lt;p&gt;There are two main types, a &lt;strong&gt;forward proxy&lt;/strong&gt; which handles requests from and to anywhere on the internet. There is also a &lt;strong&gt;reverse proxy&lt;/strong&gt; which takes requests from the Internet and forwards them to servers in an internal network.&lt;/p&gt;
+
+&lt;p&gt;It offers a few benefits including:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Privacy, allows you to surf internet anonymously.&lt;/li&gt;
+  &lt;li&gt;Speed, cache data to speed up common requests.&lt;/li&gt;
+  &lt;li&gt;Reduces bandwidth.&lt;/li&gt;
+  &lt;li&gt;Activity Logging.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how-does-one-identify-if-a-request-is-coming-from-a-proxy-server&quot;&gt;How does one identify if a request is coming from a proxy server?&lt;/h2&gt;
+
+&lt;p&gt;There’s not a 100% reliable way to tell, but the presence of any of the following headers is a strong indication that the request was routed from a proxy server:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;via:
+forwarded:
+x-forwarded-for:
+client-ip:
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;are-there-different-types-of-proxies-what-are-they&quot;&gt;Are there different types of proxies? What are they?&lt;/h2&gt;
+
+&lt;p&gt;There are a few different types, but the most comment are:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;HTTP proxies&lt;/strong&gt;: You’d use these to access websites. These proxies only work with HTTP and HTTPs webpages. You can use this type of proxy to access geo-restricted content (although that may violate the user agreement with your content provider).&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;SOCKS5 proxies&lt;/strong&gt;: Unlike HTTP proxies, these can be used to access video streaming services, file sharing sites, and games online.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Transparent proxies&lt;/strong&gt;: These work without modifying the request and responses (which is why it’s called transparent). You might have used a transparent proxy without realizing it. Employers, schools, libraries might set up a transparent proxy to filter user’s content when they connect ot the internet or block users from accessing certain websites.&lt;/li&gt;
+&lt;/ol&gt;</content><author><name>Janessa Tran</name></author><summary type="html">During a project at work, my teammate and I were having issues trying to connect to an API that was behind a VPN. The question of whether or not our the request was going through a proxy server came up. I hadn’t heard of a proxy server before so I thought I would write about what it is.</summary></entry><entry><title type="html">System Design: SQL vs NoSQL</title><link href="http://localhost:4000/sql-vs-nosql/" rel="alternate" type="text/html" title="System Design: SQL vs NoSQL" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>http://localhost:4000/sql-vs-nosql</id><content type="html" xml:base="http://localhost:4000/sql-vs-nosql/">&lt;p&gt;When deciding what type of database to use for an application system, it’s important to know about the strengths and weaknesses of your options. The main two types are SQL (relational database) and NoSQL (non-relational / distributed database).&lt;/p&gt;
+
+&lt;h2 id=&quot;sql&quot;&gt;SQL&lt;/h2&gt;
+
+&lt;p&gt;SQL Databases are also known as relational databases. Examples of popular SQL databases include MySQL, PostgreSQL, Microsoft SQL Server, Oracle, CockroachDB. They offer strength in the following areas:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Relationships&lt;/strong&gt;: Allows easy querying between data among multiple tables. These relationships are defined using primary and foreign key columns.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Structured Data&lt;/strong&gt;: The data is structured using SQL schemas which define the columns and tables in the DB. Because the model / format of the data must be known before storing anything, it reduces room for error in saving data.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;ACID compliant&lt;/strong&gt;: Atomicity, Consistency, Isolation, Durability. SQL transactions are executed atomically, meaning they are either all excuted or not executed at all if any statement in the group fails. An example of the importance of this feature is demonstrated in the scenario where a user is looking to transfer money from their bank, but lack sufficient funds. Instead of the withdrawal executing, the entire transaction would just fail.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-SQL&quot;&gt;BEGIN TRANSACTION t1;
+UPDATE balances SET balance = balance - 100 WHERE account_id = 1;
+UPDATE balances SET balance = balance + 25 WHERE account_id = 2;
+COMMIT TRANSACTION
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;On the other hand, SQL Databases present weaknesses in the following ways:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Structured Data&lt;/strong&gt;: Columns and tables have to be set up ahead of time, so these databases take more time to set up compared to NoSQL. They are also not as good at storing/querying unstructured data.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Scaling is difficult&lt;/strong&gt;: Horizontal scaling is difficult, so if a system is write-heavy the only option is often to vertically scale the database up which is more expensive in general than provisioning additional servers. For read-heavy systems, you can provision multiple read-only replicas of the DB.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;nosql&quot;&gt;NoSQL&lt;/h2&gt;
+
+&lt;p&gt;NoSQL stands for “Not only SQL” and emerged with big data and web/mobile applications. It is rooted in graph, document, key-value pairs and wide-column stores. Examples of popular NoSQL databases include MongoDB, Redis, DynamoDB, Cassandra, CouchDB. The advantages this type of database offers includes:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Unstructured Data&lt;/strong&gt;: It does not support table relationships, but instead stores data in documents or key-value pairs. This makes the database more flexible and easier to set up, particularly when storing unstructured data.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Horizontal Scaling&lt;/strong&gt;: NoSQL databases can be divded across different data stores, allowing for distributed databases, since it lacks relationships. This makes it easier to scale the DB for large amounts of data without having to purchase a single, expensive sever. They support both read-heavy and write-heavy systems.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The weaknesses for this type of database include:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Eventual Consistency&lt;/strong&gt;: Because these databases are usually designed for distributed use cases, after writing to one shard in a distributed NoSQL cluster, there is a small delay before the change is propagated to other replicas. During this time, reading from a replica can yield inaccurate information. Note, this isn’t necessarily a weakness of NoSQL databases but rather distributed databases in general.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;sql-vs-nosql-scenarios&quot;&gt;SQL vs NoSQL Scenarios&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Amazon Targeted Ads&lt;/em&gt;&lt;/strong&gt;: Let’s say you are building a targeted product advertisement engine that is personalized for customers. What kind of database should be used?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NoSQL.&lt;/strong&gt; There are a few considerations to make. One, this service needs to be built for Amazon’s tens of millions of customers so horizontal scaling is important. It’s also probably fine that that the data is a little out of date but eventually consistency since it’s just recommendations.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Banks Loans&lt;/em&gt;&lt;/strong&gt;: We want to build a service at our bank to allow users to apply for loans through our application. The database will store loan applications which includes information about the loan amount, user’s current balance, and user’s prior transaction history. What kind of database should be used?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;SQL.&lt;/strong&gt; In financial applications, data consistency is very important. Also, there are many relational tables in this scenario including tables for User, Loan, and Transaction.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Website Session Store&lt;/em&gt;&lt;/strong&gt;: You want to create a session store to manage session information for each user who might visit a website. What type of database should be used?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NoSQL.&lt;/strong&gt; Information about a user’s session is unstructured in nature since each user’s session differs. It’s easier to store this type of information in a schema-less document. Moreover, low-latency access to session data is important for a good user experience.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Health Care Company Info&lt;/em&gt;&lt;/strong&gt;: We want a database to maintain information about the different offices for health care provider company. The offices are in different states and have many doctors who work with multiple patients. What type of database should be used?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;SQL.&lt;/strong&gt; There are many relations in the schema that are apparent: An Office has many Doctors, a Doctor has many Patients, and a Patient has many health records.&lt;/p&gt;</content><author><name>Janessa Tran</name></author><summary type="html">When deciding what type of database to use for an application system, it’s important to know about the strengths and weaknesses of your options. The main two types are SQL (relational database) and NoSQL (non-relational / distributed database).</summary></entry><entry><title type="html">Self-awareness</title><link href="http://localhost:4000/self-awareness/" rel="alternate" type="text/html" title="Self-awareness" /><published>2021-12-21T00:00:00-08:00</published><updated>2021-12-21T00:00:00-08:00</updated><id>http://localhost:4000/self-awareness</id><content type="html" xml:base="http://localhost:4000/self-awareness/">&lt;blockquote&gt;
+  &lt;p&gt;“Knowing yourself is the beginning of all wisdom.” - Aristotle&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Questions I’m answering to reflect and plan for the coming year.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;How have I grown this year? What experiences/system led to this type of growth?&lt;/li&gt;
+  &lt;li&gt;What challenges did I face this year? What did I learn from them?&lt;/li&gt;
+  &lt;li&gt;What are 10 things this year that I feel truly grateful for?&lt;/li&gt;
+  &lt;li&gt;What made me feel purposeful this last year?&lt;/li&gt;
+  &lt;li&gt;What do I want to bring into the next year? What do I want to let go of?&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Happy new year!&lt;/p&gt;</content><author><name>Janessa Tran</name></author><summary type="html">“Knowing yourself is the beginning of all wisdom.” - Aristotle</summary></entry></feed>

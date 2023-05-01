@@ -1,0 +1,153 @@
+I"�><p>Today I started reading a book called “Rails AntiPatterns, Best Practice Ruby on Rails Refactoring”. My goal with reading this book is to  get a better sense of how to write more organized, clean code that makes sense to other people and is easier to maintain. In this post, I will share what I learned today from the book!</p>
+
+<h2 id="follow-the-law-of-demeter-aka-use-only-one-dot">Follow the Law of Demeter, aka, “use only one dot”.</h2>
+
+<p>This law describes the concept that an object can call methods on a related object, but it should not reach through that object to call a method on a third related object.</p>
+
+<p>Example: Say that you have created a Rails app with different models like the following…</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Library</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">has_many</span> <span class="ss">:books</span>
+  <span class="n">has_one</span> <span class="ss">:address</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Book</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">belongs_to</span> <span class="ss">:library</span>
+  <span class="n">has_one</span> <span class="ss">:genre</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Address</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">belongs_to</span> <span class="ss">:library</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p>If we were to show a view of the data above (a book of a specific genre, available at a specific library, which is at a specific address) it might look something like:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># library_books.html.erb
+
+&lt;%= @book.genre %&gt;
+&lt;%= @book.library.name %&gt;
+&lt;%= @book.library.address.street %&gt;
+&lt;%= @book.library.address.city %&gt;
+&lt;%= @book.library.address.state %&gt;
+&lt;%= @book.library.address.zip_code %&gt;
+</code></pre></div></div>
+
+<p>This violates the Law of Demeter because we have to access information through associations of other models (we don’t just use one “dot”). This is not ideal because the list of dependencies makes the code more fragile in the case that one of the association’s changes. For example, what would happen if we wanted to change <code class="language-plaintext highlighter-rouge">address</code> to <code class="language-plaintext highlighter-rouge">location</code>? We’d have to go through our code and find every call to <code class="language-plaintext highlighter-rouge">address</code> and change it! I mean, it’s possible, but kind of a lot of work.</p>
+
+<p>Luckily, Rails enables us to easily address this concern with the <code class="language-plaintext highlighter-rouge">delegate</code> method. In short, delegation allows us to use methods of one object from another by “delegating” them from one class to another.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Library</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">has_many</span> <span class="ss">:books</span>
+  <span class="n">has_one</span> <span class="ss">:address</span>
+
+  <span class="n">delegate</span> <span class="ss">:city</span><span class="p">,</span> <span class="ss">:street</span><span class="p">,</span> <span class="ss">:state</span><span class="p">,</span> <span class="ss">:zip_code</span><span class="p">,</span> <span class="ss">to: :address</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Book</span>
+  <span class="n">belongs_to</span> <span class="ss">:library</span>
+  <span class="n">has_one</span> <span class="ss">:genre</span>
+
+  <span class="n">delegate</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:city</span><span class="p">,</span> <span class="ss">:street</span><span class="p">,</span> <span class="ss">:state</span><span class="p">,</span> <span class="ss">:zip_code</span><span class="p">,</span> <span class="ss">to: :library</span><span class="p">,</span> <span class="ss">prefix: </span><span class="s1">'library'</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Address</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">belongs_to</span> <span class="ss">:library</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>Looking at the <code class="language-plaintext highlighter-rouge">Library</code> model, we’ve set up a delegation such that we can now call <code class="language-plaintext highlighter-rouge">:city, :street, :state, :zip_code</code> from a <code class="language-plaintext highlighter-rouge">Library</code> object directly. The <code class="language-plaintext highlighter-rouge">delegate</code>method passes all those method calls to <code class="language-plaintext highlighter-rouge">address</code>, which we have through the <code class="language-plaintext highlighter-rouge">has_one</code> association.  If we call <code class="language-plaintext highlighter-rouge">current_library.street</code>, for example, it will be translated to <code class="language-plaintext highlighter-rouge">current_library.address.street</code> since we’ve delegated <code class="language-plaintext highlighter-rouge">street</code> to call <code class="language-plaintext highlighter-rouge">address</code>.</p>
+
+<p>Another way to think about this, if the above doesn’t make sense, is reading it like: “hey <code class="language-plaintext highlighter-rouge">Book</code> objects, if you get a call to <code class="language-plaintext highlighter-rouge">:street</code>, we are delegating it to <code class="language-plaintext highlighter-rouge">Library</code>”.</p>
+
+<h2 id="push-all-calls-to-find-into-finders-in-the-model">Push all calls to find() into Finders in the Model</h2>
+
+<p>In short, don’t have any logic in the presentation layer (views).</p>
+
+<p>Example: say you want to display a page of users of your application by order of last name.</p>
+
+<div class="language-haml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">-# index.haml
+</span>
+<span class="nf">#user-list</span>
+  <span class="nt">%h1</span> Users
+  <span class="p">-</span> <span class="no">User</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span><span class="ss">:last_name</span><span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">u</span><span class="o">|</span>
+    <span class="nt">%li</span> link_to u.profile, u.full_name
+</code></pre></div></div>
+
+<p>Instead of having the logic directly in the view, it’s better to put it in the Controller and Model. If we wanted to list the users by order of last name again, we would need to repeat this logic and repeating code is not ideal (more about the DRY concept can be found <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">here</a>.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="k">def</span> <span class="nf">index</span>
+    <span class="vi">@users</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">ordered_by_last_name</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p>We can use a <code class="language-plaintext highlighter-rouge">scope</code>, which enables us to specify commonly-used queries as method calls on objects:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">scope</span> <span class="ss">:ordered_by_last_name</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="p">{</span> <span class="n">order</span><span class="p">(</span><span class="ss">title: </span><span class="n">asc</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p>Now, in our view, we can do:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">-</span><span class="c1"># index.haml</span>
+
+<span class="c1">#user-list</span>
+  <span class="o">%</span><span class="n">h1</span> <span class="no">Users</span>
+  <span class="o">-</span> <span class="vi">@users</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">u</span><span class="o">|</span>
+    <span class="o">%</span><span class="n">li</span> <span class="n">link_to</span> <span class="n">u</span><span class="p">.</span><span class="nf">profile</span><span class="p">,</span> <span class="n">u</span><span class="p">.</span><span class="nf">full_name</span>
+</code></pre></div></div>
+
+<h2 id="keep-finders-in-their-own-model">Keep Finders in Their Own Model</h2>
+<p>Finder are calls that query the database. For example, say we have a model <code class="language-plaintext highlighter-rouge">User</code> and <code class="language-plaintext highlighter-rouge">Orders</code> and wanted to <strong>find</strong> all of a user’s orders that have just been created. That query finder would look something like:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="k">def</span> <span class="nf">index</span>
+    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+    <span class="vi">@orders</span> <span class="o">=</span> <span class="vi">@user</span><span class="p">.</span><span class="nf">orders</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">status: </span><span class="n">created</span><span class="p">,</span> <span class="n">created_at</span> <span class="mi">2</span><span class="p">.</span><span class="nf">days</span><span class="p">.</span><span class="nf">ago</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p>We can improve this code by moving the finder (of created orders) inside the <code class="language-plaintext highlighter-rouge">Order</code> model.  This will make the <code class="language-plaintext highlighter-rouge">UsersController</code> thinner and clarify what it’s doing with a semantic method name defined in the <code class="language-plaintext highlighter-rouge">Orders</code> model.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="k">def</span> <span class="nf">index</span>
+    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+    <span class="vi">@recently_created_orders</span> <span class="o">=</span> <span class="vi">@user</span><span class="p">.</span><span class="nf">find_created_orders</span>
+  <span class="k">end</span> 
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">has_many</span> <span class="ss">:orders</span>
+
+  <span class="k">def</span> <span class="nf">find_created_orders</span>
+    <span class="n">orders</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">status: </span><span class="n">created</span><span class="p">,</span> <span class="n">created_at</span> <span class="mi">2</span><span class="p">.</span><span class="nf">days</span><span class="p">.</span><span class="nf">ago</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p>But.. wait!! We can improve this even more. Active Record associations give us a proxy class that act like arrays and lets us access methods on the target class. This means that if we had a method like <code class="language-plaintext highlighter-rouge">Order.recently_created</code> we could use it through our associations, <code class="language-plaintext highlighter-rouge">user.orders.recently_created</code>.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="k">def</span> <span class="nf">index</span>
+    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+    <span class="vi">@recently_created_orders</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">recently_created_orders</span>
+  <span class="k">end</span> 
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">has_many</span> <span class="ss">:orders</span>
+
+  <span class="k">def</span> <span class="nf">recently_created_orders</span>
+    <span class="n">orders</span><span class="p">.</span><span class="nf">recently_created</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Order</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">belongs_to</span> <span class="ss">:user</span>
+
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">recently_created</span>
+    <span class="p">(</span><span class="ss">status: </span><span class="n">created</span><span class="p">,</span> <span class="n">created_at</span> <span class="mi">2</span><span class="p">.</span><span class="nf">days</span><span class="p">.</span><span class="nf">ago</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p>This finder object pattern helps keep the model logic strictly related to a class’ behavior, unlike before when we had a query for <code class="language-plaintext highlighter-rouge">Order</code> in our <code class="language-plaintext highlighter-rouge">User</code> controller. It also helps keep the controller’s skinny.</p>
+:ET

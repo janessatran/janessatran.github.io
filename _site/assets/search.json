@@ -1,0 +1,255 @@
+[
+  
+    {
+      "title"    : "Learning Log",
+      "tags"     : "",
+      "url"      : "/learning-log/",
+      "date"     : "2022-07-17 00:00:00 -0700"
+    } ,
+  
+    {
+      "title"    : "Understanding Closures",
+      "tags"     : "javascript",
+      "url"      : "/closures-in-javascript/",
+      "date"     : "2022-07-02 00:00:00 -0700"
+    } ,
+  
+    {
+      "title"    : "Things I like at the moment",
+      "tags"     : "personal",
+      "url"      : "/thingsilikecurrently/",
+      "date"     : "2022-06-18 00:00:00 -0700"
+    } ,
+  
+    {
+      "title"    : "Getting started with dotfiles",
+      "tags"     : "",
+      "url"      : "/dotfiles/",
+      "date"     : "2021-12-29 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "HTTP Verbs",
+      "tags"     : "",
+      "url"      : "/http-verbs/",
+      "date"     : "2021-12-28 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Using websites with the lock symbol",
+      "tags"     : "",
+      "url"      : "/ssl/",
+      "date"     : "2021-12-27 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "JWT Tokens",
+      "tags"     : "",
+      "url"      : "/jwt-tokens/",
+      "date"     : "2021-12-23 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Proxy Servers",
+      "tags"     : "",
+      "url"      : "/proxy-servers/",
+      "date"     : "2021-12-23 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "System Design: SQL vs NoSQL",
+      "tags"     : "",
+      "url"      : "/sql-vs-nosql/",
+      "date"     : "2021-12-22 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Self-awareness",
+      "tags"     : "",
+      "url"      : "/self-awareness/",
+      "date"     : "2021-12-21 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Useful Rails Console Commands",
+      "tags"     : "Ruby on Rails",
+      "url"      : "/coolconsolethings/",
+      "date"     : "2021-02-03 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Adding a door animation and camera fade",
+      "tags"     : "Game Dev",
+      "url"      : "/htmlgamedevdoorandcamerafade/",
+      "date"     : "2021-01-16 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Animating the Hero&#39;s Death",
+      "tags"     : "Game Dev",
+      "url"      : "/htmlgamedevherodyinganimation/",
+      "date"     : "2021-01-15 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Adding the Ability to High Jump",
+      "tags"     : "Game Dev",
+      "url"      : "/htmlgamedevhighjump/",
+      "date"     : "2021-01-14 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Adding Music to the Game",
+      "tags"     : "Game Dev",
+      "url"      : "/htmlgamemusic/",
+      "date"     : "2021-01-12 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Sprucing up the Win Screen",
+      "tags"     : "Game Dev",
+      "url"      : "/htmlgamewinpageanimations/",
+      "date"     : "2021-01-11 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Making a Responsive Layout with CSS Grid",
+      "tags"     : "CSS",
+      "url"      : "/responsivegridcss/",
+      "date"     : "2021-01-09 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Year of Joy (Happy New Year!)",
+      "tags"     : "Life",
+      "url"      : "/pursuitofjoy/",
+      "date"     : "2021-01-02 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Learning HTML Game Development - The Beginning",
+      "tags"     : "Game Dev",
+      "url"      : "/htmlgamedevelopment/",
+      "date"     : "2021-01-02 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Helpers vs. Concerns in Rails",
+      "tags"     : "Ruby on Rails",
+      "url"      : "/helpers-vs-concerns/",
+      "date"     : "2020-11-27 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Decorator Pattern in Ruby on Rails",
+      "tags"     : "Ruby on Rails, Design Patterns",
+      "url"      : "/decoratorpattern/",
+      "date"     : "2020-11-06 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "How to create a multi-step form in Ruby on Rails",
+      "tags"     : "Ruby on Rails",
+      "url"      : "/how-to-create-a-multistep-form-in-rails/",
+      "date"     : "2020-10-08 00:00:00 -0700"
+    } ,
+  
+    {
+      "title"    : "New Year, New (The)me",
+      "tags"     : "Accessibility",
+      "url"      : "/accessible-blog/",
+      "date"     : "2020-01-19 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Learning Log (04) - Rails AntiPatterns, Using modules and classes",
+      "tags"     : "Ruby on Rails",
+      "url"      : "/learning-log-04/",
+      "date"     : "2019-11-17 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Learning Log (03) - Rails AntiPatterns, Model layer code",
+      "tags"     : "Ruby on Rails",
+      "url"      : "/learning-log-03/",
+      "date"     : "2019-11-10 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Learning Log (02) - `chmod` and binary",
+      "tags"     : "binary",
+      "url"      : "/learning-log-02/",
+      "date"     : "2019-11-03 00:00:00 -0700"
+    } ,
+  
+    {
+      "title"    : "Learning Log (01)",
+      "tags"     : "Ruby on Rails",
+      "url"      : "/learning-log-01/",
+      "date"     : "2019-10-27 00:00:00 -0700"
+    } ,
+  
+    {
+      "title"    : "Life Updates",
+      "tags"     : "Life",
+      "url"      : "/checking-in/",
+      "date"     : "2019-10-12 00:00:00 -0700"
+    } ,
+  
+    {
+      "title"    : "Post-surgery life reflections",
+      "tags"     : "Life",
+      "url"      : "/wisdom-teeth/",
+      "date"     : "2019-07-28 00:00:00 -0700"
+    } ,
+  
+    {
+      "title"    : "What I learned building my first rails application.",
+      "tags"     : "Ruby on Rails",
+      "url"      : "/railsapp/",
+      "date"     : "2019-06-30 00:00:00 -0700"
+    } ,
+  
+    {
+      "title"    : "some Ruby things I learned today 💭",
+      "tags"     : "Ruby",
+      "url"      : "/ruby-til/",
+      "date"     : "2019-05-18 00:00:00 -0700"
+    } ,
+  
+    {
+      "title"    : "It&#39;s been a minute... hi! 💖",
+      "tags"     : "100DaysOfCode",
+      "url"      : "/life-updates/",
+      "date"     : "2019-05-14 00:00:00 -0700"
+    } ,
+  
+    {
+      "title"    : "Still (March)ing Along...",
+      "tags"     : "100DaysOfCode",
+      "url"      : "/marching-along/",
+      "date"     : "2019-03-09 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Life Updates and &#39;#100DaysOfCode&#39;",
+      "tags"     : "100DaysOfCode",
+      "url"      : "/100daysofcode/",
+      "date"     : "2019-02-02 00:00:00 -0800"
+    } ,
+  
+    {
+      "title"    : "Exploring Data Visualizations in Python",
+      "tags"     : "Data Visualization",
+      "url"      : "/data-viz/",
+      "date"     : "2018-08-10 00:00:00 -0700"
+    } ,
+  
+    {
+      "title"    : "Sufjan Stevens Lyrics Generator using a LSTM model",
+      "tags"     : "Data Analytics",
+      "url"      : "/sufjan-lstm/",
+      "date"     : "2018-07-16 00:00:00 -0700"
+    } 
+  
+]

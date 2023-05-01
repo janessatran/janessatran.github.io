@@ -1,0 +1,87 @@
+I"�,<p>If you’ve been following my posts, I mentioned that following the <strong>#100DaysOfCode</strong> challenge I wanted to spend more time doing practice problems on codewars, leetcode, HackerRank, etc. This is because I want to spend more time developing my problem-solving skills and to become more familiar of the “ruby-way” of programming.</p>
+
+<p>Here are some things I learned about today that feel worth noting:</p>
+
+<h2 id="inject--reduce">Inject / Reduce</h2>
+<p>These methods can be used to basically combine a bunch of things down to one thing (or at least that’s how I’ve come to understand it so far). Usually, we can do this by iterating through the data structure and applying some sort of aggregation technique, but the <code class="language-plaintext highlighter-rouge">reduce</code> method lets us do it in one line! 
+According to <a href="https://ruby-doc.org/core-2.4.0/Enumerable.html">ruby-doc</a>, the <code class="language-plaintext highlighter-rouge">inject</code> and <code class="language-plaintext highlighter-rouge">reduce</code> methods are aliases and they combine all elements of <em>enum</em> by applying a binary operation, specified by a block or a symbol that names a method or operator.</p>
+
+<h3 id="example-of-inject-and-reduce">Example of inject and reduce</h3>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">].</span><span class="nf">inject</span><span class="p">(</span> <span class="p">:</span><span class="o">+</span> <span class="p">)</span>
+<span class="o">=&gt;</span> <span class="mi">10</span>
+
+<span class="c1"># A method that generates the full name of people given their first name </span>
+<span class="c1"># followed by some variable number of middle names, and finally their last name.</span>
+<span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="o">*</span><span class="n">other_names</span><span class="p">)</span>
+  <span class="n">other_names</span><span class="p">.</span><span class="nf">reduce</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">n</span><span class="p">,</span> <span class="n">o</span><span class="o">|</span> <span class="n">n</span> <span class="o">+</span> <span class="s2">" "</span> <span class="n">o</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="n">full_name</span><span class="p">(</span><span class="s1">'John'</span><span class="p">,</span> <span class="s1">'Jacob'</span><span class="p">,</span> <span class="s1">'Jingleheimer'</span><span class="p">,</span> <span class="s1">'Schmidt'</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="s2">"John Jacob Jingleheimer Schmidt"</span>
+</code></pre></div></div>
+<p><em>Note: A colon <code class="language-plaintext highlighter-rouge">:</code> before a sequence of characters is a <code class="language-plaintext highlighter-rouge">Symbol</code> literal. The symbol you pass to <code class="language-plaintext highlighter-rouge">reduce</code> or <code class="language-plaintext highlighter-rouge">inject</code> will be interpreted as a name of a method to call on each element.</em></p>
+
+<h2 id="defining-methods">Defining Methods</h2>
+<h3 id="positional-arguments-optional-parameters-and-keyword-arguments">Positional arguments, Optional parameters, and Keyword arguments</h3>
+<p>There are several ways to setup the way arguments are passed to methods in Ruby. The first way to do so is to simply use positional arguments. For example, here is a class <code class="language-plaintext highlighter-rouge">Coffee</code> with positional arguments to initialize the coffee object’s size, flavor, and roast.</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Coffee</span> 
+  <span class="nb">attr_accessor</span> <span class="ss">:size</span><span class="p">,</span> <span class="ss">:roast</span><span class="p">,</span> <span class="ss">:flavor</span><span class="p">,</span> <span class="ss">:ice</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">roast</span><span class="p">,</span> <span class="n">flavor</span><span class="p">,</span> <span class="n">ice</span><span class="p">)</span>
+    <span class="vi">@size</span> <span class="o">=</span> <span class="n">size</span>
+    <span class="vi">@flavor</span> <span class="o">=</span> <span class="n">flavor</span>
+    <span class="vi">@roast</span> <span class="o">=</span> <span class="n">roast</span>
+    <span class="vi">@ice</span> <span class="o">=</span> <span class="n">ice</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">cuppa</span> <span class="o">=</span> <span class="no">Coffee</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'small'</span><span class="p">,</span> <span class="s1">'dark'</span><span class="p">,</span> <span class="s1">'vanilla'</span><span class="p">,</span> <span class="kp">true</span><span class="p">)</span>
+</code></pre></div></div>
+<p>This is a straightforward way of setting up our class, but there is one major drawback to using positional arguments which is that the arguments are order specific.  Let’s pretend that instead of the three arguments we have to initialize the object, we had 20. If we wanted to apply a default value to one of the arguments, we would now need to re-order the arguments in the initialize method call and in all the objects that have been instantiated previously.  This becomes really cumbersome if you have a lot of arguments because you now have to ensure that the argument order is corrected. Technically,  the method invocation will still work if you don’t place the argument with a default value at the end (for example,  you can define a method like <code class="language-plaintext highlighter-rouge">def initialize(size, roast='Medium', flavor)</code>, but the convention is to place arguments with default values at the end because it’s less confusing.</p>
+
+<p>Here is an example of adding a default value to our argument<code class="language-plaintext highlighter-rouge">roast</code>  in our <code class="language-plaintext highlighter-rouge">Coffee</code> class.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Coffee</span> 
+  <span class="nb">attr_accessor</span> <span class="ss">:size</span><span class="p">,</span> <span class="ss">:roast</span><span class="p">,</span> <span class="ss">:flavor</span><span class="p">,</span> <span class="ss">:ice</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">flavor</span><span class="p">,</span> <span class="n">ice</span><span class="p">,</span> <span class="n">roast</span><span class="o">=</span><span class="s1">'Medium'</span><span class="p">)</span>
+    <span class="vi">@size</span> <span class="o">=</span> <span class="n">size</span>
+    <span class="vi">@flavor</span> <span class="o">=</span> <span class="n">flavor</span>
+    <span class="vi">@roast</span> <span class="o">=</span> <span class="n">roast</span>
+    <span class="vi">@ice</span> <span class="o">=</span> <span class="n">ice</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">cuppa</span> <span class="o">=</span> <span class="no">Coffee</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'small'</span><span class="p">,</span> <span class="s1">'dark'</span><span class="p">,</span> <span class="s1">'vanilla'</span><span class="p">,</span> <span class="kp">true</span><span class="p">)</span>
+<span class="c1"># The values are now incorrect with no indication of the error</span>
+<span class="n">cuppa</span><span class="p">.</span><span class="nf">size</span> <span class="c1"># small</span>
+<span class="n">cuppa</span><span class="p">.</span><span class="nf">flavor</span> <span class="c1"># dark</span>
+<span class="n">cuppa</span><span class="p">.</span><span class="nf">ice</span> <span class="c1"># vanilla</span>
+<span class="n">cuppa</span><span class="p">.</span><span class="nf">roast</span> <span class="c1"># true</span>
+</code></pre></div></div>
+
+<p>Luckily, we can refactor our class to use keyword arguments to make future changes a lot easier! With keyword arguments, we explicitly state every argument with a keyword (just as the naming implies). This will make things easier such that  the object instantiation will no longer rely on order-specific argument calls. Then, if we need to add a default parameter later on we don’t need to change every invocation of our Coffee class.</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Coffee</span>
+  <span class="nb">attr_accessor</span> <span class="ss">:size</span><span class="p">,</span> <span class="ss">:roast</span><span class="p">,</span> <span class="ss">:flavor</span><span class="p">,</span> <span class="ss">:ice</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">size</span><span class="p">:,</span> <span class="ss">roast: </span><span class="s1">'Medium'</span><span class="p">,</span> <span class="n">flavor</span><span class="p">,</span> <span class="ss">ice: </span><span class="s1">'false'</span><span class="p">)</span>
+    <span class="vi">@size</span> <span class="o">=</span> <span class="n">size</span>
+    <span class="vi">@flavor</span> <span class="o">=</span> <span class="n">flavor</span>
+    <span class="vi">@roast</span> <span class="o">=</span> <span class="n">roast</span>
+    <span class="vi">@ice</span> <span class="o">=</span> <span class="n">ice</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">cuppa</span> <span class="o">=</span> <span class="no">Coffee</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span>
+  <span class="ss">size: </span><span class="s1">'large'</span><span class="p">,</span>
+  <span class="ss">roast: </span><span class="s1">'dark'</span><span class="p">,</span> 
+  <span class="ss">flavor: </span><span class="s1">'hazelnut'</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">cuppa</span><span class="p">.</span><span class="nf">size</span> <span class="c1"># large</span>
+<span class="n">cuppa</span><span class="p">.</span><span class="nf">roast</span> <span class="c1"># dark</span>
+<span class="n">cuppa</span><span class="p">.</span><span class="nf">flavor</span> <span class="c1"># hazelnut</span>
+<span class="n">cuppa</span><span class="p">.</span><span class="nf">ice</span> <span class="c1"># false</span>
+</code></pre></div></div>
+<p>Awesome, now we can see with the method invocation exactly what arguments the class is expecting!</p>
+
+:ET

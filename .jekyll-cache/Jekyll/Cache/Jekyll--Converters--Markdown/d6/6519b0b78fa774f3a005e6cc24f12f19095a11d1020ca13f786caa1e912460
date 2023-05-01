@@ -1,0 +1,64 @@
+I"'<p>Recently at work we bootstrapped a new API and discussed what authentication methods we should use. JWT came up, and I didn’t know about it, so here’s what I learned.</p>
+
+<h2 id="what-is-a-jwt-access-token">What is a JWT Access Token?</h2>
+
+<p>JSON Web Token (JWT) is an open standard defining a compact, self-contained way for securely transmitting JSON information. These tokens are digitally signed using either a secret or public/private key pair.</p>
+
+<h2 id="when-should-you-use-jwts">When should you use JWTs?</h2>
+
+<p>JSON Web Tokens are useful for <strong>authorization</strong> and <strong>information exchange</strong>.</p>
+
+<p>For authorization, once the user is logged in, each following request will include the JWT which will allow the user to access things that are permitted with that token.</p>
+
+<p>For information exchange, JWTs are used to verify the senders are who they claim to be since JWTs can be signed for. Also, since the signature is calculated using the header and the payload, you can verify that the content hasn’t been changed or messed with.</p>
+
+<h2 id="what-is-the-structure">What is the structure?</h2>
+
+<p>In its compact form, JSON Web Tokens consist of the Header, Payload, and Signature. The output consists of three Base64Url strings separated by dots that can be easily passed in HTML and HTTP environments. Something like <code class="language-plaintext highlighter-rouge">XXXX.YYYY.ZZZZ</code></p>
+
+<p><strong>Header</strong>: The header usually consists of two parts, the type of the token (JWT) and the signing algorithm being used (HMAC, SHA256, RSA). For example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "alg": "HS256",
+  "type": "JWT"
+}
+</code></pre></div></div>
+
+<p>This JSON is then Base64URL encoded to form the first part of the JWT. You can do this in JavaScript in the following way:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">headerJson</span> <span class="o">=</span> <span class="p">{</span> <span class="na">alg</span><span class="p">:</span> <span class="dl">'</span><span class="s1">HS256</span><span class="dl">'</span><span class="p">,</span> <span class="na">typ</span><span class="p">:</span> <span class="dl">'</span><span class="s1">JWT</span><span class="dl">'</span> <span class="p">}</span>
+<span class="kd">let</span> <span class="nx">encoded</span> <span class="o">=</span> <span class="nx">bota</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">headerJson</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p><strong>Payload</strong>: The payload makes up the second part of the token and contains the claims, which are statements about an entity (often the user) and addtional data. There are three types of claims: registered, public, and private.</p>
+
+<ol>
+  <li><strong>Registered Claims</strong>: These are a set of predefined claims that provide a set of useful, interoperable claims. Some include iss (issuer), exp (expiration time), sub (subject), etc. While predefined, they are not mandatory (just recommended).</li>
+  <li><strong>Public Claims</strong>: These are names that are required to be collision resistant (in other words, highly unlikely to collide with other names). Their names should be UUIDs or prefixed by a URL to create a safe namespace for them and avoid collisions.</li>
+  <li><strong>Private Claims</strong>: These are names that are not required to be collision resistant.</li>
+</ol>
+
+<p>An example payload could be:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"sub"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456789"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Janessa"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"admin"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Similar to encoding the header, the payload is then Base64Url encoded to form the second part of the JSON Web Token.</p>
+
+<p><strong>Signature</strong>:
+The signature is used to verify the message wasn’t changed along the way. In the case of tokens signed with a private key, it can also verify that the sender of the JWT is who they say they are. To create the signature, you taken the encoded header, the encoded payload, a secret, the algorithm (specified in header), and sign it.</p>
+
+<p>For example:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">HMACSHA</span><span class="mi">256</span><span class="err">(base</span><span class="mi">64</span><span class="err">UrlEncode(header)</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="s2">"."</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="err">base</span><span class="mi">64</span><span class="err">UrlEncode(payload),</span><span class="w"> </span><span class="err">secret)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>When you put the header, payload, and signature all together you get something like:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkiLCJuYW1lIjoiSmFuZXNzYSIsImFkbWluIjp0cnVlfQ.dCKmOwHDkyXGtHQfExjUoepCKQpKy9czARV-EJIJx_E
+</code></pre></div></div>
+:ET

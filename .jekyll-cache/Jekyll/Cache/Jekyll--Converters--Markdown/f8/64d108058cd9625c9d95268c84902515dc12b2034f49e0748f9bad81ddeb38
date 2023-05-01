@@ -1,0 +1,120 @@
+I"�!<h2 id="what-is-the-decorator-pattern">What is the Decorator Pattern?</h2>
+
+<p>It allows us to add functionality to an object of a class without affecting other instances of that class. The term “decorator” originates from the pattern of adding additional behavior onto a single object, among all the instances of the class you have a “decorated” instance.</p>
+
+<h2 id="how-do-we-use-that-in-ruby-on-rails">How do we use that in Ruby on Rails?</h2>
+
+<p>A common requirement in projects is to alter data in a model for the view layer. For example, say you have a <code class="language-plaintext highlighter-rouge">User</code> model with attributes <code class="language-plaintext highlighter-rouge">first_name</code> and <code class="language-plaintext highlighter-rouge">last_name</code> and you want to display the full name of the user in the view.</p>
+
+<p>In order to keep presentation logic out of the views and models<em>, which should always be the goal,</em> you can add it into a decorator class instead. This simplifies our views which should exclude logic as much as possible, and models which should not know about presentation. Then, we can decorate our instances as we need.</p>
+
+<h2 id="how-do-you-implement-the-decorator-pattern">How do you implement the Decorator Pattern?</h2>
+
+<p><ins>View Logic:</ins></p>
+
+<p>Let’s say we have a <code class="language-plaintext highlighter-rouge">User</code> class and an <code class="language-plaintext highlighter-rouge">Article</code> class. In two separate views, the <code class="language-plaintext highlighter-rouge">User</code> show page and <code class="language-plaintext highlighter-rouge">Article</code> index, we display the full name of the user by combining the <code class="language-plaintext highlighter-rouge">user.first_name</code> and <code class="language-plaintext highlighter-rouge">user.last_name</code></p>
+
+<p>On the user’s profile page:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># apps/views/users/show.html.haml</span>
+
+<span class="o">%</span><span class="n">h1</span><span class="p">.</span><span class="nf">name</span><span class="o">-</span><span class="nb">display</span>
+  <span class="o">=</span> <span class="vi">@user</span><span class="p">.</span><span class="nf">first_name</span> <span class="o">+</span> <span class="s2">" "</span> <span class="o">+</span> <span class="vi">@user</span><span class="p">.</span><span class="nf">last_name</span>
+
+</code></pre></div></div>
+<p>In the index page of articles:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># apps/views/articles/index.html.haml</span>
+
+<span class="o">%</span><span class="n">h1</span><span class="o">=</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">title</span>
+<span class="p">.</span><span class="nf">author</span> <span class="no">Written</span> <span class="no">By</span> <span class="c1">#{@article.user.first_name + " " + @article.user.last_name}</span>
+</code></pre></div></div>
+
+<p><ins>Code Smell:</ins></p>
+
+<p>Right away, we should detect a code smell! Firstly, we’re repeating code in multiple places. Secondly, we’re manipulating data directly in the view which we should <strong>avoid.</strong> Remember, the view should just be there and display things.</p>
+
+<p><ins>The Solution:</ins></p>
+
+<p>We can add a decorator pattern to improve this!</p>
+
+<ul>
+  <li>Define a subdirectory, <code class="language-plaintext highlighter-rouge">app/decorators</code></li>
+  <li>Define a file, <code class="language-plaintext highlighter-rouge">app/decorators/user_decorator.rb</code></li>
+</ul>
+
+<p>In this file we can define a <code class="language-plaintext highlighter-rouge">name_display</code> method which will contain the string manipulation logic to show the full name of the user.  The class will inherit from <code class="language-plaintext highlighter-rouge">SimpleDelegator</code>, a native Ruby class that allows you to delegate methods calls to the object passed in during construction.</p>
+
+<p>As stated in the Ruby docs:</p>
+<blockquote>
+  <p>“this class provides the means to delegate all supported method calls to the object passed into the constructor” - <a href="https://ruby-doc.org/stdlib-2.5.1/libdoc/delegate/rdoc/SimpleDelegator.html">ruby-doc</a></p>
+</blockquote>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># app/decorators/user_decorator.rb</span>
+
+<span class="k">class</span> <span class="nc">UserDecorator</span> <span class="o">&lt;</span> <span class="no">SimpleDelegator</span>
+  <span class="k">def</span> <span class="nf">name_display</span>
+    <span class="c1">#{first_name last_name}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h2 id="implementing-the-decorator-into-our-views">Implementing the Decorator into our Views</h2>
+
+<p>Now we can use our decorators to simplify our views. First in the user’s profile page:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># apps/views/users/show.html.haml</span>
+
+<span class="o">%</span><span class="n">h1</span><span class="p">.</span><span class="nf">name</span><span class="o">-</span><span class="nb">display</span>
+  <span class="o">=</span> <span class="no">UserDecorator</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@user</span><span class="p">).</span><span class="nf">name_display</span>
+
+</code></pre></div></div>
+
+<p>Then in the article index page:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># apps/views/articles/index.html.haml</span>
+
+<span class="o">%</span><span class="n">h1</span><span class="o">=</span> <span class="vi">@article</span><span class="p">.</span><span class="nf">title</span>
+<span class="p">.</span><span class="nf">author</span> <span class="no">Written</span> <span class="no">By</span> <span class="c1">#{UserDecorator.new(@article.user).name_display}</span>
+</code></pre></div></div>
+
+<h2 id="alternative-using-the-draper-gem">Alternative: Using the Draper Gem</h2>
+
+<p>If you don’t want to create your own decorator class from scratch, you can also use the <a href="https://github.com/drapergem/draper">Draper Gem</a>.</p>
+
+<p>With Draper, you could write a Decorator Class like:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># app/decorators/user_decorator.rb</span>
+
+<span class="k">class</span> <span class="nc">UserDecorator</span> <span class="o">&lt;</span> <span class="no">Draper</span><span class="o">::</span><span class="no">Decorator</span>
+  <span class="n">delegate_all</span>
+
+  <span class="k">def</span> <span class="nf">name_display</span>
+    <span class="c1">#{object.first_name object.last_name}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>Then, you would call <code class="language-plaintext highlighter-rouge">decorate</code> in your controller like so:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># app/controllers/users_controller.rb</span>
+
+<span class="k">def</span> <span class="nf">show</span>
+  <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">]).</span><span class="nf">decorate</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>And in your views:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># app/views/users/show.html.haml</span>
+
+<span class="o">%</span><span class="n">h1</span><span class="p">.</span><span class="nf">name</span><span class="o">-</span><span class="nb">display</span>
+  <span class="o">=</span> <span class="vi">@user</span><span class="p">.</span><span class="nf">name_display</span>
+</code></pre></div></div>
+<h2 id="additional-resources">Additional Resources</h2>
+
+<ul>
+  <li>Decorator Pattern in Java: <a href="https://www.tutorialspoint.com/design_pattern/decorator_pattern.htm">TutorialsPoint</a></li>
+  <li>Decorator in Ruby <a href="https://refactoring.guru/design-patterns/decorator/ruby/example">RefactoringGuru</a></li>
+</ul>
+:ET

@@ -1,0 +1,70 @@
+I"$<p>I have a habit of changing up my theme quite a bit, if you haven’t already noticed. If you know me in real life, this would come as no surprise. I often rearrange my spaces (apartment, desk setup) and change my phone screens seasonally (I actually really look forward to this). I think this theme will be around for a bit, though. It’s clean, it’s functional, and most importantly… IT HAS SOME <em>ACCESSIBILITY FEATURES INTEGRATED</em>!! I’m really excited about it.</p>
+
+<h1 id="accessible-features-of-my-new-theme">Accessible features of my new theme</h1>
+<p>If you’re unfamiliar with the concept of accessible web design, it’s essentially about creating websites that are usable despite how a user accesses the internet. You can <a href="https://www.w3.org/WAI/fundamentals/accessibility-intro/">read more about web accessibility here</a> if you are interested in learning more.</p>
+
+<p>I’m quite new to learning about accessibility, but I thought, “what better way to start learning than to try to integrate accessible features myself. After all, I’m a learn-by-doing kind of person. As a result, I created this theme, <a href="https://github.com/janessatran/laloyd">Laloyd</a>, which enabled me to put into practice some of the things I have learned so far about accessibility.  What <strong>things</strong> in particular? I’m glad you asked!</p>
+
+<h2 id="semantic-html">Semantic HTML</h2>
+<p>In creating Laloyd, I employed the practice of writing structural, semantic HTML. Semantic HTML means using the proper HTML elements for their correct purpose. A <strong>semantic element</strong> describes meaning to the browser and developer clearly. For example: <code class="language-plaintext highlighter-rouge">&lt;form&gt;</code>, <code class="language-plaintext highlighter-rouge">&lt;nav&gt;</code>, and <code class="language-plaintext highlighter-rouge">&lt;article&gt;</code>, are <strong>semantic elements</strong> that clearly define its contents so you can expect what is within them. On the other hand, <code class="language-plaintext highlighter-rouge">&lt;div&gt;</code>, and <code class="language-plaintext highlighter-rouge">&lt;span&gt;</code>, are <strong>non-semantic elements</strong> because they tell us nothing about what content might lie within.</p>
+
+<h3 id="using-elements-as-intended">Using Elements As Intended</h3>
+<p>In practicing writing semantic HTML, it’s encouraged to use elements such as <code class="language-plaintext highlighter-rouge">&lt;div&gt;</code> and <code class="language-plaintext highlighter-rouge">&lt;span&gt;</code> for layout purposes only. Also, using these kinds of elements in place of a more semantically-meaningful one is discouraged (e.g. using a styled <code class="language-plaintext highlighter-rouge">&lt;div&gt;</code> as a button instead of just using <code class="language-plaintext highlighter-rouge">&lt;button&gt;</code>). Semantic HTML is beneficial to users who use assistive technology, such as screen readers, because it provides the user more context about the page. With the button example mentioned, a screen-reader would gain much more meaning from a <code class="language-plaintext highlighter-rouge">&lt;button&gt;</code> element because they would understand it’s interactable, as opposed to if it were identified as a <code class="language-plaintext highlighter-rouge">&lt;div&gt;</code> which is not.</p>
+
+<p>In creating this theme, I used semantic markup in creating the navigation by:</p>
+<ul>
+  <li>Wrapping the navigation items in a <code class="language-plaintext highlighter-rouge">&lt;nav&gt;</code> element.</li>
+  <li>Using an unordered list <code class="language-plaintext highlighter-rouge">&lt;ul&gt;</code> to convey that the menu items are not in a specific order.</li>
+</ul>
+
+<h3 id="using-heading-tags-in-meaningful-order">Using Heading Tags in Meaningful Order</h3>
+<p>Another part of writing semantic HTML involves using heading tags in an order that correctly shows the document structure and relationships between different parts of the page. This means that <code class="language-plaintext highlighter-rouge">&lt;h1&gt;</code> should be used for main headings, followed by <code class="language-plaintext highlighter-rouge">&lt;h2&gt;</code> and so on.</p>
+
+<p>Using heading tags  is largely up to the user of the theme, since headings are often created in the content of the post.</p>
+
+<h3 id="adding-titles-to-anchor-tags">Adding Titles to Anchor Tags</h3>
+<p>Another way to make a website more accessible is by adding titles to anchor tags <code class="language-plaintext highlighter-rouge">&lt;a href="" title="Where it goes to"&gt;</code>. The <code class="language-plaintext highlighter-rouge">title</code> attribute specifies extra information and often shows a tooltip text when the mouse moves over the element.</p>
+
+<p>In this theme, I added titles to anchor tags to indicate where the link would redirect the user to.</p>
+
+<figure>
+  <img src="/assets/screenshots/title_attribute_anchors.png" alt="Example of title attribute on anchor tag" />
+  <figcaption>Example of tooltip provided by defined "title" attributes in anchor elements. </figcaption>
+</figure>
+
+<h2 id="skip-links">Skip Links</h2>
+<p>Additionally, web design focused on accessibility considers that a user may navigate through a webpage in various ways such as with a mouse, keyboard, or screen-reader. Sighted users navigating through a web page with a mouse often scroll through the page to get to the main content, but users navigating through the keyboard or screen-reader will have to tab through a lot of content before getting to the actual text of the page. To alleviate this issue, the “skip link” was invented to enable users to skip to the main content of the page.</p>
+
+<p>In this theme, I added a hidden skip link that becomes visible when the link is focused. This provides a shortcut for users who want to just skip to the main content, making the website easier and quicker for users (especially those with disabilities).</p>
+
+<figure>
+  <img src="/assets/screenshots/skip_link.gif" alt="Example of skip link" />
+  <figcaption>Example of "Skip to main content link".</figcaption>
+</figure>
+
+<h2 id="high-contrast-colors-and-syntax-highlighting">High Contrast Colors and Syntax Highlighting</h2>
+<p>Color contrast is another important aspect of web accessibility, but it is also significant for scenarios of low-light environments, old screens, and visual impairment. The Web Content Accessibility Guidelines outlines the following conditions for color accessibility:</p>
+<ul>
+  <li>4.5:1 contrast between the non-link text color and background.</li>
+  <li>A 4.5:1 contrast between the link text color and background.</li>
+  <li>A 3:1 contrast between the link text color and the surrounding non-link text color.</li>
+</ul>
+
+<p>In creating this theme, I used <a href="https://colorsafe.co/">this tool, ColorSafe</a> to ensure the colors were up to these guidelines. I also selected a syntax highlighter from <a href="https://github.com/mpchadwick/pygments-high-contrast-stylesheets">this list of accessible syntax highlights</a>.</p>
+
+<h2 id="focus-states">Focus States</h2>
+<p><strong>Focus states</strong> apply to interactive components of a website and communicates when a user has highlighted an element using a keyboard or voice. They are important because they can indicate to the user where they are on the page. Most browsers show focus states, but some are easier to see than others.</p>
+
+<p>In this theme, I used the <code class="language-plaintext highlighter-rouge">:focus</code> selector in CSS to define a style change that happens when an element has focus.</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">a</span><span class="nd">:hover</span><span class="o">,</span> <span class="nt">a</span><span class="nd">:focus</span> <span class="p">{</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="m">#ff0000</span><span class="p">;</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="n">linear-gradient</span><span class="p">(</span><span class="n">to</span> <span class="nb">bottom</span><span class="p">,</span> <span class="nb">transparent</span> <span class="m">0%</span><span class="p">,</span> <span class="nb">transparent</span> <span class="m">0%</span><span class="p">,</span> <span class="m">#ffe0e0</span> <span class="m">0%</span><span class="p">,</span> <span class="m">#ffe0e0</span> <span class="m">100%</span><span class="p">);</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<h1 id="conclusion">Conclusion</h1>
+<p>In creating this theme, I’ve found that integrating accessible features can begin with just a few small changes in the ways we write and design websites. While there are definitely many more ways I can improve <a href="https://github.com/janessatran/laloyd">Laloyd</a> to make it more accessible, I hope that these few considerations makes any impact at all for user accessibility. I learned a lot in this exercise to create an accessible theme, and I hope you learned something from this write-up too.</p>
+
+:ET

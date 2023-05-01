@@ -1,0 +1,24 @@
+I"d<p>Over winter break, a discussion arose regarding data and security on the internet. My almost-but-not-technically brother-in-law advised his Mom to only shop on websites that show a lock symbol next to the URL. She mentioned she had heard that meant the website was secure, but wasn’t sure exactly what it was or how it was secured. So, what is the lock symbol and what does it signify?</p>
+
+<h2 id="ssltls">SSL/TLS</h2>
+
+<p>A website that shows a lock symbol next to the URL in the search bar is one which implements SSL/TLS. SSL, or Secure Sockets Layer, is an encryption-based security protocol for the purpose of ensuring privacy, authentication, and data integrity on the internet. Almost every website on the internet transfers sensitive user information, such as payment details, login credentials, credit card information, etc. SSL/TLS protects the information by encrypting the data transfer between a user’s browser and the website.</p>
+
+<h2 id="whats-the-difference-between-ssl-and-tls">What’s the difference between SSL and TLS?</h2>
+
+<p>SSL is the predecessor to the modern TLS, Transport Layer Security, that is often used today. The names are often used together or interchangeably, but they are actually two different things. SSL came before TLS, which was developed by the Internet Engineering Task Force (while SSL was developed by Netscape). The final version of SSL and the first version of TLS are not super different, but the name change signifies the change in ownership.</p>
+
+<h2 id="how-does-ssltls-work">How does SSL/TLS work?</h2>
+
+<p>SSL encrypts data that is transmitted across the web. This means that anyone who tries to intercept the data will not be able to understand the information unless they are able to decrypt it, as it comes across as a mix of random characters. Through a <a href="https://www.ssl.com/article/ssl-tls-handshake-overview/"><strong>handshake</strong></a> process, SSL initiates authentication between two communicating devices to verify that both are who they claim to be. Through a digital signature, SSL provides data integrity by ensuring that data is not tampered with in transit.</p>
+
+<h2 id="what-is-an-ssltls-certificate">What is an SSL/TLS Certificate?</h2>
+
+<p>SSL certificates (often technically TLS certificates) are what enable websites to move from HTTP to HTTPs. It is a data file which is hosted on the website’s origin server and contains the website’s public key and identity.</p>
+
+<p>Devices attempting to communicate with the origin server will reference the SSL certificate to get the public key and verify the server’s identity. Meanwhile, the private key is kept secret and is used to decrypt data that was encrypted with the public key.</p>
+
+<h2 id="in-summary">In Summary</h2>
+
+<p>SSL (Secure Sockets Layer) is an encryption technology used by websites to secure the connection between the website and their visitors.</p>
+:ET

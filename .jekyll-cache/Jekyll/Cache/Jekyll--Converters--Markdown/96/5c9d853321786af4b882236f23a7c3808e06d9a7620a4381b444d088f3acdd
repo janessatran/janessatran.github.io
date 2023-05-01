@@ -1,0 +1,266 @@
+I"�r<p>Recently at work, I had to implement a sign-up form for user subscriptions. At first glance, it seemed really straightforward: create a form where a user enters their information and upon successful submission, decrease the number of subscription licenses associated with that user’s account. Unsurprisingly, however, there were a lot of other requirements I had to meet and implementing this functionality turned out to be more complicated than I was expecting. For the sake of future me, and for the sake of whoever else might need to do something similar, I wanted to write out my approach to implementing the feature in this post. First things first, let’s make sure we understand all the requirements… I’ll list them all below!</p>
+
+<h2 id="the-requirements-to-be-met">The Requirements to be met</h2>
+
+<ul>
+  <li>User gets an email with a link they can go to in order to make a subscription.</li>
+  <li>The link includes a query parameter that ties the subscription to an account (which holds X number of licenses for subscriptions).</li>
+  <li>On the sign-up form, if the user already exists in the system by checking their email redirect the user to log in before continuing so we have access to their other information for the next part of the form (first name, last name, organizations).</li>
+  <li>If the user already exists, disable the user from editing their first_name, last_name, etc from this form to keep data accurate.</li>
+  <li>If the user does not exist, send the user an email to confirm their account in addition to creating the subscription.</li>
+  <li>After successful completion of the sign-up, reduce the number of licenses on the account.</li>
+</ul>
+
+<h2 id="models">Models</h2>
+<p>For context, these are the models that I am working with and the relevant data attributes for each:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">User</code> model: a user has an <code class="language-plaintext highlighter-rouge">email</code>, <code class="language-plaintext highlighter-rouge">first_name</code>, <code class="language-plaintext highlighter-rouge">last_name</code>, has many <code class="language-plaintext highlighter-rouge">accounts</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Account</code> model: an account has N number of <code class="language-plaintext highlighter-rouge">licenses</code> for subscriptions, has many organizations</li>
+  <li><code class="language-plaintext highlighter-rouge">Organization</code> model: has a name, belongs to <code class="language-plaintext highlighter-rouge">accounts</code> and has many <code class="language-plaintext highlighter-rouge">users</code></li>
+</ul>
+
+<h2 id="the-solution">The Solution</h2>
+
+<p>From the list of requirements, it is clear that a simple form wont suffice. The approach I took instead was to create a multi-step form where the first step of the form validates the <code class="language-plaintext highlighter-rouge">email</code> and the second step of the form validates the rest of the information about the <code class="language-plaintext highlighter-rouge">User</code>. Since we need to validate parts of the same object at different times, I also created two new objects that inheret from <code class="language-plaintext highlighter-rouge">ActiveModel::Model</code> to be able to add validations on the separate concerns.</p>
+
+<p>In this post, I will explain to you how I created a multi-step form in Ruby on Rails.</p>
+
+<h2 id="the-tutorial">The Tutorial</h2>
+
+<p>First, we will create the model classes to implement our validations. We need one class to validate the user account via <code class="language-plaintext highlighter-rouge">email</code> and another to validate the user details such as <code class="language-plaintext highlighter-rouge">first_name</code> and <code class="language-plaintext highlighter-rouge">last_name</code>.</p>
+
+<p>These classes will be used in each step of our form to validate the data at each step (but not necessarily write the data to the database until all validations are complete):</p>
+<ol>
+  <li>Step 1 - Validate Email of User</li>
+  <li>Step 2 - Validate Details of User</li>
+</ol>
+
+<p>One way to do this is to create a class which inherets from <code class="language-plaintext highlighter-rouge">ActiveModel::Model</code>. This enables us to validate the object and plug it into a Rails form.</p>
+
+<h3 id="the-user-accounts-form-model">The User Accounts Form Model</h3>
+
+<p>First, create the <code class="language-plaintext highlighter-rouge">UserAccountForm</code> class:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">UserAccountForm</span> 
+  <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Model</span>
+
+  <span class="nb">attr_accessor</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">:user</span><span class="p">,</span> <span class="ss">:account_uuid</span>
+  <span class="n">validates</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">format: </span><span class="p">{</span> <span class="ss">with: </span><span class="no">URI</span><span class="o">::</span><span class="no">MailTo</span><span class="o">::</span><span class="no">EMAIL</span> <span class="p">}</span>
+
+  <span class="k">def</span> <span class="nf">user</span>
+    <span class="no">User</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">email: </span><span class="n">email</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">account</span>
+    <span class="no">Account</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">uuid: </span><span class="n">account_uuid</span><span class="p">).</span><span class="nf">first</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+</code></pre></div></div>
+
+<h3 id="the-user-accounts-form-controller">The User Accounts Form Controller</h3>
+
+<p>Then, create the <code class="language-plaintext highlighter-rouge">UserAccountsController</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">UserAccountsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="k">def</span> <span class="nf">new</span>
+    <span class="c1"># the :account_uuid is passed in the request parameters from the sign-up link</span>
+    <span class="vi">@user_account</span> <span class="o">=</span> <span class="no">UserAccountForm</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">account_uuid: </span><span class="n">params</span><span class="p">[</span><span class="ss">:account_uuid</span><span class="p">])</span>
+    <span class="c1"># if a user is currently logged in, skip to the next part of the form</span>
+    <span class="c1"># passing their email and user_id through the request with query params</span>
+    <span class="k">if</span> <span class="n">current_user</span>
+      <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="ss">user_profile_form: </span><span class="p">{</span>
+          <span class="ss">mail: </span><span class="n">current_user</span><span class="p">.</span><span class="nf">email</span><span class="p">,</span>
+          <span class="ss">user_id: </span><span class="n">current_user</span><span class="p">.</span><span class="nf">id</span><span class="p">,</span>
+          <span class="ss">account_uuid: </span><span class="vi">@user_account</span><span class="p">.</span><span class="nf">account_uuid</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="n">redirect_to</span> <span class="n">new_user_profile_path</span> <span class="n">params</span>
+    <span class="k">else</span>
+      <span class="n">render</span> <span class="ss">:new</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">create</span>
+    <span class="vi">@user_account</span> <span class="o">=</span> <span class="no">UserAccount</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">user_account_params</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="vi">@user_account</span><span class="p">.</span><span class="nf">user</span><span class="p">.</span><span class="nf">present?</span> <span class="o">&amp;&amp;</span> <span class="vi">@user_account</span><span class="p">.</span><span class="nf">user</span> <span class="o">!=</span> <span class="n">current_user</span>
+      <span class="c1"># If we find a user with this email and that user is not currently</span>
+      <span class="c1"># logged in, we redirect them to log in before continuing</span>
+      <span class="n">notice</span> <span class="o">=</span> <span class="s2">"Looks like there's already an account associated with this email. Please log in to continue."</span>
+      <span class="n">redirect</span> <span class="n">to</span> <span class="n">new_user_session_path</span><span class="p">,</span> <span class="ss">notice: </span><span class="n">notice</span>
+
+    <span class="k">elsif</span> <span class="vi">@user_account</span><span class="p">.</span><span class="nf">valid?</span> <span class="o">&amp;&amp;</span> <span class="vi">@user_account</span><span class="p">.</span><span class="nf">user</span><span class="p">.</span><span class="nf">present</span> <span class="o">&amp;&amp;</span> <span class="vi">@user_account</span>  <span class="n">user</span> <span class="o">==</span> <span class="n">current_user</span>
+
+      <span class="c1"># Instead of persisting the values to the `User` object,</span>
+      <span class="c1"># we pass them through to the next part of the form</span>
+      <span class="c1"># to fill out hidden fields for those attributes</span>
+      <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="ss">user_profile_form: </span><span class="p">{</span>
+          <span class="ss">email: </span><span class="vi">@user_account</span><span class="p">.</span><span class="nf">email</span><span class="p">,</span>
+          <span class="ss">user_id: </span><span class="vi">@user_account</span><span class="p">.</span><span class="nf">user</span><span class="p">.</span><span class="nf">id</span><span class="p">,</span>
+          <span class="ss">account_uuid: </span><span class="vi">@user_account</span><span class="p">.</span><span class="nf">account_uuid</span>
+         <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="n">redirect_to</span> <span class="n">new_user_profile_path</span> <span class="n">params</span>
+    <span class="k">else</span>
+      <span class="n">render</span> <span class="ss">:new</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="kp">private</span>
+
+  <span class="k">def</span> <span class="nf">user_account_params</span>
+    <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:user_account_form</span><span class="p">).</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:account_uuid</span><span class="p">,</span> <span class="ss">:email</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+</code></pre></div></div>
+
+<h3 id="the-user-accounts-form-view">The User Accounts Form View</h3>
+<p>Next, we create the User Accounts Form view. In the example below, I am using haml.</p>
+
+<div class="language-haml highlighter-rouge"><div class="highlight"><pre class="highlight"><code># /app/views/user_accounts/new.html.haml
+
+<span class="nt">%h1</span> Subscription - Sign Up
+  <span class="p">=</span> <span class="n">simple_form_for</span><span class="p">(</span><span class="vi">@user_account</span><span class="p">,</span> <span class="ss">url: </span><span class="n">user_accounts_path</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+    <span class="p">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">error_notification</span>
+    <span class="p">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">input</span> <span class="ss">:account_uuid</span><span class="p">,</span> <span class="ss">as: :hidden</span>
+    <span class="p">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">input</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">placeholder: </span><span class="s2">"Email"</span>
+    <span class="nt">%p</span><span class="nc">.hint</span> Please use the same email address you've used for other products on this site.
+
+    <span class="p">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">button</span> <span class="ss">:submit</span><span class="p">,</span> <span class="s2">"Next"</span>
+
+
+</code></pre></div></div>
+
+<h3 id="the-user-profile-form-model">The User Profile Form Model</h3>
+<p>Now we move on to creating the classes for the next step of the form, the User Profile.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">UserProfileForm</span>
+  <span class="kp">include</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Model</span>
+
+  <span class="nb">attr_accessor</span> <span class="ss">:first_name</span><span class="p">,</span> <span class="ss">:last_name</span><span class="p">,</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">:organization</span><span class="p">,</span> <span class="ss">:account_uuid</span>
+
+  <span class="n">validates</span> <span class="ss">:first_name</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span>
+  <span class="n">validates</span> <span class="ss">:last_name</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span>
+  <span class="n">validates</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span>
+  <span class="n">validates</span> <span class="ss">:organization</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span>
+  <span class="n">validates</span> <span class="ss">:account_uuid</span><span class="p">,</span> <span class="ss">presence: </span><span class="kp">true</span>
+<span class="k">end</span>
+
+</code></pre></div></div>
+
+<h3 id="the-user-profile-controller">The User Profile Controller</h3>
+
+<p>The User Profile controller differs slightly from the User Account controller because it is the last step in our form. We will need to use the parameters passed in the request from the <code class="language-plaintext highlighter-rouge">UserAccountController</code> to fill in the hidden form fields so that the data can be submitted in the final request. I’ve created a helper method <code class="language-plaintext highlighter-rouge">set_inputs</code> that will create instance variables that I can access in my view to set the input values if we find any data on the user.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">UserProfileController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="n">before_action</span> <span class="ss">:set_inputs</span> <span class="c1"># our function to set the hidden field inputs</span>
+
+  <span class="k">def</span> <span class="nf">new</span>
+    <span class="vi">@user_profile</span> <span class="o">=</span> <span class="no">UserProfileForm</span><span class="p">.</span><span class="nf">new</span>
+    <span class="n">render</span> <span class="ss">:new</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">create</span> 
+    <span class="vi">@user_profile</span> <span class="o">=</span> <span class="no">UserProfileForm</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">user_profile_params</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="o">!</span><span class="vi">@user_profile</span><span class="p">.</span><span class="nf">valid?</span>
+      <span class="n">render</span> <span class="ss">:new</span><span class="p">,</span> <span class="ss">alert: </span><span class="s2">"Some required fields are missing"</span>
+    <span class="k">else</span>
+      <span class="k">if</span> <span class="vi">@user</span>
+        <span class="no">SubscriptionUser</span><span class="p">.</span><span class="nf">create!</span><span class="p">(</span><span class="ss">user: </span><span class="vi">@user</span><span class="p">,</span> <span class="ss">account: </span><span class="vi">@account</span> <span class="p">)</span>
+    <span class="k">else</span>
+      <span class="c1"># we put it in a transaction because we do not want to create the subscription unless the user creation succceeds</span>
+    <span class="no">User</span><span class="p">.</span><span class="nf">transaction</span> <span class="k">do</span>
+        <span class="k">begin</span>
+          <span class="k">if</span> <span class="vi">@user</span><span class="p">.</span><span class="nf">nil?</span>
+            <span class="vi">@new_user</span> <span class="o">=</span> <span class="kp">true</span>
+            <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">create!</span><span class="p">(</span>
+              <span class="ss">email: </span><span class="n">user_profile_params</span><span class="p">[</span><span class="ss">:email</span><span class="p">],</span>
+              <span class="ss">first_name: </span><span class="n">user_profile_params</span><span class="p">[</span><span class="ss">:first_name</span><span class="p">],</span>
+              <span class="ss">last_name: </span><span class="n">user_profile_params</span><span class="p">[</span><span class="ss">:last_name</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="no">NewUserMailer</span><span class="p">.</span><span class="nf">send_new_user_email</span><span class="p">(</span><span class="vi">@user</span><span class="p">).</span><span class="nf">deliver_later</span>
+          <span class="k">end</span>
+          <span class="vi">@subscribed_user</span> <span class="o">=</span> <span class="no">SubscriptionUser</span><span class="p">.</span><span class="nf">create!</span><span class="p">(</span>
+            <span class="ss">user: </span><span class="vi">@user</span><span class="p">,</span>
+            <span class="ss">account: </span><span class="vi">@account</span><span class="p">,</span>
+            <span class="ss">organization: </span><span class="n">user_profile_params</span><span class="p">[</span><span class="ss">:organization</span><span class="p">]</span>
+          <span class="p">)</span>
+        <span class="k">rescue</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">RecordInvalid</span>
+          <span class="n">render</span> <span class="ss">:new</span><span class="p">,</span> <span class="ss">notice: </span><span class="s2">"An issue occurred with creating your subscription and we were unable to save it. Please refresh and try again.."</span>
+        <span class="k">else</span>
+          <span class="k">if</span> <span class="vi">@new_user</span>
+            <span class="n">notice</span> <span class="o">=</span> <span class="s2">"Please check your email to confirm your email address and set your password."</span>
+            <span class="n">redirect_to</span> <span class="n">new_user_session_path</span><span class="p">,</span> <span class="ss">notice: </span><span class="n">notice</span>
+          <span class="k">else</span>
+            <span class="n">notice</span> <span class="o">=</span> <span class="s2">"Success! Your subscription has been created."</span>
+            <span class="n">redirect_to</span> <span class="n">root_path</span><span class="p">,</span> <span class="ss">notice: </span><span class="n">notice</span>
+          <span class="k">end</span>
+        <span class="k">end</span>
+      <span class="k">end</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="kp">private</span>
+
+  <span class="k">def</span> <span class="nf">set_inputs</span>
+    <span class="vi">@user</span> <span class="o">=</span> <span class="n">current_user</span> <span class="p">?</span> <span class="n">current_user</span> <span class="p">:</span> <span class="kp">nil</span> <span class="c1"># if there is a user logged in, set our @user object to the current_user, otherwise set it to nil</span>
+    <span class="vi">@email</span> <span class="o">=</span> <span class="n">user_profile_params</span><span class="p">[</span><span class="ss">:email</span><span class="p">]</span>
+    <span class="vi">@first_name</span> <span class="o">=</span> <span class="n">current_user</span><span class="o">&amp;</span><span class="p">.</span><span class="nf">first_name</span> <span class="c1"># &amp;. is the safe navigation operator, it will only make the `first_name` call if current_user is not nil</span>
+    <span class="vi">@last_name</span> <span class="o">=</span> <span class="n">current_user</span><span class="o">&amp;</span><span class="p">.</span><span class="nf">last_name</span>
+    <span class="vi">@account</span> <span class="o">=</span> <span class="no">Account</span><span class="p">.</span><span class="nf">find_by</span><span class="p">(</span><span class="ss">uuid: </span><span class="n">user_profile_params</span><span class="p">[</span><span class="ss">:account_uuid</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="vi">@user</span><span class="p">.</span><span class="nf">present?</span>
+      <span class="c1"># We want to filter our selection options for the Organization field by the user's organizations if they are logged in</span>
+      <span class="vi">@organization_options</span> <span class="o">=</span> <span class="vi">@user</span><span class="p">.</span><span class="nf">organizations</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">org</span><span class="o">|</span> <span class="p">[</span><span class="n">org</span><span class="p">.</span><span class="nf">id</span><span class="p">,</span> <span class="n">org</span><span class="p">.</span><span class="nf">name</span><span class="p">]</span> <span class="p">}</span>
+    <span class="k">else</span>
+      <span class="c1"># If the user is not logged in, we will show all the organizations</span>
+      <span class="vi">@organization_options</span> <span class="o">=</span> <span class="no">Organization</span><span class="p">.</span><span class="nf">all</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">org</span><span class="o">|</span> <span class="p">[</span><span class="n">org</span><span class="p">.</span><span class="nf">id</span><span class="p">,</span> <span class="n">org</span><span class="p">.</span><span class="nf">name</span><span class="p">]</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">user_profile_params</span>
+    <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:user_profile_form</span><span class="p">).</span><span class="nf">permit</span><span class="p">(</span>
+      <span class="ss">:user_id</span><span class="p">,</span>
+      <span class="ss">:email</span><span class="p">,</span>
+      <span class="ss">:first_name</span><span class="p">,</span>
+      <span class="ss">:last_name</span><span class="p">,</span>
+      <span class="ss">:organization</span><span class="p">,</span>
+      <span class="ss">:account_uuid</span>
+    <span class="p">)</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h3 id="the-user-profile-form-view">The User Profile Form View</h3>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># /app/views/user_profiles/new.html.haml</span>
+
+<span class="o">%</span><span class="n">h1</span> <span class="no">Subscription</span> <span class="o">-</span> <span class="no">User</span> <span class="no">Details</span>
+<span class="o">=</span> <span class="n">simple_form_for</span><span class="p">(</span><span class="vi">@user_profile</span><span class="p">,</span> <span class="ss">url: </span><span class="n">user_profiles_path</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+  <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">error_notification</span>
+  <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">input</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">label: </span><span class="kp">false</span><span class="p">,</span> <span class="ss">input_html: </span><span class="p">{</span> <span class="ss">value: </span><span class="vi">@email</span><span class="p">,</span> <span class="ss">hidden: </span><span class="kp">true</span> <span class="p">}</span>
+  <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">input</span> <span class="ss">:account_uuid</span><span class="p">,</span> <span class="ss">label: </span><span class="kp">false</span><span class="p">,</span> <span class="ss">input_html: </span><span class="p">{</span> <span class="ss">value: </span><span class="vi">@account</span><span class="o">&amp;</span><span class="p">.</span><span class="nf">uuid</span><span class="p">,</span> <span class="ss">hidden: </span><span class="kp">true</span> <span class="p">}</span>
+  <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">input</span> <span class="ss">:first_name</span><span class="p">,</span> <span class="ss">placeholder: </span><span class="s1">'First name'</span><span class="p">,</span> <span class="ss">input_html: </span><span class="p">{</span> <span class="ss">value: </span><span class="vi">@first_name</span><span class="p">,</span> <span class="ss">readonly: </span><span class="vi">@first_name</span><span class="p">.</span><span class="nf">present?</span> <span class="p">?</span> <span class="kp">true</span> <span class="p">:</span> <span class="kp">false</span> <span class="p">}</span>
+  <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">input</span> <span class="ss">:last_name</span><span class="p">,</span> <span class="ss">placeholder: </span><span class="s1">'Last name'</span><span class="p">,</span> <span class="ss">input_html: </span><span class="p">{</span> <span class="ss">value: </span><span class="vi">@last_name</span><span class="p">,</span> <span class="ss">readonly: </span><span class="vi">@last_name</span><span class="p">.</span><span class="nf">present?</span> <span class="p">?</span> <span class="kp">true</span> <span class="p">:</span> <span class="kp">false</span> <span class="p">}</span>
+  <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">select</span> <span class="ss">:organization</span><span class="p">,</span> <span class="n">options_for_select</span><span class="p">(</span><span class="vi">@organization</span><span class="p">)</span>
+
+  <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">button</span> <span class="ss">:submit</span><span class="p">,</span> <span class="s2">"Submit"</span>
+
+</code></pre></div></div>
+
+<h2 id="routing">Routing</h2>
+<p>Last, but not least, we need to add our routes:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">routes</span><span class="p">.</span><span class="nf">draw</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:user_accounts</span><span class="p">,</span> <span class="ss">only: </span><span class="sx">%i[new create]</span>
+  <span class="n">resources</span> <span class="ss">:user_profiles</span><span class="p">,</span> <span class="ss">only: </span><span class="sx">%i[new create]</span>
+<span class="k">end</span>
+</code></pre></div></div>
+:ET

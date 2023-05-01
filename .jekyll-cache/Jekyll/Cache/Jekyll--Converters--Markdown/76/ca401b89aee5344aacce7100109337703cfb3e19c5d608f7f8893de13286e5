@@ -1,0 +1,10 @@
+I"ð<p>These are the most commonly used HTTP verbs and their correspondence to CRUD operations.</p>
+
+<ul>
+  <li>POST: create</li>
+  <li>GET: read</li>
+  <li>PUT: full update</li>
+  <li>DELETE: delete</li>
+  <li>PATCH: partial update</li>
+</ul>
+:ET

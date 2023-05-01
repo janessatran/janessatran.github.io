@@ -1,0 +1,25 @@
+I"�<p>I work a lot with the rails console and learned a few cool things you can do inside the console that I wanted to record.  If you’re unfamiliar with the <strong>rails console</strong>, it’s a command that lets you interact with your Rails application from the command line.</p>
+
+<h2 id="useful-things-you-can-do-in-rails-console">Useful Things You Can Do In Rails Console</h2>
+
+<p><strong>To clear the console:</strong> <code class="language-plaintext highlighter-rouge">CMD + R</code></p>
+
+<p><strong>To list available methods on an object:</strong> <code class="language-plaintext highlighter-rouge">ls</code></p>
+
+<p><strong>Reload console:</strong> <code class="language-plaintext highlighter-rouge">reload!</code></p>
+
+<p><strong>View method’s source:</strong> <code class="language-plaintext highlighter-rouge">show-source object</code></p>
+
+<p><strong>Shortcut for value of last successful expression: <code class="language-plaintext highlighter-rouge">_</code></strong>
+This is useful when you run a command and then you decide you want to reference it. Instead of typing the entire command again or going back to assign it to some variable, you can just use <code class="language-plaintext highlighter-rouge">_</code>.</p>
+
+<p><strong>To view all commands available from the pry gem, in the console type</strong> <code class="language-plaintext highlighter-rouge">help</code></p>
+
+<p><strong>To access high level methods in the application</strong> such as path helpers or HTTP methods, you can call those methods on <code class="language-plaintext highlighter-rouge">app</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">app</span><span class="p">.</span><span class="nf">root_path</span>
+<span class="n">app</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="nf">root_path</span><span class="p">))</span> 
+</code></pre></div></div>
+
+<p>Similarly, you can call <code class="language-plaintext highlighter-rouge">helper</code>  to get access to view helpers defined by you and also by rails (such as <code class="language-plaintext highlighter-rouge">link_to</code>)</p>
+:ET

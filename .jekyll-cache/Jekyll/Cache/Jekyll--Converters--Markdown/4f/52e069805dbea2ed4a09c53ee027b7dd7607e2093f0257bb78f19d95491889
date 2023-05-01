@@ -1,0 +1,165 @@
+I"0<h1 id="what-is-a-helper">What is a helper?</h1>
+<p>In Rails, a helper is a method that is used in our Rails views to share reused code across them.</p>
+
+<h3 id="when-should-i-create-a-helper-method">When should I create a helper method?</h3>
+<p>When we have logic that produces bits of html, such as formatting a string or conditionally rendering page elements, we can consider using a helper method to clean up we code.</p>
+
+<h3 id="how-do-i-write-a-helper-method">How do I write a helper method?</h3>
+<p>Helpers are modules that fall under <code class="language-plaintext highlighter-rouge">app/helpers</code> in our Rails project. Within the module, we can define methods that will be available in all our views.</p>
+
+<p>For example, say we have a <code class="language-plaintext highlighter-rouge">User</code> model with attributes <code class="language-plaintext highlighter-rouge">first_name</code> and <code class="language-plaintext highlighter-rouge">last_name</code> and we’d like to display a <code class="language-plaintext highlighter-rouge">user</code>’s full name in a view. We could write a helper to re-use:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># app/helpers/user_helper.rb</span>
+
+<span class="k">module</span> <span class="nn">UserHelper</span>
+  <span class="k">def</span> <span class="nf">name_display</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+    <span class="s2">"</span><span class="si">#{</span><span class="n">user</span><span class="p">.</span><span class="nf">first_name</span> <span class="n">user</span><span class="p">.</span><span class="nf">last_name</span><span class="si">}</span><span class="s2">"</span>
+   <span class="k">end</span>
+<span class="k">end</span>
+
+</code></pre></div></div>
+
+<p>In our view:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># app/views/users/index.haml</span>
+
+<span class="o">%</span><span class="n">h1</span> <span class="no">Users</span> <span class="no">Index</span>
+
+<span class="o">%</span><span class="n">ul</span>
+  <span class="o">-</span> <span class="no">User</span><span class="p">.</span><span class="nf">all</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
+    <span class="o">%</span><span class="n">li</span><span class="o">=</span> <span class="n">name_display</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<h3 id="can-we-use-them-in-controllers">Can we use them in controllers?</h3>
+<p>If we’re using Rails 5+, we can use helpers in our controller with the <code class="language-plaintext highlighter-rouge">helpers</code> object. Note that it is possible, but it’s not super common.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># app/controllers/users_controller.rb</span>
+
+<span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+
+  <span class="k">def</span> <span class="nf">show</span>
+   <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+   <span class="vi">@user_name</span> <span class="o">=</span> <span class="n">helpers</span><span class="p">.</span><span class="nf">name_display</span><span class="p">(</span><span class="vi">@user</span><span class="p">)</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+
+</code></pre></div></div>
+
+<h1 id="what-is-a-concern">What is a concern?</h1>
+<p>Concerns are modules that inherit from <code class="language-plaintext highlighter-rouge">ActiveSupport::Concern</code> and can be included in controllers or models. The main difference between concerns and regular modules are convenient features such as <code class="language-plaintext highlighter-rouge">#included</code> and <code class="language-plaintext highlighter-rouge">class_methods</code>. The <code class="language-plaintext highlighter-rouge">included</code> block is  called whenever a module is “included” into another class or module. It usually includes important class methods / callbacks that we want shared across the models using the concern.</p>
+
+<h3 id="when-should-i-create-a-concern">When should I create a concern?</h3>
+<ol>
+  <li>When we have some sort of functionality that is shared across different models. For example, say we have an <code class="language-plaintext highlighter-rouge">#archive</code> function which sets <code class="language-plaintext highlighter-rouge">archived_at</code> for <code class="language-plaintext highlighter-rouge">User</code> and <code class="language-plaintext highlighter-rouge">Post</code>. Instead of writing that method in both models, we can write a concern and <code class="language-plaintext highlighter-rouge">include Archivable</code> instead.</li>
+  <li>When we have some sort of functionality that is shared across different controllers. For example, say we are using the <a href="https://github.com/varvet/pundit">pundit gem</a> to handle authorization in an application that enables users to make posts, comment on posts, and like posts. Say we want to skip authorization in actions related to <code class="language-plaintext highlighter-rouge">Posts</code> and <code class="language-plaintext highlighter-rouge">Comments</code>. We could write a concern that gets included in both controllers.</li>
+</ol>
+
+<h3 id="how-do-i-write-a-concern">How do I write a concern?</h3>
+<p>Concerns live in either <code class="language-plaintext highlighter-rouge">app/controllers/concerns</code> or <code class="language-plaintext highlighter-rouge">app/models/concerns</code>.
+Below, I will demonstrate how to write the concerns for the scenarios discussed above.</p>
+
+<h4 id="model-concerns">Model Concerns</h4>
+<p><strong>Concern:</strong> multiple models can be archived by setting the <code class="language-plaintext highlighter-rouge">archived_at</code> attribute on the model. We can write an <code class="language-plaintext highlighter-rouge">Archivable</code> concern and include it in the necessary models.</p>
+
+<p>The concern:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># app/models/archivable.rb</span>
+
+<span class="k">module</span> <span class="nn">Archivable</span>
+  <span class="kp">extend</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Concern</span>
+
+  <span class="n">included</span> <span class="k">do</span>
+    <span class="n">scope</span> <span class="ss">:unarchived</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="p">{</span> <span class="n">where</span><span class="p">(</span><span class="ss">archived_at: </span><span class="kp">nil</span><span class="p">)</span> <span class="p">}</span>
+    <span class="n">scope</span> <span class="ss">:archived</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="p">{</span> <span class="n">where</span><span class="p">.</span><span class="nf">not</span><span class="p">(</span><span class="ss">archived_at: </span><span class="kp">nil</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">archive</span>
+    <span class="nb">self</span><span class="p">.</span><span class="nf">archived_at</span> <span class="o">=</span> <span class="no">Time</span><span class="p">.</span><span class="nf">now</span>
+    <span class="n">save</span> <span class="ss">validate: </span><span class="kp">false</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">archived?</span>
+    <span class="o">!</span><span class="n">archived_at</span><span class="p">.</span><span class="nf">nil?</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+</code></pre></div></div>
+
+<p>Including it in <code class="language-plaintext highlighter-rouge">User</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># app/models.user.rb</span>
+
+<span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+ <span class="kp">include</span> <span class="no">Archivable</span>
+
+ <span class="o">...</span>
+<span class="k">end</span>
+
+</code></pre></div></div>
+
+<p>And again in <code class="language-plaintext highlighter-rouge">Post</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># app/models.post.rb</span>
+
+<span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+ <span class="kp">include</span> <span class="no">Archivable</span>
+
+ <span class="o">...</span>
+<span class="k">end</span>
+
+</code></pre></div></div>
+
+<p>Now, we can call  the methods defined in the module for instances of <code class="language-plaintext highlighter-rouge">User</code> and <code class="language-plaintext highlighter-rouge">Post</code>, such as <code class="language-plaintext highlighter-rouge">User.last.archive</code>.</p>
+
+<h4 id="controller-concerns">Controller Concerns</h4>
+<p><strong>Concern:</strong> multiple controllers should skip authorization (via pundit). Instead of calling the same callbacks twice, we define a concern and include it in the controller.</p>
+
+<p>The concern:</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># app/controllers/concerns/skip_authorization.rb</span>
+
+<span class="k">module</span> <span class="nn">SkipAuthorization</span>
+  <span class="kp">extend</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Concern</span>
+
+  <span class="n">included</span> <span class="k">do</span>
+    <span class="n">skip_after_action</span> <span class="ss">:verify_authorized</span>
+    <span class="n">skip_after_action</span> <span class="ss">:verify_policy_scoped</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+</code></pre></div></div>
+
+<p>Including it in our <code class="language-plaintext highlighter-rouge">posts_controller</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># app/controllers/posts_controller.rb</span>
+
+<span class="k">class</span> <span class="nc">PostsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="kp">include</span> <span class="no">SkipAuthorization</span>
+
+  <span class="o">...</span>
+<span class="k">end</span>
+
+</code></pre></div></div>
+<p>And again in <code class="language-plaintext highlighter-rouge">comments_controller</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># app/controllers/comments_controller.rb</span>
+
+<span class="k">class</span> <span class="nc">CommentsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="kp">include</span> <span class="no">SkipAuthorization</span>
+
+  <span class="o">...</span>
+<span class="k">end</span>
+
+</code></pre></div></div>
+
+<h1 id="whats-the-difference-between-a-helper-and-a-concern">What’s the difference between a helper and a concern?</h1>
+
+<p>To state it simply, <strong>helpers</strong> contain methods to be used in views. <strong>Concerns</strong> contain methods to be included in controllers/models.</p>
+
+<h2 id="additional-resources">Additional Resources</h2>
+<ul>
+  <li><a href="https://thoughtbot.com/blog/disambiguate-rails-helpers">Disambiguting Rails Helpers</a></li>
+  <li><a href="https://api.rubyonrails.org/classes/ActiveSupport/Concern.html">Rails Concerns</a></li>
+</ul>
+:ET

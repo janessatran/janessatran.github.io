@@ -1,0 +1,103 @@
+I"�@<h2 id="im-learning-game-development-">I’m learning Game Development !!</h2>
+<p>I’ve recently been drawn to learning how to develop games. If you read <a href="/pursuitofjoy/">my post about 2021 being the Year of Joy</a>, you will know that my intention for this year is to pursue the things that bring about this feeling. Learning new things brings me joy (one of my top values in life is growth), and creating things that are fun and cute definitely bring me A LOT of joy.</p>
+
+<p>I started the learning process by completing <a href="https://mozdevs.github.io/html5-games-workshop/en/guides/platformer/start-here/">Mozilla’s HTML5 Games Workshop</a>. It walks through how to use Phaser.js to build a platformer game and provides all the assets in order to build out two levels of the game.</p>
+
+<p>At the end of the workshop, it details a few suggestions of <a href="https://mozdevs.github.io/html5-games-workshop/en/guides/platformer/moving-forward/">additional features that would improve the game</a>. I plan to add these features to continue learning. I also intend to share my learning journey here on my blog, starting with the first add-on feature: game states!</p>
+
+<h2 id="adding-game-states">Adding Game States</h2>
+<p>A “state” represents the screen in the game. For example, you may have a loading state, play state, win state, menu state, etc. Adding onto the workshop game, I implemented a <strong>Menu State</strong>, which appears when the game first loads, and a <strong>Win State</strong>, which appears after all the levels are complete.</p>
+
+<p>Our <code class="language-plaintext highlighter-rouge">game</code> object is created with <a href="https://phaser.io/docs/2.4.4/Phaser.Game.html">Phaser’s Game class</a>. One of the objects available to the <code class="language-plaintext highlighter-rouge">game</code> object is <code class="language-plaintext highlighter-rouge">state</code>, which is an instantiation of the <code class="language-plaintext highlighter-rouge">StateManager</code> class, which is very properly named because it basically just manages the game states. You can add new states to the game by calling <code class="language-plaintext highlighter-rouge">game.state.add(key, state)</code>, where <code class="language-plaintext highlighter-rouge">key</code> is a string you define to uniquely reference the state, and <code class="language-plaintext highlighter-rouge">state</code> is an object representing the state you want to switch to.</p>
+
+<p>I set up the additional game states in the main window onload function.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Create game object.</span>
+    <span class="kd">let</span> <span class="nx">game</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Phaser</span><span class="p">.</span><span class="nx">Game</span><span class="p">(</span><span class="mi">960</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="nx">Phaser</span><span class="p">.</span><span class="nx">AUTO</span><span class="p">,</span> <span class="dl">'</span><span class="s1">game</span><span class="dl">'</span><span class="p">)</span>
+
+    <span class="c1">// Define game states.</span>
+    <span class="c1">// A game state represents one "screen" in the game</span>
+    <span class="c1">// the screen consists of: loading screen, main menu, level, etc</span>
+    <span class="nx">game</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="dl">'</span><span class="s1">play</span><span class="dl">'</span><span class="p">,</span> <span class="nx">PlayState</span><span class="p">);</span>
+    <span class="nx">game</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="dl">'</span><span class="s1">menu</span><span class="dl">'</span><span class="p">,</span> <span class="nx">MenuState</span><span class="p">);</span>
+    <span class="nx">game</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="dl">'</span><span class="s1">win</span><span class="dl">'</span><span class="p">,</span> <span class="nx">WinState</span><span class="p">);</span>
+
+    <span class="c1">// Set starting state to menu.</span>
+    <span class="nx">game</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="dl">'</span><span class="s1">menu</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>Accordingly, I created my state objects: <code class="language-plaintext highlighter-rouge">MenuState</code> and <code class="language-plaintext highlighter-rouge">WinState</code>.</p>
+
+<p>In the <code class="language-plaintext highlighter-rouge">MenuState</code> object, I load the assets in the <code class="language-plaintext highlighter-rouge">preload</code> function and set up the background image and text labels in <code class="language-plaintext highlighter-rouge">create</code>. I also added a keyboard listener to start the game once the user presses the “W” key by defining the <code class="language-plaintext highlighter-rouge">start</code> function to call the <code class="language-plaintext highlighter-rouge">play</code> state for the game object.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/******************************************************
+  Menu State
+*******************************************************/</span>
+<span class="nx">MenuState</span> <span class="o">=</span> <span class="p">{};</span>
+
+<span class="nx">MenuState</span><span class="p">.</span><span class="nx">preload</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">load</span><span class="p">.</span><span class="nx">image</span><span class="p">(</span><span class="dl">'</span><span class="s1">background</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">images/background.png</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">MenuState</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">add</span><span class="p">.</span><span class="nx">image</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="dl">'</span><span class="s1">background</span><span class="dl">'</span><span class="p">);</span>
+
+    <span class="kd">let</span> <span class="nx">nameLabel</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">add</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Adventures of Leat</span><span class="dl">'</span><span class="p">,</span>
+        <span class="p">{</span><span class="na">font</span><span class="p">:</span> <span class="dl">'</span><span class="s1">50px Arial</span><span class="dl">'</span><span class="p">,</span> <span class="na">fill</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#107003</span><span class="dl">'</span><span class="p">})</span>
+
+    <span class="kd">let</span> <span class="nx">startLabel</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">add</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">world</span><span class="p">.</span><span class="nx">height</span> <span class="o">-</span> <span class="mi">80</span><span class="p">,</span>
+        <span class="dl">'</span><span class="s1">Press the "W" key to start</span><span class="dl">'</span><span class="p">,</span>
+        <span class="p">{</span><span class="na">font</span><span class="p">:</span> <span class="dl">'</span><span class="s1">25px Arial</span><span class="dl">'</span><span class="p">,</span> <span class="na">fill</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#107003</span><span class="dl">'</span><span class="p">})</span>
+
+    <span class="kd">let</span> <span class="nx">wKey</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">input</span><span class="p">.</span><span class="nx">keyboard</span><span class="p">.</span><span class="nx">addKey</span><span class="p">(</span><span class="nx">Phaser</span><span class="p">.</span><span class="nx">KeyCode</span><span class="p">.</span><span class="nx">W</span><span class="p">);</span>
+    <span class="nx">wKey</span><span class="p">.</span><span class="nx">onDown</span><span class="p">.</span><span class="nx">addOnce</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">start</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">MenuState</span><span class="p">.</span><span class="nx">start</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="dl">'</span><span class="s1">play</span><span class="dl">'</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="p">{</span><span class="na">level</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">WinState</code> object is very similar, except instead of starting the game, it restarts the game when the user presses “W”:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/******************************************************
+  Win State
+*******************************************************/</span>
+<span class="nx">WinState</span> <span class="o">=</span> <span class="p">{};</span>
+
+<span class="nx">WinState</span><span class="p">.</span><span class="nx">preload</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">load</span><span class="p">.</span><span class="nx">image</span><span class="p">(</span><span class="dl">'</span><span class="s1">background</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">images/background.png</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">WinState</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">add</span><span class="p">.</span><span class="nx">image</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="dl">'</span><span class="s1">background</span><span class="dl">'</span><span class="p">);</span>
+
+    <span class="kd">let</span> <span class="nx">winLabel</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">add</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="dl">'</span><span class="s1">YOU WON!</span><span class="dl">'</span><span class="p">,</span>
+        <span class="p">{</span><span class="na">font</span><span class="p">:</span> <span class="dl">'</span><span class="s1">50px Arial</span><span class="dl">'</span><span class="p">,</span> <span class="na">fill</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#760e99</span><span class="dl">"</span><span class="p">});</span>
+    <span class="kd">let</span> <span class="nx">startLabel</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">add</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">world</span><span class="p">.</span><span class="nx">height</span> <span class="o">-</span> <span class="mi">80</span><span class="p">,</span>
+        <span class="dl">'</span><span class="s1">Press the "W" key to restart</span><span class="dl">'</span><span class="p">,</span>
+        <span class="p">{</span><span class="na">font</span><span class="p">:</span> <span class="dl">'</span><span class="s1">25px Arial</span><span class="dl">'</span><span class="p">,</span> <span class="na">fill</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#107003</span><span class="dl">'</span><span class="p">})</span>
+
+    <span class="kd">let</span> <span class="nx">wKey</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">input</span><span class="p">.</span><span class="nx">keyboard</span><span class="p">.</span><span class="nx">addKey</span><span class="p">(</span><span class="nx">Phaser</span><span class="p">.</span><span class="nx">KeyCode</span><span class="p">.</span><span class="nx">W</span><span class="p">);</span>
+    <span class="nx">wKey</span><span class="p">.</span><span class="nx">onDown</span><span class="p">.</span><span class="nx">addOnce</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">restart</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">WinState</span><span class="p">.</span><span class="nx">restart</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="dl">'</span><span class="s1">menu</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="resulting-features">Resulting Features</h2>
+<p>The result looks like this:
+<img src="https://i.imgur.com/Q3XcBn4.png" alt="A screen that says 'Adventures of Leat' and 'Press w to start'" /></p>
+
+<p>and our Win State:
+<img src="https://i.imgur.com/Ra31dBW.png" alt="A screen that says 'You Won' and 'Press w to restart'" /></p>
+
+<p>Pretty cool, I think!!</p>
+
+:ET

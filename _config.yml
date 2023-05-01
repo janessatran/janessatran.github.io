@@ -3,7 +3,7 @@ title: Janessa Tran
 description: >- # site description
   Full-stack software engineer
 lang: en-US # default lang
-timezone: Central # set your timezone
+timezone: # set your timezone
 image: assets/img/me.png # This image used for Open Graph more info https://ogp.me/
 repo: https://github.com/janessatran # site repo [optional]
 mode: dark # default theme "dark" | "light"
@@ -12,7 +12,7 @@ mode: dark # default theme "dark" | "light"
 author:
   name: Janessa Tran # author name
   bio: >- # tell to the world
-    Software Engineer.
+    i like to make art and stuff. currently a software engineer @ Adobe.
   username: username # general username
   github: janessatran # github username
   twitter: janessatran_ # twitter username

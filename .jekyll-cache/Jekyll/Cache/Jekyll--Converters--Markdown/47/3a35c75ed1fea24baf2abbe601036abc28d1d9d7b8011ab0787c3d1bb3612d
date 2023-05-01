@@ -1,0 +1,112 @@
+I"�=<p><em>This is the third post in my series on learning html game development. You can find the other posts <a href="/tags/#Game%20Dev">here</a>!</em></p>
+
+<p>While I don’t play a lot of video games, video game music is honestly one of my favorite genres of music. I find it really great to work to (because it’s upbeat/not distracting) and I also think sometimes it can really complete a game. To no surprise, I was pretty excited about this next feature which involves adding background music to the different game states (these starts are menu, play, and win)! If you’d like to learn how I did it, continue reading!</p>
+
+<h2 id="getting-the-music">Getting the music</h2>
+
+<p>The first thing we need to do is obtain audio files which we can then load into the game. The website I used to download free audio is <a href="https://www.playonloop.com/">playonloop.com</a>. They have a section for royalty-free music and allow people to download free short versions of the audio. Once you download your audio files, move them into the development repo (I put mine under <code class="language-plaintext highlighter-rouge">/audio</code>) for easy access.</p>
+
+<h2 id="adding-the-music-to-our-game">Adding the music to our game</h2>
+
+<h3 id="menu-music">Menu Music</h3>
+
+<p>The first audio file we are going to add to our game is the one that plays while the player is on the menu page. We load our files, like our other assets, inside the <code class="language-plaintext highlighter-rouge">preload</code> method for each state class.</p>
+
+<p>Read in audio files in <code class="language-plaintext highlighter-rouge">preload</code> method:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">MenuState</span><span class="p">.</span><span class="nx">preload</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">load</span><span class="p">.</span><span class="nx">audio</span><span class="p">(</span><span class="dl">'</span><span class="s1">music</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">audio/menu-music.wav</span><span class="dl">'</span><span class="p">)</span>
+        <span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Then, in the <code class="language-plaintext highlighter-rouge">create</code> method, create the audio and play it. We set <code class="language-plaintext highlighter-rouge">this.music.loop</code> to true to enable the music to play continuously.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">MenuState</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">music</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">add</span><span class="p">.</span><span class="nx">audio</span><span class="p">(</span><span class="dl">'</span><span class="s1">music</span><span class="dl">'</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">music</span><span class="p">.</span><span class="nx">loop</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">music</span><span class="p">.</span><span class="nx">play</span><span class="p">();</span>
+  <span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Since the music is playing continuously, however, we want to ensure that we stop the music before we change states so that the music doesn’t overlap.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">MenuState</span><span class="p">.</span><span class="nx">start</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="dl">'</span><span class="s1">play</span><span class="dl">'</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="p">{</span><span class="na">level</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">music</span><span class="p">.</span><span class="nx">pause</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="playing-music">Playing Music</h3>
+
+<p>Next, we set up the music that plays while the game is being played. I wanted to keep the music continuous playing regardless of the level, so I had to create a variable to check if the music was already playing since music gets added at each level. I set this up by creating a flag in <code class="language-plaintext highlighter-rouge">init()</code> to keep track if the background music is playing, and then pass along the value every time a new level is created.</p>
+
+<p>Set the variable:</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">PlayState</span><span class="p">.</span><span class="nx">init</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">bgMusicPlaying</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">bgMusicPlaying</span> <span class="o">||</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Check if music is playing via our variable <code class="language-plaintext highlighter-rouge">this.bgMusicPlaying</code>, if not, play it and set the variable:</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">PlayState</span><span class="p">.</span><span class="nx">_loadLevel</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">bgMusicPlaying</span> <span class="o">===</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">music</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">add</span><span class="p">.</span><span class="nx">audio</span><span class="p">(</span><span class="dl">'</span><span class="s1">background</span><span class="dl">'</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">music</span><span class="p">.</span><span class="nx">loop</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">music</span><span class="p">.</span><span class="nx">play</span><span class="p">();</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">bgMusicPlaying</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Additionally, whenever we call restart (the hero dies, or the game advances to the next level), we pass <code class="language-plaintext highlighter-rouge">this.bgMusicPlaying</code> to ensure that we don’t add another layer of music if it’s already playing.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">restart</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="p">{</span> <span class="na">level</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">level</span><span class="p">,</span> <span class="na">bgMusicPlaying</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">bgMusicPlaying</span><span class="p">});</span>
+</code></pre></div></div>
+
+<p>Finally, when the game is over, we transition to the win state, so we want to ensure that the music stops playing before we move on. We do this by checking if the next level is the last level, and if it is, pause the music.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">PlayState</span><span class="p">.</span><span class="nx">_nextLevel</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">hero</span><span class="p">.</span><span class="nx">dying</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">restart</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="p">{</span> <span class="na">level</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">level</span><span class="p">,</span> <span class="na">bgMusicPlaying</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">bgMusicPlaying</span><span class="p">});</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">level</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="nx">LEVEL_COUNT</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">fade</span><span class="p">();</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">music</span><span class="p">.</span><span class="nx">pause</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">restart</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="p">{</span> <span class="na">level</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="na">bgMusicPlaying</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">bgMusicPlaying</span><span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="win-state-music">Win State Music</h3>
+
+<p>Lastly, we add music to the game for when the player has finished the game. It involves the same steps we’ve already gone over, but repetition never hurts so I’ll state the steps again!</p>
+
+<p>Load the asset in <code class="language-plaintext highlighter-rouge">preload</code></p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">WinState</span><span class="p">.</span><span class="nx">preload</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">load</span><span class="p">.</span><span class="nx">audio</span><span class="p">(</span><span class="dl">'</span><span class="s1">music</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">audio/win-music.wav</span><span class="dl">'</span><span class="p">)</span>
+        <span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Add the audio to the game in <code class="language-plaintext highlighter-rouge">create</code> and set it to play on loop</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">WinState</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">music</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">add</span><span class="p">.</span><span class="nx">audio</span><span class="p">(</span><span class="dl">'</span><span class="s1">music</span><span class="dl">'</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">music</span><span class="p">.</span><span class="nx">loop</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">music</span><span class="p">.</span><span class="nx">play</span><span class="p">();</span>
+        <span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Pause the music when moving to another state</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">WinState</span><span class="p">.</span><span class="nx">restart</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="dl">'</span><span class="s1">menu</span><span class="dl">'</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">music</span><span class="p">.</span><span class="nx">pause</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="summary">Summary</h2>
+
+<p>And there we have it! Each state in the game now has background music 😃 You can check it out yourself <a href="https://janessatran.github.io/html5game/">here</a>.  If you have any suggestions or questions, feel free to reach out! Thanks for reading!</p>
+:ET

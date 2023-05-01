@@ -1,0 +1,113 @@
+I"�4<p><em>This is the sixth post in my series on learning html game development. You can find the other posts <a href="https://www.janessatran.com/tags/#game-dev">here</a>!</em></p>
+
+<p>This post brings us to an end of my series on adding features to Adventures of Leat. The final features I will discuss include an animation effect I added to when Leat enters a door with a key, as well as a camera fade that occurs when transitioning to the  win screen. As always, if you’re interested in learning how I implemented these features, just keep reading!</p>
+
+<h2 id="subtle-animations-to-improve-realism">Subtle Animations to Improve Realism</h2>
+
+<p>Outside the land where Leat lives, when you open a door you have to actually go through the door before you enter into a new space. In the game, I emanate this illusion of realism by adding an animation which turns the door black while Leat walks through.</p>
+
+<p>The parts of the code that are relevant for implementing this functionality include the door sprite, which is loaded in the <code class="language-plaintext highlighter-rouge">PlayState</code> class as <code class="language-plaintext highlighter-rouge">this.door</code> , as well as the method which handles the event <code class="language-plaintext highlighter-rouge">PlayState._onHeroVsDoor</code>.</p>
+
+<p>First, we want to add an animation to our door sprite. In <code class="language-plaintext highlighter-rouge">PlayState.create</code> we add:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">door</span><span class="p">.</span><span class="nx">animations</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="dl">'</span><span class="s1">open</span><span class="dl">'</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="mi">8</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The arguments provided in this line of code do the following:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">open</code>: the unique name which we will use to reference the animation when we want to play it</li>
+  <li><code class="language-plaintext highlighter-rouge">[1,2]</code>: the frames we will play from the sprite sheet (pictured below)</li>
+  <li><code class="language-plaintext highlighter-rouge">8</code>: the rate in frames per second we will play the animation frames</li>
+</ul>
+
+<center><img src="https://i.imgur.com/MGkFN8t.png" alt="sprite sheet of door" /></center>
+
+<p>Next, we will modify the event handler <code class="language-plaintext highlighter-rouge">PlayState._onHeroVsDoor</code> to play the animation and add a time event which allows the entire animation to play before loading the next level by adding a delay.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">PlayState</span><span class="p">.</span><span class="nx">_onHeroVsDoor</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">hero</span><span class="p">,</span> <span class="nx">door</span><span class="p">)</span> <span class="p">{</span>
+     <span class="k">this</span><span class="p">.</span><span class="nx">door</span><span class="p">.</span><span class="nx">animations</span><span class="p">.</span><span class="nx">play</span><span class="p">(</span><span class="dl">'</span><span class="s1">open</span><span class="dl">'</span><span class="p">)</span>
+     <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">time</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_nextLevel</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+ <span class="p">}</span>
+</code></pre></div></div>
+
+<p>That’s it! Now, when Leat enters the door with a key, the open door animation will play and make it look like they are actually going through the door 😃</p>
+
+<center><img src="https://i.imgur.com/1Af2fQ2.gif" alt="door entering animation effect" /></center>
+
+<h2 id="savoring-victory">Savoring Victory</h2>
+
+<blockquote>
+  <p>“Savoring is the capacity to notice, appreciate and intensify the positive aspects of our lives.”</p>
+</blockquote>
+
+<p>Before ending the game and displaying the win screen, I wanted to add a way to enable the player to intentionally savor the moment of completing the game. In order to create this, I added a camera effect which fades the screen black before it eventually fades back to normal on the Win Screen.</p>
+
+<p>To add this, we make use of <code class="language-plaintext highlighter-rouge">game.camera</code> which is automatically created when we initiatialize our <code class="language-plaintext highlighter-rouge">game</code> object. The camera is the view into our world. I’ll include a description from the Phaser documentation itself, as I think the description is pretty good.</p>
+
+<center><img src="https://i.imgur.com/8qOG4aK.png" alt="screenshot of Phaser camera documentation" /></center>
+
+<p><a href="https://phaser.io/docs/2.6.2/Phaser.Camera.html">https://phaser.io/docs/2.6.2/Phaser.Camera.html</a></p>
+
+<p>There are a few things we will need to add in order to implement the camera fade effect, so I will summarize them before jumping into the code. We will need:</p>
+
+<ul>
+  <li>a new function <code class="language-plaintext highlighter-rouge">PlayState.fade</code> which will execute the camera fading</li>
+  <li>a new function <code class="language-plaintext highlighter-rouge">PlayState.transitionToWinState</code> which will handle the change in state to the win state</li>
+  <li>a modification to <code class="language-plaintext highlighter-rouge">PlayState.create</code> to handle the fade completion</li>
+  <li>a modification to <code class="language-plaintext highlighter-rouge">PlayState._nextLevel</code> to call our fade function if the player has completed all the levels</li>
+</ul>
+
+<p>To create a fade effect, we use the <code class="language-plaintext highlighter-rouge">fade</code> function and specify the color and duration of the fade in milliseconds.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">PlayState</span><span class="p">.</span><span class="nx">fade</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+     <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">camera</span><span class="p">.</span><span class="nx">fade</span><span class="p">(</span><span class="mh">0x000000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We also want to set up a handler for what happens after the fade completes, which in this instance is to transition to the Win State. Within <code class="language-plaintext highlighter-rouge">Phaser.Camera</code> is an event handler method called <code class="language-plaintext highlighter-rouge">onFadeComplete</code> which we will use. In <code class="language-plaintext highlighter-rouge">Phaser.create</code>, we set this up with this line of code:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Phaser</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+     <span class="p">...</span>
+     <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">camera</span><span class="p">.</span><span class="nx">onFadeComplete</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">transitionToWinState</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+     <span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This means we also need to set up our event handler for transitioning to the Win State!</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">PlayState</span><span class="p">.</span><span class="nx">transitionToWinState</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+     <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="dl">'</span><span class="s1">win</span><span class="dl">'</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="p">{</span> <span class="na">coins</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">coinPickupCount</span><span class="p">})</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Lastly, we need to set up the call to fade the camera when the player is on the final level. This is handled in <code class="language-plaintext highlighter-rouge">PlayState._nextLevel</code>, so we will modify the conditional to call <code class="language-plaintext highlighter-rouge">this.fade()</code>.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">PlayState</span><span class="p">.</span><span class="nx">_nextLevel</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">hero</span><span class="p">.</span><span class="nx">dying</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">restart</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="p">{</span> <span class="na">level</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">level</span><span class="p">,</span> <span class="na">bgMusicPlaying</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">bgMusicPlaying</span><span class="p">});</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">level</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="nx">LEVEL_COUNT</span><span class="p">)</span> <span class="p">{</span>
+	      <span class="c1">// last level, make camera fade before transitioning!</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">fade</span><span class="p">();</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">music</span><span class="p">.</span><span class="nx">pause</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">restart</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="p">{</span> <span class="na">level</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="na">bgMusicPlaying</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">bgMusicPlaying</span><span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>And it looks like…</p>
+
+<center><img src="https://i.imgur.com/G1QUHLw.gif" alt="camera fade effect turning screen black before showing win screen" /></center>
+
+<h2 id="thats-a-wrap">That’s a wrap!</h2>
+
+<p>If you’ve been following me along on my HTML Game Dev learning experience, thanks a bunch! I hope you found some value in this posts and if you’ve played my game, I hope you had fun!!</p>
+
+<ul>
+  <li><strong>Source code</strong>: <a href="https://github.com/janessatran/html5game/commit/78fcdc69c6aaa19d45f799575a2c6f1dc19f35a8">Add door animation</a>; <a href="https://github.com/janessatran/html5game/commit/98d7316d3d8c0fa63fb2d887c0f2e2ae46a134aa">Add camera fade effect</a></li>
+  <li><strong>Link to game</strong>: <a href="https://janessatran.github.io/html5game/">Adventures of Leat</a></li>
+</ul>
+:ET

@@ -45,59 +45,42 @@ home: true
         x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
   </a>
   &nbsp;&nbsp;
-  <a href="https://instagram.com/artbyjanessa/" target="_blank"
-    rel="noopener" title="Instagram">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0
-      48 48" fill="none" stroke="currentColor" stroke-width="2"
-      stroke-linecap="round" stroke-linejoin="round"><path d="M 16 3 C 8.8324839
-        3 3 8.8324839 3 16 L 3 34 C 3 41.167516 8.8324839 47 16 47 L 34 47 C
-        41.167516 47 47 41.167516 47 34 L 47 16 C 47 8.8324839 41.167516 3 34 3
-        L 16 3 z M 16 5 L 34 5 C 40.086484 5 45 9.9135161 45 16 L 45 34 C 45
-        40.086484 40.086484 45 34 45 L 16 45 C 9.9135161 45 5 40.086484 5 34 L 5
-        16 C 5 9.9135161 9.9135161 5 16 5 z M 37 11 A 2 2 0 0 0 35 13 A 2 2 0 0
-        0 37 15 A 2 2 0 0 0 39 13 A 2 2 0 0 0 37 11 z M 25 14 C 18.936712 14 14
-        18.936712 14 25 C 14 31.063288 18.936712 36 25 36 C 31.063288 36 36
-        31.063288 36 25 C 36 18.936712 31.063288 14 25 14 z M 25 16 C 29.982407
-        16 34 20.017593 34 25 C 34 29.982407 29.982407 34 25 34 C 20.017593 34
-        16 29.982407 16 25 C 16 20.017593 20.017593 16 25 16 z" /></svg>
-    </a>
-    &nbsp;&nbsp;
-  </div>
+</div>
 
-  <div class="works-container">
-    <h3 class="posts-item-note" aria-label="Selected Works">Selected Works</h3>
-    <article class="post-item">
-      <span class="post-item-date">Podcast</span>
-      <h4 class="post-item-title">
-        <a
-          href="https://www.codenewbie.org/podcast/how-newbies-can-contribute-to-open-source">CodeNewbies:
-          How Newbies Can Contribute to Open Source</a>
-      </h4>
-    </article>
-    <article class="post-item">
-      <span class="post-item-date">Guide</span>
-      <h4 class="post-item-title">
-        <a
-          href="https://dev.to/janessatran/a-beginner-s-guide-to-contributing-to-open-source-4fen">A
-          Beginner's Guide to Contributing to Open Source</a>
-      </h4>
-    </article>
-    <article class="post-item">
-      <span class="post-item-date">Data Viz</span>
-      <h4 class="post-item-title">
-        <a
-          href="https://sites.google.com/site/tranjanessa/home/lorenzanimations">Animating
-          Higher Dimensional Lorenz Models with Python</a>
-      </h4>
-    </article>
-  </div>
-
-  <h3 class="posts-item-note" aria-label="Recent Posts">Recent Posts</h3>
-  {%- for post in site.posts limit: site.number_of_posts -%}
+<div class="works-container">
+  <h3 class="posts-item-note" aria-label="Selected Works">Selected Works</h3>
   <article class="post-item">
-    <span class="post-item-date">{{ post.date | date: "%b %d, %Y" }}</span>
+    <span class="post-item-date">Podcast</span>
     <h4 class="post-item-title">
-      <a href="{{ post.url }}">{{ post.title | escape }}</a>
+      <a
+        href="https://www.codenewbie.org/podcast/how-newbies-can-contribute-to-open-source">CodeNewbies:
+        How Newbies Can Contribute to Open Source</a>
     </h4>
   </article>
-  {%- endfor -%}
+  <article class="post-item">
+    <span class="post-item-date">Guide</span>
+    <h4 class="post-item-title">
+      <a
+        href="https://dev.to/janessatran/a-beginner-s-guide-to-contributing-to-open-source-4fen">A
+        Beginner's Guide to Contributing to Open Source</a>
+    </h4>
+  </article>
+  <article class="post-item">
+    <span class="post-item-date">Data Viz</span>
+    <h4 class="post-item-title">
+      <a
+        href="https://sites.google.com/site/tranjanessa/home/lorenzanimations">Animating
+        Higher Dimensional Lorenz Models with Python</a>
+    </h4>
+  </article>
+</div>
+
+<h3 class="posts-item-note" aria-label="Recent Posts">Recent Posts</h3>
+{%- for post in site.posts limit: site.number_of_posts -%}
+<article class="post-item">
+  <span class="post-item-date">{{ post.date | date: "%b %d, %Y" }}</span>
+  <h4 class="post-item-title">
+    <a href="{{ post.url }}">{{ post.title | escape }}</a>
+  </h4>
+</article>
+{%- endfor -%}

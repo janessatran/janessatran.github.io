@@ -15,6 +15,12 @@
   transition: none;
 }
 
+// colors
+$color__black: #000000;
+$color__gray: #eeeeee;
+$color__beige: #ffeed4;
+$color__yellow: #fefeca;
+
 html {
   overflow-x: hidden;
   width: 100%;
@@ -46,7 +52,7 @@ body {
   overflow-x: hidden;
   position: relative;
   color: $text-base-color;
-  background-color: $white;
+  background: $color__beige;
   font: $normal-weight #{$base-font-size}/#{$base-line-height} $sans-family;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
@@ -81,7 +87,7 @@ figure,
 strong,
 b {
   font-weight: $bold-weight;
-  color: $black;
+  color: $red;
 }
 
 // horizontal rule
@@ -97,7 +103,7 @@ kbd {
   -webkit-border-radius: 3px;
   border: 1px solid $light;
   border-radius: 2px;
-  color: $black;
+  color: $red;
   display: inline-block;
   font-size: $small-font-size;
   line-height: 1.4;
@@ -183,7 +189,7 @@ li {
   padding-top: 1px;
 
   &:before {
-    color: $black;
+    color: $red;
   }
 
   > ul,
@@ -200,7 +206,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: $black;
+  color: $red;
   font-weight: $bold-weight;
   & + ul,
   & + ol {
@@ -234,7 +240,7 @@ a {
   text-decoration-color: $smoke;
 
   &:hover {
-    color: $text-link-blue;
+    color: $text-link-red;
   }
 
   &:focus {
@@ -329,7 +335,7 @@ table {
 
   thead {
     font-weight: $bold-weight;
-    color: $black;
+    color: $red;
     border-bottom: 1px solid $light;
   }
 
@@ -351,8 +357,8 @@ table {
 // When mouse block a text set this color
 mark,
 ::selection {
-  background: #fffba0;
-  color: $black;
+  background: #d5711f5b;
+  color: $red;
 }
 
 // Github Gist clear border

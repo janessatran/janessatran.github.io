@@ -1,0 +1,206 @@
+I"4C<p>Good morning my fellow readers! I’m continuing to go through Rails AntiPatterns and have more things I’d like to share as I’m learning. This post will be about how to simplify Models using modules and classes.</p>
+
+<h3 id="tldr">TL;DR</h3>
+<p>If you don’t want to read the entire thing, this is what I’ve learned in a nutshell…
+To simplify Models:</p>
+<ol>
+  <li>Identify if your description of a Model/Class requires you use “and” or “or”. If it does, delegate the responsibility of some of the methods to a new class.
+    <ul>
+      <li>You can use the <code class="language-plaintext highlighter-rouge">delegate</code> method to do this. More on that <a href="https://apidock.com/rails/Module/delegate">here</a>.</li>
+      <li>You can also use the <code class="language-plaintext highlighter-rouge">composed_of</code> method to do this. More on that <a href="https://apidock.com/rails/ActiveRecord/Aggregations/ClassMethods/composed_of">here</a>.
+        <ul>
+          <li>When you use composition, you create a value object. A <strong>value object</strong> represents an entity that is equal based on value (two different objects with equal attribute values are considered equal objects). Primitive objects in Ruby such as <code class="language-plaintext highlighter-rouge">Symbol</code>, <code class="language-plaintext highlighter-rouge">String</code>, <code class="language-plaintext highlighter-rouge">Integer</code>, etc are examples of value objects.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>You can use <strong>modules</strong> to extract behavior into separate files and then <code class="language-plaintext highlighter-rouge">include</code> or <code class="language-plaintext highlighter-rouge">extend</code> them into your classes as necessary. Modules have two main purposes:
+    <ul>
+      <li>One, <strong>namespacing</strong> - a way of bundling logically related objects together into a single namespace, which helps with possible clashing of the same class names(an example of a namespace/module is <code class="language-plaintext highlighter-rouge">ActiveRecord::Base</code>).</li>
+      <li>Two, <strong>mixins</strong> - providing multiple inheritance of a module through including or extending them into other classes.
+        <ul>
+          <li>When you <code class="language-plaintext highlighter-rouge">include</code> a module, the module methods are instance methods.</li>
+          <li>When you <code class="language-plaintext highlighter-rouge">extend</code> a module, the module methods are class methods.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Try to avoid large transaction blocks in Controllers and Models, use <a href="https://guides.rubyonrails.org/active_record_validations.html">validations</a> such as <code class="language-plaintext highlighter-rouge">presence: true</code> and <a href="https://guides.rubyonrails.org/active_record_callbacks.html">callbacks</a> such as <code class="language-plaintext highlighter-rouge">before_save</code> in your Models instead.</li>
+</ol>
+
+<h1 id="how-to-use-modulesclasses-to-clean-up-models">How to use Modules/Classes to clean up Models!</h1>
+<h3 id="delegate-responsibility-to-new-classes">Delegate Responsibility to New Classes</h3>
+<p>Say we have a model <code class="language-plaintext highlighter-rouge">Purchase</code> . It has methods to return purchases by different criteria and export purchases in different formats:</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Purchase</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">belongs_to</span> <span class="ss">:customer</span>
+  <span class="n">has_many</span> <span class="ss">:items</span>
+
+  <span class="k">def</span> <span class="nf">find_returned_credit_card_purchases</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">find_completed_cash_purchases</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">to_xml</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">to_json</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">to_csv</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p>If we think about how to describe this class, we can see that it violates the Single Responsibility Principle.</p>
+
+<p>“The Single Responsibility Principle (SRP), in short, states that a class should only be responsible for one thing.”</p>
+
+<p>You can check if your class design is in violation of this rule by asking yourself how you’d describe it and see if you need the words “and” or “or” to fully relay the functionality. For our <code class="language-plaintext highlighter-rouge">Purchase</code> class, we’re doing two things: 1) creating methods to make more advanced search queries, and 2) creating methods to export data in various formats.</p>
+
+<p>We want to move the export methods out of the <code class="language-plaintext highlighter-rouge">Purchase</code> class because they’re not really part of a <code class="language-plaintext highlighter-rouge">Purchase</code> object.</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># app/models/purchase.rb</span>
+<span class="k">class</span> <span class="nc">Purchase</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">belongs_to</span> <span class="ss">:customer</span>
+  <span class="n">has_many</span> <span class="ss">:items</span>
+  <span class="n">delegate</span> <span class="ss">:to_xml</span><span class="p">,</span> <span class="ss">:to_csv</span><span class="p">,</span> <span class="ss">:to_pdf</span><span class="p">,</span> <span class="ss">to: </span><span class="s1">'converter'</span>
+
+  <span class="k">def</span> <span class="nf">find_returned_credit_card_purchases</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">find_completed_cash_purchases</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">converter</span>
+    <span class="no">PurchaseConverter</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># app/models/purchase_converter.rb</span>
+<span class="k">class</span> <span class="nc">OrderConverter</span>
+  <span class="nb">attr_reader</span> <span class="ss">:purchase</span>
+
+  <span class="k">def</span> <span class="nf">intialize</span><span class="p">(</span><span class="n">purchase</span><span class="p">)</span>
+    <span class="vi">@purchase</span> <span class="o">=</span> <span class="n">purchase</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">to_xml</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">to_json</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">to_csv</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p>In our refactoring, we moved the conversion methods into a new class <code class="language-plaintext highlighter-rouge">OrderConverter</code> and used delegations to enable us to call <code class="language-plaintext highlighter-rouge">@purchase.to_pdf</code>, which also follows the Law of Demeter!</p>
+
+<p>Another way to separate responsibility to separate classes is through the use of <strong>composition.</strong></p>
+
+<h4 id="rails-composed_of-method">Rails <code class="language-plaintext highlighter-rouge">composed_of</code> method</h4>
+
+<p>This method “adds reader and writer methods for manipulating a value object”.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">composed_of</code> method takes three main options:</p>
+
+<ol>
+  <li>the name of the method that will reference the new object</li>
+  <li>the name of the object’s class (<code class="language-plaintext highlighter-rouge">:class_name</code>)</li>
+  <li>the mapping of database columns to attributes on the object (<code class="language-plaintext highlighter-rouge">:mapping</code>)</li>
+</ol>
+
+<p>For example:  if we had a <code class="language-plaintext highlighter-rouge">Company</code> model that comprised of an <code class="language-plaintext highlighter-rouge">address</code>, among other things, we could define a composition in our class like so:</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Company</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">composed_of</span> <span class="ss">:address</span><span class="p">,</span> 
+              <span class="ss">:mapping</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="sx">%w(address_street street)</span><span class="p">,</span> <span class="sx">%w(address_city city)</span><span class="p">]</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p>This would give us an <code class="language-plaintext highlighter-rouge">Address</code> class that looks like the following:</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Address</span>
+  <span class="nb">attr_reader</span> <span class="ss">:street</span><span class="p">,</span> <span class="ss">:city</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">street</span><span class="p">,</span> <span class="n">city</span><span class="p">)</span>
+    <span class="vi">@street</span><span class="p">,</span> <span class="vi">@city</span> <span class="o">=</span> <span class="n">street</span><span class="p">,</span> <span class="n">city</span>
+  <span class="k">end</span>
+
+  <span class="c1"># we can define more methods like the ones below to compare these objects</span>
+  <span class="k">def</span> <span class="nf">close_to?</span><span class="p">(</span><span class="n">other_address</span><span class="p">)</span>
+    <span class="n">city</span> <span class="o">==</span> <span class="n">other_address</span><span class="p">.</span><span class="nf">city</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">==</span><span class="p">(</span><span class="n">other_address</span><span class="p">)</span>
+    <span class="n">city</span> <span class="o">==</span> <span class="n">other_address</span><span class="p">.</span><span class="nf">city</span> <span class="o">&amp;&amp;</span> <span class="n">street</span> <span class="o">==</span> <span class="n">other_address</span><span class="p">.</span><span class="nf">street</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p>Now, when t we set a <code class="language-plaintext highlighter-rouge">Company</code> object’s address with a street and city, we can obtain the <code class="language-plaintext highlighter-rouge">address</code> like:</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">company</span><span class="p">.</span><span class="nf">address_street</span> <span class="o">=</span> <span class="s2">"Cedar Grove"</span>
+<span class="n">company</span><span class="p">.</span><span class="nf">address_city</span> <span class="o">=</span> <span class="s2">"Portland"</span>
+<span class="n">company</span><span class="p">.</span><span class="nf">address</span> <span class="c1"># =&gt; Address.new("Cedar Grove", "Portland")</span>
+</code></pre></div></div>
+<h4 id="a-lil-note-the-difference-between-value-objects-and-entity-objects">A lil note: the difference between Value Objects and Entity Objects</h4>
+
+<p>Most objects we deal with, such as if we were to instantiate our <code class="language-plaintext highlighter-rouge">Company</code> class, would be considered an entity object. We could have two instances of <code class="language-plaintext highlighter-rouge">Company</code> with the same values in each attribute, but they would still be considered not equal because they are distinct objects.</p>
+
+<p>On the other hand, our <code class="language-plaintext highlighter-rouge">Address</code> class describes a Value object.  Value objects are compared by value, so if we had two instances of <code class="language-plaintext highlighter-rouge">Address</code> with the same values for each attribute, we would consider those objects equal because their attribute values match.</p>
+
+<h3 id="use-modules">Use Modules</h3>
+
+<p>Modules allow you to extract behavior into separate files. If you had an <code class="language-plaintext highlighter-rouge">Order</code> class, for example, and had methods for finding all the others, searching against all the orders, and exporting all the orders into various data formats, you could move those methods into modules to organize the functionality better.  If you did this, you could result in creating the following module files:</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">lib/order_state_finders.rb</code></li>
+  <li><code class="language-plaintext highlighter-rouge">lib/order_searchers.rb</code></li>
+  <li><code class="language-plaintext highlighter-rouge">lib/order_exporters.rb</code></li>
+</ol>
+
+<p>More on modules!</p>
+
+<p>They have two primary purposes:</p>
+
+<ol>
+  <li>Namespacing - a way of bundling logically related objects together</li>
+  <li>Mixins - Ruby’s way of providing multiple inheritance</li>
+</ol>
+
+<p><strong>Namespacing</strong></p>
+
+<p>Namespacing helps with the possibility of clashing names among various classes. For example, if we were to create a new gem with <code class="language-plaintext highlighter-rouge">bundle gem sufjan_stevens</code>, we would get a default file with a module in it:</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">require</span> <span class="s2">"sufjan_stevens/version"</span>
+
+<span class="k">module</span> <span class="nn">SufjanStevens</span>
+  <span class="o">...</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p>If we were to make a new class, we could put it in the <code class="language-plaintext highlighter-rouge">SufjanStevens</code> namespace:</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="nn">SufjanStevens</span>
+  <span class="k">class</span> <span class="nc">Song</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p>Now, if we were to make another gem that also had a <code class="language-plaintext highlighter-rouge">Song</code> class, we could distinguish between the two by using the namespace <code class="language-plaintext highlighter-rouge">SufjanStevens::Song.new</code>.</p>
+
+<p>Psst… we see this in rails with <code class="language-plaintext highlighter-rouge">ActiveRecord::Base</code>, the module being named <code class="language-plaintext highlighter-rouge">ActiveRecord</code>.</p>
+
+<p><strong>Mixins</strong></p>
+
+<p>If you have methods that need to be accessed across different classes, instead of repeating those methods in each class, you can abstract them into a module and <strong>include</strong> or <strong>extend</strong> the modules in each class.</p>
+
+<h4 id="a-lil-note-on-include-vs-extend">A lil note on <code class="language-plaintext highlighter-rouge">include</code> vs <code class="language-plaintext highlighter-rouge">extend</code>:</h4>
+
+<p>When you <strong>include</strong> a module in a class, those methods that get called on the class are instance methods. When you <strong>extend</strong> a module in a class, those methods become class methods.</p>
+
+<h3 id="avoid-large-transaction-blocks-in-controllers-and-models">Avoid large transaction blocks in Controllers and Models</h3>
+
+<p>Active Record supplies built-in transactions such as <strong>validations</strong>, which allow you to ensure that only valid data is stored in your database, and <strong>callbacks</strong>, which allows you to trigger logic before or after an alteration of an object’s state. Employ these instead of create a block of transactions to run to avoid complexity!</p>
+:ET

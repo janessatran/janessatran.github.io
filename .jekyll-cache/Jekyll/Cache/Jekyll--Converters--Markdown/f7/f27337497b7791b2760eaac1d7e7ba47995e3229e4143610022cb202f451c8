@@ -1,0 +1,125 @@
+I"u2<h2 id="day-1-july-17-2022">Day 1: July 17, 2022</h2>
+
+<p><strong>Today’s Progress</strong>: I read Chapter 7 of <a href="https://justjavascript.com/">Just JavaScript</a>, learning about Equality of Values. I also started learning how to use Inkscape as well as how to animate SVGs with JavaScript and CSS.</p>
+
+<p><strong>Thoughts</strong>: I really enjoy how interactive the reading is with Just JavaScript. Also, I can’t help but notice how JS has so many quirks. For example, today I learned about the strict equality operator’s special cases where <code class="language-plaintext highlighter-rouge">NaN === NaN</code> returns false and <code class="language-plaintext highlighter-rouge">0 === -0</code> returns true. What?!</p>
+
+<p>Learning InkScape was not too difficult and pretty fun. I made a bat and I was prett happy with how it turned out. It’s relatively easy to look things up for InkScape! The codepen I created was complaining about the SVG not being real HTML, and I learned it’s because I had exported the image as an InkScape SVG instead of plain SVG, meaning it includes a few properties that are specific to InkScape and technically not HTML. I ended up keeping it as an InkScape SVG because without that type of export, the image didn’t include the namespaces I was querying off of to select the pupils. I know I could add some selector classes off the plain SVG, but the effort was pretty manual so maybe I’ll just do that next time 😆</p>
+
+<p><strong>Link to work</strong>: My notes are private, but the codepen is <a href="https://codepen.io/janessatran/pen/dymNgBQ">here</a>.</p>
+
+<h2 id="day-2-july-18-2022">Day 2: July 18, 2022</h2>
+
+<p><strong>Today’s Progress</strong>: Lots of reading today. I read Chapter 8 of <a href="https://justjavascript.com/">Just JavaScript</a>, about Properties. Also read <a href="https://architecturenotes.co/fallacies-of-distributed-systems/">Fallacies of Distributed Systems</a> and <a href="https://architecturenotes.co/things-you-should-know-about-databases/">Things You Should Know About Databases</a></p>
+
+<p><strong>Thoughts</strong>: Not a ton of time to get into coding work but reading is still something!</p>
+
+<p>The chapter on properties in the Just JavaScript book was really insightful in helping me realize the mental model I have around objects and properties. Again, I highly recommend this book! It’s super interactive and helps you understand how you understand things, and helps you realize when your understanding of things might be a little wrong.</p>
+
+<p>I enjoy how the Architecture Notes blog has a lot of visuals to supplement the articles. Sometimes I find the writing style a bit round-a-bout and distracting, but I learned a lot from it so far so that’s what matters!</p>
+
+<p><strong>Link to work</strong>: No links</p>
+
+<h2 id="day-3-july-19-2022">Day 3: July 19, 2022</h2>
+
+<p><strong>Today’s Progress</strong>: Read about Mutations in Chapter 9 of <a href="https://justjavascript.com/">Just JavaScript</a>. I also started going through a tutorial to learn about WebRTC, which stands for Web Real-Time Communication and is a technology that allows you to stream audio/video media between browsers without an intermediary!</p>
+
+<p><strong>Thoughts</strong>: The mutations chapter felt super reptitive, because it was really similar to the last chapter about properties. Nonetheless, the practice of drawing out how each line of code is visually represented was actually <em>super</em> helpful. While I was very tempted to skip all the drawings, I am glad I stuck it through and completed the chapter because it seems to be helping me cement a more solid understanding of how properties and changing values of properties/objects works in the JS universe!</p>
+
+<p>As for the WebRTC tutorial, I haven’t gotten very far yet but I have learned a bit about WebRTC and how it works! I also learned a few new postgres commands and a bit more about databases!</p>
+
+<p><strong>Link to work</strong>: No links, maybe soon once I go through the WebRTC application tutorial 😃</p>
+
+<h2 id="day-4-july-20-2022">Day 4: July 20, 2022</h2>
+
+<p><strong>Today’s Progress</strong>: Read about Prototypes in the FINAL CHAPTER of <a href="https://justjavascript.com/">Just JavaScript</a>.</p>
+
+<p><strong>Thoughts</strong>: I wish there was more to read/learn from Just JavaScript! I learned about prototypes, the prototype chain, and plan on revisiting my notes just to better cement the learnings in my brain. I really enjoyed this read and I’m considering picking up a course to continue this style of structured, self-paced learning. I’ve often gone the route of learn-by-doing which I think has worked really great, but I also think there’s something to learning from experts before you start tinkering yourself.</p>
+
+<p><strong>Link to work</strong>: No links</p>
+
+<h2 id="day-5-july-21-2022">Day 5: July 21, 2022</h2>
+
+<p><strong>Today’s Progress</strong>: Went through Part 0 of <a href="https://fullstackopen.com/en/">Fullstack Open 2022</a></p>
+
+<p><strong>Thoughts</strong>: Part 0 was just about the fundamentals of web apps. Even though a lot of the information was familiar/known, I did learn a few things (like various buttons/features in the developer console)! So far I like how it’s a mixture of reading and then applying the new information through some sort of activity. In this case, it was creating sequence diagrams for various actions on different types of web apps. I am curious to see if I get feedback on whether or not I did the exercises correctly (you submit your answers in a repo). I guess we will see!</p>
+
+<p><strong>Link to work</strong>: I’m adding the solutions to exercises in <a href="https://github.com/janessatran/fullstack-course">this repo</a></p>
+
+<h2 id="day-4-july-20-2022-1">Day 4: July 20, 2022</h2>
+
+<p><strong>Today’s Progress</strong>: Read about Prototypes in the FINAL CHAPTER of <a href="https://justjavascript.com/">Just JavaScript</a>.</p>
+
+<p><strong>Thoughts</strong>: I wish there was more to read/learn from Just JavaScript! I learned about prototypes, the prototype chain, and plan on revisiting my notes just to better cement the learnings in my brain. I really enjoyed this read and I’m considering picking up a course to continue this style of structured, self-paced learning. I’ve often gone the route of learn-by-doing which I think has worked really great, but I also think there’s something to learning from experts before you start tinkering yourself.</p>
+
+<p><strong>Link to work</strong>: No links</p>
+
+<h2 id="day-6-july-22-2022">Day 6: July 22, 2022</h2>
+
+<p><strong>Today’s Progress</strong>: Went through Part 1a and 1b of <a href="https://fullstackopen.com/en/">Fullstack Open 2022</a></p>
+
+<p><strong>Thoughts</strong>: Part 1a and Part 1b consisted of an introduction to React and an introduction to JavaScript. It was mostly overview for me at this point, but still useful to concretize the information in my brain I suppose!</p>
+
+<p>Also I plan on taking a break this weekend to celebrate another year around the sun! :)</p>
+
+<p><strong>Link to work</strong>: I’ve stored solutions to exercises in the various parts by commit <a href="https://github.com/janessatran/fullstack-course">here</a></p>
+
+<h2 id="day-7-july-25-2022">Day 7: July 25, 2022</h2>
+
+<p><strong>Today’s Progress</strong>: Went through Part 1c of <a href="https://fullstackopen.com/en/">Fullstack Open 2022</a></p>
+
+<p><strong>Thoughts</strong>: A lot of this is review material because it covered component states and event handlers. It was a little boring because it’s all review.</p>
+
+<p><strong>Link to work</strong>: No links</p>
+
+<h2 id="day-8-july-26-2022">Day 8: July 26, 2022</h2>
+
+<p><strong>Today’s Progress</strong>: Started learning more about GraphQL by creating a new app with remix and vendure.</p>
+
+<p><strong>Thoughts</strong>: I read through <a href="https://dev.to/michlbrmly/graphql-fundamentals-hands-on-30lk">this article about GraphQL fundamentals</a> and started up a storefront app using <a href="https://www.vendure.io/">Vendure</a> and <a href="https://github.com/vendure-ecommerce/storefront-remix-starter">this Remix storefront starter</a>. I’m starting to gain familiarity with how to write queries, but still have a lot to learn because I don’t really understand how to use the queries to load the data where I need it. I’m planning to read through <a href="https://layercode.com/community/remix-apollo-graphql">this article about Remix with Apollo GraphQL</a> tomorrow. Hopefully it clears up some of my confusion! I’m trying to do something seemingly simple at the moment: query for a collection via name and use the assets within that collection to load on the homepage. Wish me luck!!</p>
+
+<p><strong>Link to work</strong>: Nothing pushed up yet, so no links!</p>
+
+<h2 id="day-9-july-27-2022">Day 9: July 27, 2022</h2>
+
+<p><strong>Today’s Progress</strong>: Completed the tutorial <a href="https://www.apollographql.com/tutorials/">Odyssey’s Lift-Off Part 1 on GraphQL</a> and read about Remix + Apollo GraphQL.</p>
+
+<p><strong>Thoughts</strong>: I read <a href="https://layercode.com/community/remix-apollo-graphql">the article about Remix + Apollo GraphQL</a> that I had mentioned yesterday, but was still unsuccessful in undersatnding the GraphQL wrapper class in the Remix storefront starter. There’s a lot of things in this tech stack that I’m unfamiliar with so I decided I should probably learn to walk before I try to run. 😂 As a result, I stumbled upon a tutorial to learn GraphQL and went through the first part to learn the basics. It was actually super super useful!! And it feels like a win from yesterday because I was going down a rabbit hole of trying to make an entire app with a new stack and I didn’t even really understand the underlying bits. Well. You live and you learn. I’m learning!!!</p>
+
+<p><strong>Link to work</strong>: I forked the repo that I’m working through in the learning path. It can be found <a href="https://github.com/janessatran/odyssey-lift-off-part1">here</a> if you are so inclined to look into it!</p>
+
+<h2 id="day-10-july-28-2022">Day 10: July 28, 2022</h2>
+
+<p><strong>Today’s Progress</strong>: Started going through part 2 of the tutorial about GraphQL.</p>
+
+<p><strong>Thoughts</strong>: Didn’t have as much time today to study but started learning about the journey of a GraphQL query from the client, to server, and back to the client. Learned some details about how the server converts the query string into an abstract syntax tree, and about resolver functions which populate data for each field in the schema.</p>
+
+<p><strong>Link to work</strong>: No links</p>
+
+<h2 id="day-11-july-29-2022">Day 11: July 29, 2022</h2>
+
+<p><strong>Today’s Progress</strong>: Finished part 2 of the GraphQL tutorial, learning about Resolvers. Also completed part 3, learning about arguments in queries.</p>
+
+<p><strong>Thoughts</strong>: Now that I know more about resolvers and arguments, I’d like to try to go through the storefront code with the graphql wrapper (from previous days) to see if I can better understand the code. It’s pretty late here now though so I’m going to go to bed and will hopefully get to that this weekend!</p>
+
+<p><strong>Link to work</strong>:</p>
+
+<ul>
+  <li><a href="https://github.com/janessatran/odyssey-lift-off-part2">Repo for part 2, about resolvers</a>.</li>
+  <li><a href="https://github.com/janessatran/odyssey-lift-off-part3">Repo for part 3, about arguments</a></li>
+</ul>
+
+<h2 id="day-12-july-30-2022">Day 12: July 30, 2022</h2>
+
+<p><strong>Today’s Progress</strong>: Took a break from the GraphQL tutorial to go back to the storefront app to see if I could get it to work. I did! I set up a new private repo with the server, client, and a somewhat detailed README to get things set up.</p>
+
+<p><strong>Thoughts</strong>: I was able to figure out how to set up the stripe integration for the app and to get the assets I wanted loaded on the homepage. It helped a lot that I learned a bit about GraphQL before attempting to work in this stack. I also got some help from my sister (which if you are reading this, thank you sister!!).</p>
+
+<p><strong>Link to work</strong>: No links, it’s private for now until it gets to a place that is ready to be shared!</p>
+
+<h2 id="day-13-august-01-2022">Day 13: August 01, 2022</h2>
+
+<p><strong>Today’s Progress</strong>: Happy August!! Today I went through a RemixJS tutorial, specifically this <a href="https://remix.run/docs/en/v1/tutorials/blog">Developer Blog</a> one.</p>
+
+<p><strong>Thoughts</strong>: RemixJS is pretty interesting. I see some parallels with Ruby on Rails with the route pages representing the views. I went through the tutorial but haven’t done any of the “homework” tasks. I may go through those at some point.</p>
+:ET

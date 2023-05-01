@@ -1,0 +1,271 @@
+I"ި<p>If I had to name my favorite musician in the entire world, I would probably say it is Sufjan Stevens. He is an Oscar-nominated, indie/folk/electronic/alternative, multiinstrumentalist and musician. He also has a singing voice that is so soft and angelic, you can’t help but feel you’ve transcended this sphere you inhabit (or maybe that’s just me). At the core of it all, however, what attracts me to Sufjan’s music the most is he is fundamentally a storyteller through song. He has written two albums after states in the US (Illinois and Michigan), an album in the perspective of the planets in the universe, an album about the loss of his mother (and an ode to Oregon), among many other albums. For this reason, I thought it would be interesting to attempt to create a model that could generate lyrics of the artistic, story-telling caliber of Sufjan Stevens.</p>
+
+<p align="center">
+ <img src="https://i.imgur.com/KlhtxfB.gif" alt="Sufjan saying Fantastic!" width="80%" />
+</p>
+
+<h4>Deciding upon the LSTM model</h4>
+<p>For the purposes of creating this lyric generator, I decided to use a Long Short Term Memory (LSTM) model. I will briefly go over what an LSTM model is and why I selected it, but if you are interested in a thorough explanation of LSTM model’s I highly recommend 
+<a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTMs by Cristopher Olah</a></p>
+
+<p>Briefly, an LSTM is a type of recurrent neural network that resolves the vanishing gradient problem that recurrent neural networks tend to exhibit. Recurrent neural networks (RNN) are chain-like networks with loops, in contrast to a feed-forward neural network where information only travels one direction. These loops provide a chain-like structure that allows past information to persist in the model. This makes RNNs a good choice for our lyric generator, as the chain-like structure lends itself well to sequences. Theoretically, RNNs are capable of remembering early input information when generating an output later in the network, however in practice they exhibit difficulty learning long-range dependencies. In the optimization process of minimizing the loss function in RNNs, gradients are calculated using the backpropagation algorithm, which uses the chain rule to compute the gradient of the loss (error) with respect to the weights. The issue arises when certain activation functions are used. One such activation function is the sigmoid function because the sigmoid function’s derivative is always less than 0.25, resulting in the potential for a lot of small numbers being multiplied together, ultimately resulting in a really small gradient value (and little to no adjustments to the model weights).</p>
+
+<p>LSTMs avoid the long-term dependency problem by addressing the vanishing gradient issue with a memory unit called the cell. This cell makes a decision by considering previous information at each time step including the previous output, previous cell state, as well as the current input. With each time step, the memory is altered and a new output is generated. The LSTM has the ability to remove/add information to the cell state with structures called gates, which optionally let information through.</p>
+
+<h4>Gathering the data</h4>
+<p>I used two APIs, <a href="https://github.com/enricobacis/lyricwikia">lyricwikia</a> to get the lyrics, and <a href="https://github.com/plamere/spotipy">spotipy</a>, to get the top 50 songs by Sufjan.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># to use the spotipy API you will need to create an acct and get an API key
+</span><span class="n">client_credentials_manager</span> <span class="o">=</span> <span class="n">SpotifyClientCredentials</span><span class="p">(</span><span class="n">client_id</span><span class="o">=</span><span class="s">'ENTER_CLIENT_ID_HERE'</span><span class="p">)</span>
+<span class="n">sp</span> <span class="o">=</span> <span class="n">spotipy</span><span class="p">.</span><span class="n">Spotify</span><span class="p">(</span><span class="n">client_credentials_manager</span><span class="o">=</span><span class="n">client_credentials_manager</span><span class="p">)</span>
+
+<span class="c1"># you can add more artists in the array to pass through the loop
+</span><span class="n">artists</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Sufjan Stevens'</span><span class="p">]</span>
+
+<span class="n">top_50</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">artist</span> <span class="ow">in</span> <span class="n">artists</span><span class="p">:</span>
+    <span class="n">top_50</span><span class="p">[</span><span class="n">artist</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">sp</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">artist</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s">'tracks'</span><span class="p">][</span><span class="s">'items'</span><span class="p">]):</span>
+        <span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s">'. '</span> <span class="o">+</span> <span class="n">t</span><span class="p">[</span><span class="s">'name'</span><span class="p">])</span>
+        <span class="n">top_50</span><span class="p">[</span><span class="n">artist</span><span class="p">].</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s">'name'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h4>Exploratory data analysis</h4>
+<p>After reading in the available lyrics (31 out of 50 song lyrics were available through the API), I mapped the unique words with their frequencies in each song to get an idea of the vocabulary range in his music. I wrote a few functions to complete this task, which I have included the code for below.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">make_upper</span><span class="p">(</span><span class="n">words</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">word</span> <span class="p">:</span> <span class="n">word</span><span class="p">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">words</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">word_cnt</span><span class="p">(</span><span class="n">words</span><span class="p">):</span>
+    <span class="n">wordfreq</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">word</span> <span class="p">:</span> <span class="n">word</span><span class="p">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">words</span><span class="p">)</span>
+    <span class="n">wordlist</span> <span class="o">=</span> <span class="n">words</span><span class="p">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">wordfreq</span> <span class="o">=</span> <span class="p">[</span><span class="n">wordlist</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">wordlist</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">wordlist</span><span class="p">,</span><span class="n">wordfreq</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">get_freqs</span><span class="p">(</span><span class="n">lyrics</span><span class="p">):</span>
+    <span class="n">freqs</span> <span class="o">=</span> <span class="n">word_cnt</span><span class="p">(</span><span class="n">lyrics</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">freqs</span>
+
+
+
+<span class="k">def</span> <span class="nf">get_lyrics</span><span class="p">(</span><span class="n">top_50</span><span class="p">):</span>
+    <span class="n">unique_words</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">titles</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">dictionaries</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">title_lyrics</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">all_lyrics</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">plot_data</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">artist</span> <span class="ow">in</span> <span class="n">top_50</span><span class="p">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">artist</span><span class="p">)</span>
+        <span class="n">songs</span> <span class="o">=</span> <span class="n">top_50</span><span class="p">[</span><span class="n">artist</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">songs</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s">' '</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">lyrics</span> <span class="o">=</span> <span class="n">lyricwikia</span><span class="p">.</span><span class="n">get_lyrics</span><span class="p">(</span><span class="n">artist</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+                <span class="n">all_lyrics</span><span class="p">.</span><span class="n">append</span><span class="p">((</span><span class="n">lyrics</span><span class="p">))</span>
+                <span class="n">freq_vals</span> <span class="o">=</span> <span class="n">get_freqs</span><span class="p">(</span><span class="n">lyrics</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">freq_vals</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s">'unique word count: '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">freq_vals</span><span class="p">)))</span>
+                    <span class="n">title_lyrics</span><span class="p">[</span><span class="n">title</span><span class="p">]</span> <span class="o">=</span> <span class="n">lyrics</span>
+                    <span class="n">xaxis</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">freq_vals</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">freq_vals</span><span class="p">))</span>
+                    <span class="n">trace</span> <span class="o">=</span> <span class="n">go</span><span class="p">.</span><span class="n">Scatter</span><span class="p">(</span>
+                      <span class="n">x</span> <span class="o">=</span> <span class="n">xaxis</span><span class="p">,</span>
+                      <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">freq_vals</span><span class="p">.</span><span class="n">values</span><span class="p">()],</span> 
+                      <span class="n">name</span><span class="o">=</span><span class="n">title</span>
+                    <span class="p">)</span>
+                    <span class="n">plot_data</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+                    <span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xaxis</span><span class="p">,</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">freq_vals</span><span class="p">.</span><span class="n">values</span><span class="p">()])</span>
+                    <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+                    <span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'unique word'</span><span class="p">)</span>
+                    <span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'frequency'</span><span class="p">)</span>
+                    <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+                    <span class="n">dictionaries</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">freq_vals</span><span class="p">)</span>
+                    <span class="n">unique_words</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">freq_vals</span><span class="p">))</span>    
+                    <span class="n">titles</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+                    <span class="n">df_data</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">'Artist'</span><span class="p">:</span><span class="n">artist</span><span class="p">,</span>
+                                            <span class="s">'Song'</span><span class="p">:</span> <span class="n">titles</span><span class="p">,</span>
+                                            <span class="s">'Unique Word Count'</span><span class="p">:</span> <span class="n">unique_words</span><span class="p">,</span>
+                                            <span class="s">'Dictionary of word count'</span><span class="p">:</span> <span class="n">dictionaries</span>
+                    <span class="p">})</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">continue</span>
+    <span class="k">return</span> <span class="n">all_lyrics</span><span class="p">,</span> <span class="n">df_data</span>
+</code></pre></div></div>
+<p>To get the data for training our model, I call <code class="language-plaintext highlighter-rouge">all_lyrics, df_data = get_lyrics(top_50)</code>. 
+I visualized the data as line graphs where the x-axis are unique words (indicated by a numeric value) and the y-axis are the corresponding frequencies in the song. Some songs are more repetitive than others, so they have fewer unique words. On average, however, Sufjan’s songs have around 98 unique words. Below are samples of the unique word mapping for the songs Casimir Pulaski Day and Chicago.</p>
+
+<p><b>Song title:</b> Casimir Pulaski Day
+<b>Unique word count:</b> 153</p>
+
+<p align="center">
+<img src="https://i.imgur.com/zQQ4Cye.png" alt="Chicago Unique Word Count Graph" width="80%" />
+</p>
+<p><b>Song title:</b> Chicago
+<b>Unique word count:</b> 66</p>
+<p align="center">
+<img src="https://i.imgur.com/St7jbu3.png" alt="Casimir Pulaski Day Unique Word Count Graph" width="80%" />
+</p>
+<h4>Cleaning/Preparing the data for training</h4>
+<p>To prepare the data, I read all of the data into  a string and make the characters lowercase in order to reduce the number of features. Next, I created a dictionary with the KEY as a unique number and VALUE as the unique character in the set. I use this dictionary later in the process to properly the encode the data to be understood by our keras model.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># put all lyrics into one long string to get count of total characters
+</span><span class="n">data</span> <span class="o">=</span> <span class="s">""</span>
+<span class="k">for</span> <span class="n">lyric</span> <span class="ow">in</span> <span class="n">all_lyrics</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span>  <span class="n">lyric</span><span class="p">.</span><span class="n">lower</span><span class="p">()</span>
+    
+<span class="c1"># get list of unique characters
+</span><span class="n">chars</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">))))</span>
+<span class="c1"># chars = [char for char in chars]
+</span>
+<span class="c1"># create dictionary of key: numeric, val: unique character
+</span><span class="n">char_to_int</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">c</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">chars</span><span class="p">))</span>
+
+<span class="c1"># create dictionary of key: unique character, val: numeric
+</span><span class="n">int_to_char</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">chars</span><span class="p">))</span>
+
+<span class="c1"># get count of total characters
+</span><span class="n">N_ALL_CHARS</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># get count of unique characters
+</span><span class="n">N_UNIQUE_CHARS</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">chars</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Total Characters: "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">N_ALL_CHARS</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Total Distinct Characters: "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">N_UNIQUE_CHARS</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Unique Characters: "</span><span class="p">,</span> <span class="n">chars</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The resulting dataset included 36,198 characters total, with 42 unique characters including punctuation marks, numbers, and letters.</p>
+
+<p>The next step in the preparation required that I convert the sequence data into a 3D vector defined by (number_of_sequences, sequence_length, num_unique_chars) in order to be able to pass it to the model. I created placeholder vectors filled with zeros for the input and output vectors using <code class="language-plaintext highlighter-rouge">np.zeros()</code>.</p>
+
+<p>For the vector shape:</p>
+<ul>
+  <li>I arbitrarily set the sequence length to be 50.</li>
+  <li>Next, I calculated the value for the number of sequences simply by dividing the total number of characters in my dataset by the sequence length.</li>
+  <li>Lastly, I got the number of unique characters from my dataset from getting the <code class="language-plaintext highlighter-rouge">len(set())</code> of my data.</li>
+</ul>
+
+<p>For my dataset, the input and output shapes are (723, 50, 42).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># prepare the dataset of input-output pairs encoded as integers
+# set char length of lyric line
+</span><span class="n">SEQ_LENGTH</span> <span class="o">=</span> <span class="mi">50</span> 
+<span class="n">N_SEQ</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">/</span><span class="n">SEQ_LENGTH</span><span class="p">)</span>
+
+<span class="c1"># create list of keys for each character window
+# inputs data needs to be 3D  (number of sequences, length of sequences, number of features aka unique chars)
+</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N_SEQ</span><span class="p">,</span> <span class="n">SEQ_LENGTH</span><span class="p">,</span> <span class="n">N_UNIQUE_CHARS</span><span class="p">))</span> <span class="c1"># key of each character in window
+</span>
+<span class="c1"># create list of output result from input key window
+</span><span class="n">outputs</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N_SEQ</span><span class="p">,</span> <span class="n">SEQ_LENGTH</span><span class="p">,</span> <span class="n">N_UNIQUE_CHARS</span><span class="p">))</span>
+</code></pre></div></div>
+<p>To fill the placeholder vectors, I iterated through the dataset by the defined window to get the current sequence. Then, I iterated through the obtained sequence to get the numeric-encoding of each character.</p>
+
+<p>For example, the first input sequence window, at <code class="language-plaintext highlighter-rouge">i = 0</code>, (from 0 to 50) is a character array that looks like this:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="s">' '</span><span class="p">,</span> <span class="s">'t'</span><span class="p">,</span> <span class="s">'h'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">,</span> <span class="s">' '</span><span class="p">,</span> <span class="s">'o'</span><span class="p">,</span> <span class="s">'n'</span><span class="p">,</span> <span class="s">'l'</span><span class="p">,</span> <span class="s">'y'</span><span class="p">,</span> <span class="s">' '</span><span class="p">,</span> <span class="s">'t'</span><span class="p">,</span> <span class="s">'h'</span><span class="p">,</span> <span class="s">'i'</span><span class="p">,</span> <span class="s">'n'</span><span class="p">,</span> <span class="s">'g'</span><span class="p">,</span> <span class="s">' '</span><span class="p">,</span> <span class="s">'t'</span><span class="p">,</span> <span class="s">'h'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">,</span> <span class="s">'t'</span><span class="p">,</span> <span class="s">' '</span><span class="p">,</span> <span class="s">'k'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">,</span> <span class="s">'p'</span><span class="p">,</span> <span class="s">'s'</span><span class="p">,</span> <span class="s">' '</span><span class="p">,</span> <span class="s">'m'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">,</span> <span class="s">' '</span><span class="p">,</span> <span class="s">'f'</span><span class="p">,</span> <span class="s">'r'</span><span class="p">,</span> <span class="s">'o'</span><span class="p">,</span> <span class="s">'m'</span><span class="p">,</span> <span class="s">' '</span><span class="p">,</span> <span class="s">'d'</span><span class="p">,</span> <span class="s">'r'</span><span class="p">,</span> <span class="s">'i'</span><span class="p">,</span> <span class="s">'v'</span><span class="p">,</span> <span class="s">'i'</span><span class="p">,</span> <span class="s">'n'</span><span class="p">,</span> <span class="s">'g'</span><span class="p">,</span> <span class="s">' '</span><span class="p">,</span> <span class="s">'t'</span><span class="p">,</span> <span class="s">'h'</span><span class="p">,</span> <span class="s">'i'</span><span class="p">,</span> <span class="s">'s'</span><span class="p">,</span> <span class="s">' '</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">]</span>
+</code></pre></div></div>
+<p>The corresponding numeric representation looks like this:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">15</span><span class="p">]</span>
+</code></pre></div></div>
+<p>In order to get the first character value, the empty space ‘ ‘, to be represented in our 3D vector, I used a one-hot encoding representation of the value. The one-hot encoding looks like a sparse vector filled with 0’s and a 1 value placed at an index we defined in our dictionary mapping of characters to integers.</p>
+
+<p>For example, in the first iteration through the sequence, at <code class="language-plaintext highlighter-rouge">j = 0</code>, the numeric representation of our value is 1. The one-hot encoding for our character looks like:
+<code class="language-plaintext highlighter-rouge">[0, 1, 0, 0, 0, ..., n=47],</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># iterate through all characters, shifting window by 1 character
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N_SEQ</span><span class="p">):</span>
+    <span class="n">input_seq</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">SEQ_LENGTH</span><span class="p">]</span>
+    <span class="c1"># get numeric encodings of character values for window
+</span>    <span class="n">input_seq_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">char_to_int</span><span class="p">[</span><span class="n">value</span><span class="p">]</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">input_seq</span><span class="p">]</span>
+    <span class="c1"># create input sequence placeholder to one-hot encode unique_character 
+</span>    <span class="n">input_seq_ph</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">SEQ_LENGTH</span><span class="p">,</span> <span class="n">N_UNIQUE_CHARS</span><span class="p">))</span>
+    <span class="c1"># iterate through placeholder to one-hot encode, placing 1 value 
+</span>    <span class="c1"># at mapped position to indicate the unique character
+</span>    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">SEQ_LENGTH</span><span class="p">):</span>
+        <span class="n">input_seq_ph</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">input_seq_idx</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">=</span> <span class="mf">1.</span>
+    <span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">input_seq_ph</span>
+
+    <span class="n">output_seq</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">SEQ_LENGTH</span><span class="p">]</span>
+    <span class="n">output_seq_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">char_to_int</span><span class="p">[</span><span class="n">value</span><span class="p">]</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">output_seq</span><span class="p">]</span>
+    <span class="n">output_seq_ph</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">SEQ_LENGTH</span><span class="p">,</span> <span class="n">N_UNIQUE_CHARS</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">SEQ_LENGTH</span><span class="p">):</span>
+        <span class="n">output_seq_ph</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">output_seq_idx</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">=</span> <span class="mf">1.</span>           
+    <span class="n">outputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">output_seq_ph</span>
+    
+<span class="c1"># get total number of patterns
+</span><span class="n">N_PATTERNS</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Total Patterns: "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">N_PATTERNS</span><span class="p">))</span>
+
+</code></pre></div></div>
+
+<p>Here is an example of what the input and output  sequences may look like before encoding the sequences to integers:</p>
+
+<p><strong>SEQ_IN:</strong> warm bath, holiday inn after dark
+signs and wonder</p>
+
+<p><strong>SEQ_OUT:</strong> arm bath, holiday inn after dark
+signs and wonders</p>
+
+<h4>Building/Training LSTM Model:</h4>
+<p>To build the model, I used Keras (a wrapper for tensorflow). Below is the code for my model with comments explaining the layers and parameters:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+<span class="c1"># 256 memory units in cell
+# Our input shape indicates variable-length sequences of 42-dimensional vectors
+# return_sequences = True, return hidden state output for each input time step
+# the output will be a sequence of the same length, as opposed to just one vector
+</span><span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">N_UNIQUE_CHARS</span><span class="p">),</span> <span class="n">return_sequences</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+
+<span class="c1"># Dropout 20% of inputs (to reduce overfitting)
+</span><span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.2</span><span class="p">))</span>
+<span class="c1"># TimeDistributed allows you to apply Dense operation across every output at each time step 
+</span><span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">TimeDistributed</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">N_UNIQUE_CHARS</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'softmax'</span><span class="p">)))</span>
+<span class="n">model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s">'categorical_crossentropy'</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s">'adam'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>I ran 100 epochs with a batch size of 32.</p>
+
+<h4>Generating Lyrics from Model</h4>
+
+<p>To generate lyrics, I defined a function with a <code class="language-plaintext highlighter-rouge">model</code> parameter for the trained model and a <code class="language-plaintext highlighter-rouge">lyric_length</code> parameter.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">generate_lyrics</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lyric_length</span><span class="p">):</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="n">N_UNIQUE_CHARS</span><span class="p">)]</span>
+    <span class="n">output_lyrics</span> <span class="o">=</span> <span class="p">[</span><span class="n">int_to_char</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]]</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">idx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'in: '</span><span class="p">,</span> <span class="n">output_lyrics</span><span class="p">,</span> <span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+    <span class="c1"># shape is (number of sequences, length of sequences, number of features aka unique chars)
+</span>    <span class="n">start</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">lyric_length</span><span class="p">,</span> <span class="n">N_UNIQUE_CHARS</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lyric_length</span><span class="p">):</span>
+        <span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:][</span><span class="n">idx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">int_to_char</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">end</span><span class="o">=</span><span class="s">""</span><span class="p">)</span>
+        <span class="c1"># np.argmax returns position of largest probability value
+</span>        <span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">start</span><span class="p">[:,</span> <span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">prediction</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">int_to_char</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="n">output_lyrics</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="s">''</span><span class="p">).</span><span class="n">join</span><span class="p">(</span><span class="n">output_lyrics</span><span class="p">)</span>
+</code></pre></div></div>
+<p>In this function, I used a random number generator to get a random value between 0 and 41 (because I had 42 unique characters in this dataset) and prepared the input value to feed into the model (just as I prepared the input for training). Once the input value is fed into the model, I decoded each output back into a non-numeric character, joined each character in the loop together, and generated our Sufjan Stevens’ lyrics!</p>
+
+<p>Running <code class="language-plaintext highlighter-rouge">generate_lyrics(model, 100)</code>:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>in:  ['m'] 
+
+me from cutting my arm
+crosshatch, warm bath, holiday inn after dark
+signs and wonders, water stain writing the wall
+daniel's message, blood of the moon on us all
+
+do i care if i despise this?
+</code></pre></div></div>
+<p>I have to say, that’s pretty neat!!</p>
+
+<h4>Conclusions</h4>
+<p>Overall, it was relatively easy to get a create a model that generated understandable words. Running 100 epochs took less than 20 minutes to train. In the future, I’d like to incorporate other artists’ works into the dataset in order to increase the number of patterns in the hopes of generating original lyrics. All in all, however, this was a really good learning exercise for understanding how LSTMs work!</p>
+
+<p>Thanks for reading :)</p>
+:ET

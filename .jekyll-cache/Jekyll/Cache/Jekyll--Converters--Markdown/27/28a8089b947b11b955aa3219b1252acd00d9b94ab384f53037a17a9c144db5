@@ -1,0 +1,109 @@
+I"<<p>If you’ve been following me along my journey of learning html game development, you know that I have been working on implementing additional features to my game <a href="https://janessatran.github.io/html5game">Adventures of Leat</a>. In this post, I will explain how I spruced up the Win State page using sprite sheet animations!</p>
+
+<p><em>If you haven’t been following along or just have no idea what I am talking about, you can read the first part of this GameDev blog series in my <a href="https://www.janessatran.com/htmlgamedevelopment/">original post about learning game development</a></em></p>
+
+<h2 id="what-do-you-mean-by-sprucing-up">What do you mean by “sprucing up”?</h2>
+
+<p>If you play the game, you go around avoiding spiders, collecting keys to open doors, and collecting coins along the way. I wanted to add some pizzazz to the win screen by showing the tally of coins Leat collects at the end of the game, ideally with an animated coin to make it more exciting!</p>
+
+<p><strong>The object is to go from this:</strong></p>
+
+<p><img src="https://i.imgur.com/Ra31dBW.png" alt="A screen that says 'You Won' and 'Press w to restart'" /></p>
+
+<p><strong>To this:</strong></p>
+
+<p><img src="https://i.imgur.com/IQefoql.gif" alt="A screen that says Yay! You Won 20 coins next to an animated image of ßa spinning coin" /></p>
+
+<h2 id="passing-coin-data-to-winstate">Passing coin data to <code class="language-plaintext highlighter-rouge">WinState</code></h2>
+
+<p>First we need to be able to pass data about the number of collected coins from our <code class="language-plaintext highlighter-rouge">PlayState</code> to our <code class="language-plaintext highlighter-rouge">WinState</code>.  We can do this by passing a JSON object with our coin data that we’ve stored in <code class="language-plaintext highlighter-rouge">PlayState.coinPickupCount</code> to the function call that is made when we initialize our <code class="language-plaintext highlighter-rouge">WinState</code>:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// start(key, clearWorld, clearCache, parameter)</span>
+<span class="c1">// true - keep cache</span>
+<span class="c1">// false - don't keep existing world objects</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="dl">'</span><span class="s1">win</span><span class="dl">'</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="p">{</span> <span class="na">coins</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">coinPickupCount</span><span class="p">})</span>
+</code></pre></div></div>
+
+<p>We then need to modify <code class="language-plaintext highlighter-rouge">WinState</code> to handle this information. We do this by creating an <code class="language-plaintext highlighter-rouge">init()</code> function which takes an argument we’ve named <code class="language-plaintext highlighter-rouge">data</code>. Inside the function, we check if <code class="language-plaintext highlighter-rouge">data</code> is defined, and if it is we set <code class="language-plaintext highlighter-rouge">WinState.coinPickupCount</code> to the value <code class="language-plaintext highlighter-rouge">data.coins</code>.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">WinState</span><span class="p">.</span><span class="nx">init</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">data</span> <span class="o">!=</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">coinPickupCount</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">coins</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">coinPickupCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Now our <code class="language-plaintext highlighter-rouge">WinState</code> has the data about the number of coins collected! We will now move onto how to add the animated coin image to the screen.</p>
+
+<h2 id="loading-the-animated-coin-image">Loading the Animated Coin Image</h2>
+
+<p>To add the animated coin image to the screen, we modify the <code class="language-plaintext highlighter-rouge">WinState.preload</code> function to load our sprite sheet with the animated coin. A <strong>sprite sheet</strong> is a bitmap image file that contains several smaller graphics in a tile grid arrangement.</p>
+
+<p>Our coin sprite sheet contains 4 tiles with images of the coin at different angles:</p>
+
+<center><img src="https://i.imgur.com/aHTMPTf.png" alt="An image of 4 coins across a one row grid that display the coin from a different angle in each tile" /></center>
+
+<p><br /></p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">WinState</span><span class="p">.</span><span class="nx">preload</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">load</span><span class="p">.</span><span class="nx">image</span><span class="p">(</span><span class="dl">'</span><span class="s1">background</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">images/background.png</span><span class="dl">'</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">load</span><span class="p">.</span><span class="nx">spritesheet</span><span class="p">(</span><span class="dl">'</span><span class="s1">coin</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">images/coin_animated.png</span><span class="dl">'</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">22</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="why-preload-the-assets">Why preload the assets?</h3>
+
+<p>You might be wondering why we preload the assets instead of just loading them when we use them. The short answer: best practice. Usually, a game may need to load a large number of assets for a scene. It may take some time to load them all, so preloading allows you to integrate a loading bar or some indicator to the player that the game is loading. In our case we do not have a wealth of assets, but we should follow the best practices in case we do eventually expand the game to include a lot of assets!</p>
+
+<h3 id="adding-the-animations-to-the-sprite-sheet">Adding the animations to the sprite sheet</h3>
+
+<p>Lastly, in our <code class="language-plaintext highlighter-rouge">create</code> function we load the sprite sheet and add it to the page.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">animatedCoinIcon</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">add</span><span class="p">.</span><span class="nx">sprite</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">215</span><span class="p">,</span> <span class="dl">'</span><span class="s1">coin</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Then, we set the <strong>anchor</strong>, which sets the origin point for the animation.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">animatedCoinIcon</span><span class="p">.</span><span class="nx">anchor</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now, we define an animation sequence for our <code class="language-plaintext highlighter-rouge">animatedCoinIcon</code> using the <code class="language-plaintext highlighter-rouge">animations.add</code> function:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// add(name, frames, frameRate, loop, useNumericIndex) → {Phaser.Animation}</span>
+<span class="nx">animatedCoinIcon</span><span class="p">.</span><span class="nx">animations</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="dl">'</span><span class="s1">rotate</span><span class="dl">'</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="mi">6</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><em>Documentation on the add function can be found <a href="https://phaser.io/docs/2.6.2/Phaser.AnimationManager.html#add">here</a>.</em></p>
+
+<p>Lastly, we play the animation!</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">animatedCoinIcon</span><span class="p">.</span><span class="nx">animations</span><span class="p">.</span><span class="nx">play</span><span class="p">(</span><span class="dl">'</span><span class="s1">rotate</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>All together this looks like:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">WinState</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">add</span><span class="p">.</span><span class="nx">image</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="dl">'</span><span class="s1">background</span><span class="dl">'</span><span class="p">);</span>
+
+        <span class="c1">// Here we load the sprite sheet, which we've named coin in our preload function</span>
+    <span class="kd">let</span> <span class="nx">animatedCoinIcon</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">add</span><span class="p">.</span><span class="nx">sprite</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">215</span><span class="p">,</span> <span class="dl">'</span><span class="s1">coin</span><span class="dl">'</span><span class="p">)</span>
+        <span class="c1">// Next we set the anchor, aka the origin point</span>
+    <span class="nx">animatedCoinIcon</span><span class="p">.</span><span class="nx">anchor</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+
+        <span class="c1">// add(name, frames, frameRate, loop, useNumericIndex) → {Phaser.Animation}</span>
+    <span class="nx">animatedCoinIcon</span><span class="p">.</span><span class="nx">animations</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="dl">'</span><span class="s1">rotate</span><span class="dl">'</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="mi">6</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="nx">animatedCoinIcon</span><span class="p">.</span><span class="nx">animations</span><span class="p">.</span><span class="nx">play</span><span class="p">(</span><span class="dl">'</span><span class="s1">rotate</span><span class="dl">'</span><span class="p">)</span>
+
+    <span class="kd">let</span> <span class="nx">winLabel</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">add</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Yay!</span><span class="dl">'</span><span class="p">,</span>
+        <span class="p">{</span><span class="na">font</span><span class="p">:</span> <span class="dl">'</span><span class="s1">50px Arial</span><span class="dl">'</span><span class="p">,</span> <span class="na">fill</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#760e99</span><span class="dl">"</span><span class="p">});</span>
+    <span class="kd">let</span> <span class="nx">coinLabel</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">game</span><span class="p">.</span><span class="nx">add</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="dl">'</span><span class="s1">You collected </span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">coinPickupCount</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> coins. Nice job!</span><span class="dl">'</span><span class="p">,</span>
+        <span class="p">{</span><span class="na">font</span><span class="p">:</span> <span class="dl">'</span><span class="s1">30px Arial</span><span class="dl">'</span><span class="p">,</span> <span class="na">fill</span><span class="p">:</span> <span class="dl">"</span><span class="s2">#760e99</span><span class="dl">"</span><span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="woohoo">Woohoo!</h2>
+
+<p>There you have it! We now have a spruced up win page which tells the player how many coins they collected with a neat animation to jazz things up!</p>
+:ET

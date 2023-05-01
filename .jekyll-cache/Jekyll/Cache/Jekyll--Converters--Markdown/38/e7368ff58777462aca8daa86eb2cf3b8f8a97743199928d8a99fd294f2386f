@@ -1,0 +1,40 @@
+I")<h2 id="i-get-paid-to-write-code">I get paid to write code?!</h2>
+<p>Last week was my first week working as a professional jr. software engineer and it was GREAT. I really like the people I work with, really enjoy working in Rails (I’m full-stack btw, Ruby just holds a special place in my heart ❤️), and I just love that I get to spend most of my days now thinking about code. I feel incredibly fortunate.</p>
+
+<p>Now that I am working full-time in this role, though, I’ve been thinking about how I will continue to go about my days of learning and improving my programming skills outside of the 9-5. I’ll dive in next to what I’ve come up with so far.</p>
+
+<h2 id="general-learning-goals">General Learning Goals</h2>
+
+<p>I’d like to improve in the following areas:</p>
+
+<p><strong>Full-stack web development:</strong></p>
+<ol>
+  <li>Ruby on Rails</li>
+  <li>General front-end, including CSS and React</li>
+</ol>
+
+<p><strong>General programming:</strong></p>
+<ol>
+  <li>Object oriented programming (Reading POODR by Sandi Metz)?</li>
+  <li>General development methodologies / best practices (Reading The Pragmatic Programmer by Andrew Hunt and Davis Thomas)</li>
+</ol>
+
+<p>Currently, my plan is to continue creating side projects to understand how things get made. I don’t want to focus on creating anything original because it would take me a really long time to think of something and start. Instead, I’d like to just focus on building things from scratch, learning new things, and recording the new things I learn in learning logs on this blog. I’m sharing what I’m learning on this blog <em>primarily</em> to have a log to look back on myself, but also because I think writing out what I’m learning on a public platform will encourage me to really understand what I’m learning. On that note…</p>
+
+<h2 id="learning-log-01">Learning Log #01</h2>
+<p>So I started a new rails project that is essentially a photo-sharring app that enables a user to upload a picture with a caption. It uses <a href="https://cloudinary.com/">Cloudinary</a> for storing pictures and <a href="pusher.com">Pusher</a> to update the feed in real time. I’m hoping to integrate the <a href="https://github.com/plataformatec/devise">Devise</a> gem for authentication, since my first rails app just used sessions and cookies. And I’m also hoping to create the front-end with <a href="https://github.com/reactjs/react-rails">react-rails</a>.</p>
+
+<h3 id="things-ive-learned-this-week">Things I’ve learned this week</h3>
+<h4 id="how-to-store-credentials-like-api-keyssecrets-safely-using-environment-variables">How to store credentials (like API keys/secrets) safely using environment variables.</h4>
+<p>We can use the gem <a href="https://github.com/bkeepers/dotenv">dotenv</a>, which loads environment variables from the <code class="language-plaintext highlighter-rouge">.env</code> file and creates an array <code class="language-plaintext highlighter-rouge">ENV</code> in development. You place your <code class="language-plaintext highlighter-rouge">.env</code> file in <code class="language-plaintext highlighter-rouge">.gitnignore</code>, which is a file that Git uses to determine which files/directories to ignore before you make a commit.</p>
+<h4 id="what-scaffolding-is-in-rails-and-when-to-use-it">What scaffolding is in Rails and when to use it.</h4>
+<p>Scaffolding in Ruby on Rails refers to the auto-generation of a Model, Views, and Controller for a table (such as Users). For example, using the command `rails generate scaffold User” would create a full CRUD (create, read, update, delete) web interface for the Users table. Basically, it’s a quick way to autogenerate a lot of things you might need when creating a new data table in a project. It’s not always necessary, though, because you may not need the full CRUD functionality. (PS, I’m not using scaffolding to create my photosharing project!)</p>
+
+<p>Other things I’ve learned from work…</p>
+
+<h4 id="what-is-haml">What is HAML?</h4>
+<p><a href="https://haml.info/about.html">HAML</a>, which stands for HTML Abstraction Markup Language, is a markup language that’s used to cleanly and simply describe the HTML of any web document without the use of inline code.</p>
+<h4 id="what-is-coffeescript">What is coffeescript?</h4>
+<p><a href="https://coffeescript.org/#introduction">Coffeescript</a> is a programming language that compiles to JavaScript. It adds syntactic sugar inspired by Ruby, Python and Haskell in an effort to enhance JavaScript’s brevity and readability. (source: <a href="https://en.wikipedia.org/wiki/CoffeeScript">Wikipedia</a>)</p>
+
+:ET
