@@ -1,10 +1,25 @@
 ---
-title: Projects
+title: Stuff I made with code
 permalink: /projects/
 layout: page
 excerpt: Things I've tinkered with.
 comments: false
 ---
+
+## Portal
+
+<p style="padding:0;margin:0">
+	<a class="tag" href="https://github.com/janessatran/threejs-portal">Repo</a> |
+	<a class="tag" href="https://janessatran.github.io/threejs-portal/">Live</a>
+</p>
+Portal scene made with Blender and ThreeJS.
+
+<center>
+	<img src="https://imgur.com/TaG5rlG.png" alt="screenshot of portal scene project" style="margin: 0 auto;">
+</center>
+
+<br>
+<br>
 
 ## Adventures of Leat
 
