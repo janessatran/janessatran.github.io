@@ -3,7 +3,11 @@
     class="author-avatar"
     src="{{ site.author.avatar }}"
     alt="{{ site.author.username }}"
-  />
-  <h2 class="author-name">{{ site.author.name }}</h2>
+    />
+  <h2 class="author-name">
+    {% assign character = site.author.name | split: "" %}
+    {% for c in character %}
+    <div class="author-name-char">{{ c }}</div>
+    {% endfor %}</h2>
   <p class="author-bio">{{ site.author.bio }}</p>
 </div>

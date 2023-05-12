@@ -16,9 +16,9 @@
 }
 
 // colors
-$color__black: #000000;
+$color__black: #002038;
 $color__gray: #eeeeee;
-$color__beige: #ffeed4;
+$color__beige: #eee6d9;
 $color__yellow: #fefeca;
 
 html {
@@ -87,7 +87,7 @@ figure,
 strong,
 b {
   font-weight: $bold-weight;
-  color: $red;
+  color: $pink;
 }
 
 // horizontal rule
@@ -103,7 +103,7 @@ kbd {
   -webkit-border-radius: 3px;
   border: 1px solid $light;
   border-radius: 2px;
-  color: $red;
+  color: $pink;
   display: inline-block;
   font-size: $small-font-size;
   line-height: 1.4;
@@ -189,7 +189,7 @@ li {
   padding-top: 1px;
 
   &:before {
-    color: $red;
+    color: $pink;
   }
 
   > ul,
@@ -206,7 +206,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: $red;
+  color: $pink;
   font-weight: $bold-weight;
   & + ul,
   & + ol {
@@ -265,8 +265,6 @@ blockquote {
   font-style: italic;
   text-align: center;
   opacity: 0.9;
-  border-top: 1px solid $light;
-  border-bottom: 1px solid $light;
   padding: 10px;
   margin-left: 10px;
   margin-right: 10px;
@@ -335,7 +333,7 @@ table {
 
   thead {
     font-weight: $bold-weight;
-    color: $red;
+    color: $pink;
     border-bottom: 1px solid $light;
   }
 
@@ -358,7 +356,7 @@ table {
 mark,
 ::selection {
   background: #d5711f5b;
-  color: $red;
+  color: $pink;
 }
 
 // Github Gist clear border

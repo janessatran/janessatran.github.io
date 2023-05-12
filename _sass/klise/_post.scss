@@ -50,16 +50,6 @@
   time {
     position: relative;
     margin-right: 1.5em;
-
-    &::after {
-      background: $light;
-      bottom: 1px;
-      content: " ";
-      height: 2px;
-      position: absolute;
-      right: -20px;
-      width: 12px;
-    }
   }
 
   span[itemprop="author"] {
@@ -115,7 +105,7 @@
   }
 
   ul.task-list {
-    list-style: none; 
+    list-style: none;
     margin: 0;
 
     li::before {
@@ -195,7 +185,6 @@
   display: flex;
   position: relative;
   margin-top: 5em;
-  border-top: 1px solid $light;
   line-height: 1.4;
 
   .post-nav-item {
@@ -251,7 +240,6 @@
     .post-nav-item:nth-child(even) {
       border-left: 0;
       padding-left: 0;
-      border-top: 1px solid $light;
     }
   }
 }

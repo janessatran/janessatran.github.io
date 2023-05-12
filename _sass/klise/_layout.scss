@@ -6,7 +6,6 @@
   position: relative;
   margin-right: auto;
   margin-left: auto;
-  border-bottom: 1px solid $light;
   padding: $spacing-full - 15px $spacing-full;
   @extend %clearfix;
 }
@@ -190,6 +189,7 @@
   }
 
   .author-avatar {
+    display: none;
     width: 70px;
     height: 70px;
     border-radius: 100%;
@@ -203,8 +203,61 @@
   }
 
   .author-name {
-    font-size: 1.7em;
+    font-size: 3rem;
     margin-bottom: 2px;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 0.1em;
+  }
+
+  .author-name-char {
+    text-transform: lowercase;
+    animation: letterdrift 4s infinite alternate ease-in-out;
+    display: inline-block;
+  }
+
+  .author-name-char:nth-child(4n + 1) {
+    animation-delay: -2s;
+  }
+
+  .author-name-char:nth-child(4n + 2) {
+    animation-delay: -4s;
+  }
+
+  .author-name-char:nth-child(4n + 3) {
+    animation-delay: -6s;
+  }
+
+  @-webkit-keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    60% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    60% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes letterdrift {
+    from {
+      transform: translateY(-3px) rotate(-5deg);
+    }
+    to {
+      transform: translateY(3px) rotate(5deg);
+    }
   }
 
   .author-bio {
@@ -233,10 +286,6 @@
   padding-top: 5px;
   padding-bottom: 6px;
   @extend %clearfix;
-
-  &:not(:first-child) {
-    border-top: 1px solid $light;
-  }
 
   .post-item-date {
     min-width: 96px;
@@ -355,9 +404,8 @@
     border-radius: 5px;
     padding: 10px 10px 10px 35px;
     color: $text-base-color;
-    -webkit-appearance: none;
     font-size: $base-font-size;
-    background-color: rgba(128, 128, 128, 0.1);
+    background-color: rgba(154, 121, 93, 0.371);
     border: 1px solid rgba(128, 128, 128, 0.1);
     &::-webkit-input-placeholder {
       color: #808080;
